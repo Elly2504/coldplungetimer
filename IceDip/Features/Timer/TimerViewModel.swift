@@ -25,6 +25,9 @@ final class TimerViewModel {
 
     private var timer: Timer?
     private var backgroundDate: Date?
+    private var storedModelContext: ModelContext?
+    private var storedNotificationService: NotificationService?
+    private var storedHapticsEnabled: Bool = true
 
     // MARK: - Computed
 
@@ -51,10 +54,14 @@ final class TimerViewModel {
 
     // MARK: - Actions
 
-    func start(modelContext: ModelContext, hapticsEnabled: Bool, notificationService: NotificationService) {
+    func start(modelContext: ModelContext, hapticsEnabled: Bool, soundEnabled: Bool, notificationService: NotificationService) {
         let session = PlungeSession(targetDuration: selectedDuration)
         modelContext.insert(session)
         currentSession = session
+
+        storedModelContext = modelContext
+        storedNotificationService = notificationService
+        storedHapticsEnabled = hapticsEnabled
 
         isRunning = true
         isPaused = false
@@ -63,7 +70,7 @@ final class TimerViewModel {
         showCompletion = false
         moodAfter = nil
 
-        notificationService.scheduleTimerComplete(duration: selectedDuration)
+        notificationService.scheduleTimerComplete(duration: selectedDuration, soundEnabled: soundEnabled)
 
         if hapticsEnabled {
             HapticService.start()
@@ -92,6 +99,12 @@ final class TimerViewModel {
         notificationService.cancelTimerNotifications()
 
         if let session = currentSession {
+            if elapsedSeconds < 5 {
+                modelContext.delete(session)
+                currentSession = nil
+                return
+            }
+
             session.complete(
                 waterTemp: hasWaterTemp ? waterTemp : nil,
                 moodBefore: moodBefore,
@@ -111,6 +124,8 @@ final class TimerViewModel {
         showCompletion = false
         moodBefore = nil
         moodAfter = nil
+        storedModelContext = nil
+        storedNotificationService = nil
     }
 
     func handleBackground() {
@@ -134,7 +149,9 @@ final class TimerViewModel {
             HapticService.zoneTransition()
         }
 
-        if !isComplete {
+        if isComplete, let ctx = storedModelContext, let ns = storedNotificationService {
+            stop(modelContext: ctx, hapticsEnabled: storedHapticsEnabled, notificationService: ns)
+        } else if !isComplete {
             startTimer(hapticsEnabled: hapticsEnabled)
         }
     }
@@ -166,6 +183,11 @@ final class TimerViewModel {
         if hapticsEnabled {
             let remaining = Int(remainingSeconds)
             HapticService.countdown(secondsRemaining: remaining)
+        }
+
+        // Auto-complete when target duration reached
+        if isComplete, let ctx = storedModelContext, let ns = storedNotificationService {
+            stop(modelContext: ctx, hapticsEnabled: hapticsEnabled, notificationService: ns)
         }
     }
 }

@@ -21,7 +21,7 @@ final class NotificationService {
         self.isAuthorized = settings.authorizationStatus == .authorized
     }
 
-    nonisolated func scheduleTimerComplete(duration: TimeInterval) {
+    nonisolated func scheduleTimerComplete(duration: TimeInterval, soundEnabled: Bool) {
         let content = UNMutableNotificationContent()
         content.title = "Plunge Complete!"
         let minutes = Int(duration) / 60
@@ -31,7 +31,7 @@ final class NotificationService {
         } else {
             content.body = "Great job! You stayed in for \(seconds) seconds."
         }
-        content.sound = .default
+        content.sound = soundEnabled ? .default : nil
 
         let trigger = UNTimeIntervalNotificationTrigger(
             timeInterval: duration,
@@ -47,11 +47,11 @@ final class NotificationService {
         UNUserNotificationCenter.current().add(request)
     }
 
-    nonisolated func scheduleDailyReminder(hour: Int, minute: Int) {
+    nonisolated func scheduleDailyReminder(hour: Int, minute: Int, soundEnabled: Bool) {
         let content = UNMutableNotificationContent()
         content.title = "Time for Your Cold Plunge"
         content.body = "Build your resilience — start today's cold exposure session."
-        content.sound = .default
+        content.sound = soundEnabled ? .default : nil
 
         var dateComponents = DateComponents()
         dateComponents.hour = hour

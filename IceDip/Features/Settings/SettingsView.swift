@@ -10,7 +10,7 @@ struct SettingsView: View {
     @AppStorage(PreferenceKey.reminderMinute) private var reminderMinute = 0
     @AppStorage(PreferenceKey.weeklyGoalSessions) private var weeklyGoalSessions = 3
 
-    @State private var notificationService = NotificationService()
+    @Environment(NotificationService.self) private var notificationService
 
     private let durationOptions: [(String, TimeInterval)] = [
         ("30 seconds", 30),
@@ -58,7 +58,8 @@ struct SettingsView: View {
                                     Task { await notificationService.requestPermission() }
                                     notificationService.scheduleDailyReminder(
                                         hour: reminderHour,
-                                        minute: reminderMinute
+                                        minute: reminderMinute,
+                                        soundEnabled: soundEnabled
                                     )
                                 } else {
                                     notificationService.cancelPendingNotifications()
@@ -90,7 +91,7 @@ struct SettingsView: View {
                         HStack {
                             Text("Version")
                             Spacer()
-                            Text("1.0.0")
+                            Text(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0")
                                 .foregroundStyle(Theme.Colors.textSecondary)
                         }
                     }
@@ -122,6 +123,6 @@ struct SettingsView: View {
     private func updateReminder() {
         guard reminderEnabled else { return }
         notificationService.cancelPendingNotifications()
-        notificationService.scheduleDailyReminder(hour: reminderHour, minute: reminderMinute)
+        notificationService.scheduleDailyReminder(hour: reminderHour, minute: reminderMinute, soundEnabled: soundEnabled)
     }
 }

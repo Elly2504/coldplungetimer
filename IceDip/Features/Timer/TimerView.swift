@@ -3,11 +3,14 @@ import SwiftData
 
 struct TimerView: View {
     @State private var viewModel = TimerViewModel()
-    @State private var notificationService = NotificationService()
+    @Environment(NotificationService.self) private var notificationService
     @Environment(\.modelContext) private var modelContext
     @Environment(\.scenePhase) private var scenePhase
     @AppStorage(PreferenceKey.hapticsEnabled) private var hapticsEnabled = true
+    @AppStorage(PreferenceKey.soundEnabled) private var soundEnabled = true
+    @AppStorage(PreferenceKey.tempUnit) private var tempUnit = "celsius"
     @AppStorage(PreferenceKey.defaultDuration) private var defaultDuration: TimeInterval = 120
+    @State private var showStopConfirmation = false
 
     private let durationPresets: [(String, TimeInterval)] = [
         ("1m", 60),
@@ -41,7 +44,6 @@ struct TimerView: View {
         }
         .onAppear {
             viewModel.selectedDuration = defaultDuration
-            Task { await notificationService.checkPermission() }
         }
     }
 
@@ -55,6 +57,8 @@ struct TimerView: View {
             Text(viewModel.selectedDuration.formattedTimer)
                 .font(Theme.Fonts.timerDisplay)
                 .foregroundStyle(Theme.Colors.textPrimary)
+                .contentTransition(.numericText())
+                .animation(.default, value: viewModel.selectedDuration)
 
             // Duration presets
             HStack(spacing: Theme.Spacing.sm) {
@@ -79,6 +83,7 @@ struct TimerView: View {
                             )
                             .clipShape(Capsule())
                     }
+                    .accessibilityLabel("\(label) duration")
                 }
             }
 
@@ -93,12 +98,14 @@ struct TimerView: View {
 
                 if viewModel.hasWaterTemp {
                     HStack {
-                        Text("\(Int(viewModel.waterTemp))°C")
+                        Text(viewModel.waterTemp.formattedTemperature(unit: tempUnit))
                             .font(Theme.Fonts.headingSmall)
                             .foregroundStyle(Theme.Colors.iceBlue)
-                            .frame(width: 50)
+                            .frame(width: 60)
                         Slider(value: $viewModel.waterTemp, in: 0...15, step: 1)
                             .tint(Theme.Colors.iceBlue)
+                            .accessibilityLabel("Water temperature")
+                            .accessibilityValue(viewModel.waterTemp.formattedTemperature(unit: tempUnit))
                     }
                 }
             }
@@ -111,10 +118,10 @@ struct TimerView: View {
 
             // Start button
             Button {
-                Task { await notificationService.requestPermission() }
                 viewModel.start(
                     modelContext: modelContext,
                     hapticsEnabled: hapticsEnabled,
+                    soundEnabled: soundEnabled,
                     notificationService: notificationService
                 )
             } label: {
@@ -125,6 +132,8 @@ struct TimerView: View {
                     .background(Theme.Colors.iceBlue)
                     .clipShape(Capsule())
             }
+            .accessibilityLabel("Start cold plunge timer")
+            .accessibilityHint("Starts a \(viewModel.selectedDuration.formattedMinutes) timer")
             .padding(.bottom, Theme.Spacing.xxl)
         }
     }
@@ -168,14 +177,11 @@ struct TimerView: View {
                         .background(Theme.Colors.surface)
                         .clipShape(Circle())
                 }
+                .accessibilityLabel(viewModel.isPaused ? "Resume timer" : "Pause timer")
 
                 // Stop
                 Button {
-                    viewModel.stop(
-                        modelContext: modelContext,
-                        hapticsEnabled: hapticsEnabled,
-                        notificationService: notificationService
-                    )
+                    showStopConfirmation = true
                 } label: {
                     Image(systemName: "stop.fill")
                         .font(.title2)
@@ -184,8 +190,21 @@ struct TimerView: View {
                         .background(Theme.Colors.coldShock.opacity(0.3))
                         .clipShape(Circle())
                 }
+                .accessibilityLabel("Stop timer")
             }
             .padding(.bottom, Theme.Spacing.xxl)
+        }
+        .confirmationDialog("End Session?", isPresented: $showStopConfirmation, titleVisibility: .visible) {
+            Button("End Session", role: .destructive) {
+                viewModel.stop(
+                    modelContext: modelContext,
+                    hapticsEnabled: hapticsEnabled,
+                    notificationService: notificationService
+                )
+            }
+            Button("Cancel", role: .cancel) { }
+        } message: {
+            Text("Your session will be saved with the current duration.")
         }
     }
 
@@ -213,7 +232,7 @@ struct TimerView: View {
                         summaryRow("Zone Reached", value: zone.displayName, color: zone.color)
                     }
                     if let temp = session.waterTemp {
-                        summaryRow("Water Temp", value: "\(Int(temp))°C")
+                        summaryRow("Water Temp", value: temp.formattedTemperature(unit: tempUnit))
                     }
                 }
                 .padding()
@@ -281,6 +300,7 @@ struct TimerView: View {
                             )
                             .clipShape(Circle())
                     }
+                    .accessibilityLabel("Mood rating \(rating) of 5")
                 }
             }
         }

@@ -46,7 +46,7 @@ struct StreakView: View {
                 .font(.system(size: 64, weight: .bold, design: .rounded))
                 .foregroundStyle(Theme.Colors.textPrimary)
 
-            Text(currentStreak == 1 ? "day streak" : "day streak")
+            Text(currentStreak == 1 ? "day streak" : "days streak")
                 .font(Theme.Fonts.body)
                 .foregroundStyle(Theme.Colors.textSecondary)
         }
@@ -54,6 +54,8 @@ struct StreakView: View {
         .padding(Theme.Spacing.xl)
         .background(Theme.Colors.surface)
         .clipShape(RoundedRectangle(cornerRadius: 20))
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(currentStreak) \(currentStreak == 1 ? "day" : "days") streak")
     }
 
     // MARK: - Week Overview

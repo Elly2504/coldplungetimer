@@ -25,6 +25,14 @@ struct HistoryView: View {
                             // Session list
                             ForEach(sessions) { session in
                                 SessionCard(session: session)
+                                    .accessibilityElement(children: .combine)
+                                    .contextMenu {
+                                        Button(role: .destructive) {
+                                            modelContext.delete(session)
+                                        } label: {
+                                            Label("Delete Session", systemImage: "trash")
+                                        }
+                                    }
                             }
                         }
                         .padding(.horizontal, Theme.Spacing.md)
