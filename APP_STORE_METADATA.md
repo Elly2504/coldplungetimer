@@ -70,11 +70,11 @@ Initial release! Start tracking your cold plunge sessions with benefit zones, br
 
 ## Support URL
 
-(Provide your support URL — e.g., GitHub issues page or email)
+https://elly2504.github.io/coldplungetimer/support/
 
 ## Privacy Policy URL
 
-(Required — provide a privacy policy URL before submission)
+https://elly2504.github.io/coldplungetimer/privacy/
 
 ## Screenshot Dimensions
 
