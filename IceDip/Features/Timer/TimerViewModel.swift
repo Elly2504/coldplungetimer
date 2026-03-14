@@ -1,6 +1,7 @@
 import Foundation
 import SwiftData
 import SwiftUI
+import WidgetKit
 
 @MainActor
 @Observable
@@ -29,9 +30,13 @@ final class TimerViewModel {
     private var backgroundDate: Date?
     private var storedModelContext: ModelContext?
     private var storedNotificationService: NotificationService?
+    private var storedHealthKitService: HealthKitService?
+    private var storedAmbientSoundService: AmbientSoundService?
+    private var storedPhoneConnectivityService: PhoneConnectivityService?
     private var storedHapticsEnabled: Bool = true
     private var pendingModelContext: ModelContext?
     private var pendingSoundEnabled: Bool = true
+    private var pendingAmbientSound: AmbientSound?
 
     // MARK: - Computed
 
@@ -60,22 +65,26 @@ final class TimerViewModel {
 
     // MARK: - Actions
 
-    func beginSession(modelContext: ModelContext, hapticsEnabled: Bool, soundEnabled: Bool, notificationService: NotificationService, breathingEnabled: Bool) {
+    func beginSession(modelContext: ModelContext, hapticsEnabled: Bool, soundEnabled: Bool, notificationService: NotificationService, breathingEnabled: Bool, healthKitService: HealthKitService? = nil, ambientSoundService: AmbientSoundService? = nil, ambientSound: AmbientSound? = nil, phoneConnectivityService: PhoneConnectivityService? = nil) {
         if breathingEnabled {
             pendingModelContext = modelContext
             storedNotificationService = notificationService
+            storedHealthKitService = healthKitService
+            storedAmbientSoundService = ambientSoundService
+            storedPhoneConnectivityService = phoneConnectivityService
             storedHapticsEnabled = hapticsEnabled
             pendingSoundEnabled = soundEnabled
+            pendingAmbientSound = ambientSound
             showBreathing = true
         } else {
-            start(modelContext: modelContext, hapticsEnabled: hapticsEnabled, soundEnabled: soundEnabled, notificationService: notificationService)
+            start(modelContext: modelContext, hapticsEnabled: hapticsEnabled, soundEnabled: soundEnabled, notificationService: notificationService, healthKitService: healthKitService, ambientSoundService: ambientSoundService, ambientSound: ambientSound, phoneConnectivityService: phoneConnectivityService)
         }
     }
 
     func breathingComplete() {
         showBreathing = false
         guard let ctx = pendingModelContext, let ns = storedNotificationService else { return }
-        start(modelContext: ctx, hapticsEnabled: storedHapticsEnabled, soundEnabled: pendingSoundEnabled, notificationService: ns)
+        start(modelContext: ctx, hapticsEnabled: storedHapticsEnabled, soundEnabled: pendingSoundEnabled, notificationService: ns, healthKitService: storedHealthKitService, ambientSoundService: storedAmbientSoundService, ambientSound: pendingAmbientSound, phoneConnectivityService: storedPhoneConnectivityService)
         pendingModelContext = nil
     }
 
@@ -83,13 +92,16 @@ final class TimerViewModel {
         breathingComplete()
     }
 
-    func start(modelContext: ModelContext, hapticsEnabled: Bool, soundEnabled: Bool, notificationService: NotificationService) {
+    func start(modelContext: ModelContext, hapticsEnabled: Bool, soundEnabled: Bool, notificationService: NotificationService, healthKitService: HealthKitService? = nil, ambientSoundService: AmbientSoundService? = nil, ambientSound: AmbientSound? = nil, phoneConnectivityService: PhoneConnectivityService? = nil) {
         let session = PlungeSession(targetDuration: selectedDuration)
         modelContext.insert(session)
         currentSession = session
 
         storedModelContext = modelContext
         storedNotificationService = notificationService
+        storedHealthKitService = healthKitService
+        storedAmbientSoundService = ambientSoundService
+        storedPhoneConnectivityService = phoneConnectivityService
         storedHapticsEnabled = hapticsEnabled
 
         isRunning = true
@@ -107,17 +119,23 @@ final class TimerViewModel {
         }
 
         startTimer(hapticsEnabled: hapticsEnabled)
+
+        if let ambientSound, let service = storedAmbientSoundService {
+            service.play(sound: ambientSound)
+        }
     }
 
     func pause() {
         isPaused = true
         timer?.invalidate()
         timer = nil
+        storedAmbientSoundService?.pause()
     }
 
     func resume(hapticsEnabled: Bool) {
         isPaused = false
         startTimer(hapticsEnabled: hapticsEnabled)
+        storedAmbientSoundService?.resume()
     }
 
     func stop(modelContext: ModelContext, hapticsEnabled: Bool, notificationService: NotificationService) async {
@@ -125,6 +143,7 @@ final class TimerViewModel {
         timer = nil
         isRunning = false
         isPaused = false
+        storedAmbientSoundService?.stop()
 
         await notificationService.cancelTimerNotifications()
 
@@ -145,6 +164,32 @@ final class TimerViewModel {
                 HapticService.complete()
             }
 
+            if let hks = storedHealthKitService, let endTime = session.endTime {
+                let startDate = session.startTime
+                let waterTemp = session.waterTemp
+                Task {
+                    await hks.saveWorkout(startDate: startDate, endDate: endTime, waterTempCelsius: waterTemp)
+                }
+            }
+
+            WidgetCenter.shared.reloadAllTimelines()
+
+            if let connectivityService = storedPhoneConnectivityService, let ctx = storedModelContext {
+                do {
+                    let descriptor = FetchDescriptor<PlungeSession>(sortBy: [SortDescriptor(\.startTime, order: .reverse)])
+                    let allSessions = try ctx.fetch(descriptor)
+                    let calculator = StreakCalculator(sessions: allSessions)
+                    connectivityService.sendStreakUpdate(
+                        currentStreak: calculator.currentStreak,
+                        bestStreak: calculator.bestStreak,
+                        sessionsThisWeek: calculator.sessionsThisWeekCount,
+                        lastSessionDate: calculator.lastCompletedSession?.startTime
+                    )
+                } catch {
+                    print("Failed to fetch sessions for streak update: \(error)")
+                }
+            }
+
             showCompletion = true
         }
     }
@@ -158,7 +203,12 @@ final class TimerViewModel {
         notes = ""
         storedModelContext = nil
         storedNotificationService = nil
+        storedHealthKitService = nil
+        storedPhoneConnectivityService = nil
+        storedAmbientSoundService?.stop()
+        storedAmbientSoundService = nil
         pendingModelContext = nil
+        pendingAmbientSound = nil
     }
 
     func handleBackground() {

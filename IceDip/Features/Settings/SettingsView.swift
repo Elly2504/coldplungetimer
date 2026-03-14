@@ -10,8 +10,12 @@ struct SettingsView: View {
     @AppStorage(PreferenceKey.reminderMinute) private var reminderMinute = 0
     @AppStorage(PreferenceKey.weeklyGoalSessions) private var weeklyGoalSessions = 3
     @AppStorage(PreferenceKey.breathingEnabled) private var breathingEnabled = true
+    @AppStorage(PreferenceKey.healthKitEnabled) private var healthKitEnabled = false
+    @AppStorage(PreferenceKey.ambientSoundEnabled) private var ambientSoundEnabled = false
+    @AppStorage(PreferenceKey.selectedAmbientSound) private var selectedAmbientSound = "ocean"
 
     @Environment(NotificationService.self) private var notificationService
+    @Environment(HealthKitService.self) private var healthKitService
 
     private let durationOptions: [(String, TimeInterval)] = [
         ("30 seconds", 30),
@@ -52,6 +56,18 @@ struct SettingsView: View {
                         Toggle("Sound Effects", isOn: $soundEnabled)
                     }
 
+                    // Ambient Sound
+                    Section("Ambient Sound") {
+                        Toggle("Play During Plunge", isOn: $ambientSoundEnabled)
+                        if ambientSoundEnabled {
+                            Picker("Sound", selection: $selectedAmbientSound) {
+                                ForEach(AmbientSound.allCases) { sound in
+                                    Text(sound.displayName).tag(sound.rawValue)
+                                }
+                            }
+                        }
+                    }
+
                     // Notifications
                     Section("Notifications") {
                         Toggle("Daily Reminder", isOn: $reminderEnabled)
@@ -79,6 +95,29 @@ struct SettingsView: View {
                         }
                     }
 
+                    // Health
+                    if healthKitService.isAvailable {
+                        Section("Health") {
+                            Toggle("Save to Apple Health", isOn: $healthKitEnabled)
+                                .onChange(of: healthKitEnabled) { _, enabled in
+                                    if enabled {
+                                        Task {
+                                            await healthKitService.requestAuthorization()
+                                            if !healthKitService.isAuthorized {
+                                                healthKitEnabled = false
+                                            }
+                                        }
+                                    }
+                                }
+
+                            if healthKitEnabled && !healthKitService.isAuthorized {
+                                Text("Open Settings \u{203A} Health \u{203A} IceDip to enable access.")
+                                    .font(Theme.Fonts.caption)
+                                    .foregroundStyle(Theme.Colors.textSecondary)
+                            }
+                        }
+                    }
+
                     // Goals
                     Section("Weekly Goal") {
                         Stepper(
@@ -86,6 +125,10 @@ struct SettingsView: View {
                             value: $weeklyGoalSessions,
                             in: 1...14
                         )
+                        .onChange(of: weeklyGoalSessions) { _, newValue in
+                            UserDefaults(suiteName: SharedModelContainer.appGroupIdentifier)?
+                                .set(newValue, forKey: PreferenceKey.weeklyGoalSessions)
+                        }
                     }
 
                     // About

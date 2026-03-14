@@ -4,6 +4,7 @@ import SwiftData
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(NotificationService.self) private var notificationService
+    @Environment(HealthKitService.self) private var healthKitService
     @State private var timerViewModel = TimerViewModel()
     @AppStorage(PreferenceKey.hasOnboarded) private var hasOnboarded = false
 
@@ -23,6 +24,7 @@ struct ContentView: View {
             .tint(Theme.Colors.iceBlue)
             .task {
                 await notificationService.requestPermission()
+                healthKitService.checkAuthorizationStatus()
                 cleanupOrphanedSessions()
             }
         } else {

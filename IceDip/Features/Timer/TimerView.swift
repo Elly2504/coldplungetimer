@@ -11,6 +11,12 @@ struct TimerView: View {
     @AppStorage(PreferenceKey.tempUnit) private var tempUnit = "celsius"
     @AppStorage(PreferenceKey.defaultDuration) private var defaultDuration: TimeInterval = 120
     @AppStorage(PreferenceKey.breathingEnabled) private var breathingEnabled = true
+    @AppStorage(PreferenceKey.healthKitEnabled) private var healthKitEnabled = false
+    @AppStorage(PreferenceKey.ambientSoundEnabled) private var ambientSoundEnabled = false
+    @AppStorage(PreferenceKey.selectedAmbientSound) private var selectedAmbientSound = "ocean"
+    @Environment(HealthKitService.self) private var healthKitService
+    @Environment(AmbientSoundService.self) private var ambientSoundService
+    @Environment(PhoneConnectivityService.self) private var phoneConnectivityService
     @State private var showStopConfirmation = false
     @State private var celebrationPulse = false
     @State private var shareImage: UIImage?
@@ -70,6 +76,7 @@ struct TimerView: View {
                 .foregroundStyle(Theme.Colors.textPrimary)
                 .contentTransition(.numericText())
                 .animation(.default, value: viewModel.selectedDuration)
+                .accessibilityLabel("Duration: \(viewModel.selectedDuration.formattedMinutes)")
 
             // Duration presets
             HStack(spacing: Theme.Spacing.sm) {
@@ -134,7 +141,11 @@ struct TimerView: View {
                     hapticsEnabled: hapticsEnabled,
                     soundEnabled: soundEnabled,
                     notificationService: notificationService,
-                    breathingEnabled: breathingEnabled
+                    breathingEnabled: breathingEnabled,
+                    healthKitService: healthKitEnabled ? healthKitService : nil,
+                    ambientSoundService: ambientSoundEnabled ? ambientSoundService : nil,
+                    ambientSound: ambientSoundEnabled ? AmbientSound(rawValue: selectedAmbientSound) : nil,
+                    phoneConnectivityService: phoneConnectivityService
                 )
             } label: {
                 Text("START")
@@ -245,6 +256,7 @@ struct TimerView: View {
                     .font(.system(size: 80))
                     .foregroundStyle(Theme.Colors.iceBlue)
                     .shadow(color: Theme.Colors.iceBlue.opacity(0.5), radius: celebrationPulse ? 20 : 10)
+                    .accessibilityLabel("Session complete")
             }
             .scaleEffect(viewModel.showCompletion ? 1.0 : 0.5)
             .animation(Theme.Animations.celebration, value: viewModel.showCompletion)
@@ -289,6 +301,7 @@ struct TimerView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 12))
                 .lineLimit(3...6)
                 .padding(.horizontal, Theme.Spacing.xl)
+                .accessibilityLabel("Session notes")
 
             Spacer()
 

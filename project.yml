@@ -3,6 +3,7 @@ options:
   bundleIdPrefix: com.icedip
   deploymentTarget:
     iOS: "17.0"
+    watchOS: "10.0"
   xcodeVersion: "26.2"
   createIntermediateGroups: true
 
@@ -27,18 +28,97 @@ targets:
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
         PRODUCT_BUNDLE_IDENTIFIER: com.icedip.app
+        CODE_SIGN_ENTITLEMENTS: IceDip/Resources/IceDip.entitlements
     info:
       path: IceDip/Resources/Info.plist
       properties:
         CFBundleDisplayName: IceDip
         UILaunchScreen:
           UIColorName: LaunchBackground
+        NSHealthShareUsageDescription: "IceDip reads your health data to show your cold plunge history alongside other workouts."
+        NSHealthUpdateUsageDescription: "IceDip saves your cold plunge sessions as workouts in Apple Health."
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+    dependencies:
+      - target: IceDipWidgetExtension
+        embed: true
+
+  IceDipWidgetExtension:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: IceDipWidget
+        excludes:
+          - "**/.DS_Store"
+      - path: IceDip/Models/PlungeSession.swift
+      - path: IceDip/Models/UserPreferences.swift
+      - path: IceDip/Features/Timer/BenefitZone.swift
+      - path: IceDip/Shared/Extensions.swift
+      - path: IceDip/Shared/Theme.swift
+      - path: IceDip/Shared/SharedModelContainer.swift
+      - path: IceDip/Shared/StreakCalculator.swift
+    settings:
+      base:
+        CODE_SIGN_STYLE: Automatic
+        MARKETING_VERSION: "1.0.0"
+        CURRENT_PROJECT_VERSION: 1
+        PRODUCT_BUNDLE_IDENTIFIER: com.icedip.app.widget
+        CODE_SIGN_ENTITLEMENTS: IceDipWidget/IceDipWidget.entitlements
+        SWIFT_EMIT_LOC_STRINGS: "YES"
+    info:
+      path: IceDipWidget/Info.plist
+      properties:
+        CFBundleDisplayName: IceDip Widget
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+
+  IceDipWatch:
+    type: application
+    platform: watchOS
+    sources:
+      - path: IceDipWatch
+        excludes:
+          - "**/.DS_Store"
+      - path: IceDip/Features/Timer/BenefitZone.swift
+      - path: IceDip/Shared/Extensions.swift
+      - path: IceDip/Shared/Theme.swift
+      - path: IceDip/Shared/WatchSessionData.swift
+    settings:
+      base:
+        CODE_SIGN_STYLE: Automatic
+        MARKETING_VERSION: "1.0.0"
+        CURRENT_PROJECT_VERSION: 1
+        PRODUCT_BUNDLE_IDENTIFIER: com.icedip.app.watchkitapp
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        INFOPLIST_FILE: IceDipWatch/Info.plist
+    info:
+      path: IceDipWatch/Info.plist
+      properties:
+        CFBundleDisplayName: IceDip
+        WKCompanionAppBundleIdentifier: com.icedip.app
 
 schemes:
   IceDip:
     build:
       targets:
         IceDip: all
+        IceDipWidgetExtension: all
+    run:
+      config: Debug
+    archive:
+      config: Release
+
+  IceDipWatch:
+    build:
+      targets:
+        IceDipWatch: all
     run:
       config: Debug
     archive:
