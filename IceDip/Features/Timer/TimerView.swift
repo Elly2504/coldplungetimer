@@ -18,6 +18,7 @@ struct TimerView: View {
     @Environment(HealthKitService.self) private var healthKitService
     @Environment(AmbientSoundService.self) private var ambientSoundService
     @Environment(PhoneConnectivityService.self) private var phoneConnectivityService
+    @Environment(PurchaseManager.self) private var purchaseManager
     @State private var showStopConfirmation = false
     @State private var celebrationPulse = false
     @State private var shareImage: UIImage?
@@ -164,10 +165,10 @@ struct TimerView: View {
                     hapticsEnabled: hapticsEnabled,
                     soundEnabled: soundEnabled,
                     notificationService: notificationService,
-                    breathingEnabled: breathingEnabled,
-                    healthKitService: healthKitEnabled ? healthKitService : nil,
-                    ambientSoundService: ambientSoundEnabled ? ambientSoundService : nil,
-                    ambientSound: ambientSoundEnabled ? AmbientSound(rawValue: selectedAmbientSound) : nil,
+                    breathingEnabled: breathingEnabled && purchaseManager.isProUser,
+                    healthKitService: (healthKitEnabled && purchaseManager.isProUser) ? healthKitService : nil,
+                    ambientSoundService: (ambientSoundEnabled && purchaseManager.isProUser) ? ambientSoundService : nil,
+                    ambientSound: (ambientSoundEnabled && purchaseManager.isProUser) ? AmbientSound(rawValue: selectedAmbientSound) : nil,
                     phoneConnectivityService: phoneConnectivityService
                 )
             } label: {
@@ -330,7 +331,7 @@ struct TimerView: View {
             Spacer()
 
             HStack(spacing: Theme.Spacing.md) {
-                if let shareImage {
+                if purchaseManager.isProUser, let shareImage {
                     ShareLink(
                         item: Image(uiImage: shareImage),
                         preview: SharePreview("My Cold Plunge", image: Image(uiImage: shareImage))
@@ -365,7 +366,7 @@ struct TimerView: View {
             .padding(.bottom, Theme.Spacing.xxl)
         }
         .task(id: viewModel.showCompletion) {
-            guard viewModel.showCompletion, let session = viewModel.currentSession else {
+            guard purchaseManager.isProUser, viewModel.showCompletion, let session = viewModel.currentSession else {
                 shareImage = nil
                 return
             }

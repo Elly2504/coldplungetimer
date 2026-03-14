@@ -8,8 +8,10 @@ import os
 final class WatchConnectivityService: NSObject, WCSessionDelegate {
     private static let logger = Logger(subsystem: "com.icedip.app", category: "Connectivity")
     var streakData = WatchStreakData(currentStreak: 0, bestStreak: 0, sessionsThisWeek: 0, lastSessionDate: nil)
+    var isProUser = false
 
     func activate() {
+        isProUser = UserDefaults.standard.bool(forKey: "isProUser")
         guard WCSession.isSupported() else { return }
         WCSession.default.delegate = self
         WCSession.default.activate()
@@ -41,6 +43,10 @@ final class WatchConnectivityService: NSObject, WCSessionDelegate {
     }
 
     private func decodeStreakData(from context: [String: Any]) {
+        if let proStatus = context["isProUser"] as? Bool {
+            isProUser = proStatus
+            UserDefaults.standard.set(proStatus, forKey: "isProUser")
+        }
         guard let data = context["streakData"] as? Data else { return }
         do {
             streakData = try JSONDecoder().decode(WatchStreakData.self, from: data)

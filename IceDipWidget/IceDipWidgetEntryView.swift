@@ -6,13 +6,17 @@ struct IceDipWidgetEntryView: View {
     @Environment(\.widgetFamily) var family
 
     var body: some View {
-        switch family {
-        case .systemSmall:
-            SmallWidgetView(entry: entry)
-        case .systemMedium:
-            MediumWidgetView(entry: entry)
-        default:
-            SmallWidgetView(entry: entry)
+        if entry.isProUser {
+            switch family {
+            case .systemSmall:
+                SmallWidgetView(entry: entry)
+            case .systemMedium:
+                MediumWidgetView(entry: entry)
+            default:
+                SmallWidgetView(entry: entry)
+            }
+        } else {
+            WidgetUpgradeView()
         }
     }
 }
@@ -117,5 +121,27 @@ struct MediumWidgetView: View {
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("\(entry.currentStreak) day streak, \(entry.sessionsThisWeek) of \(entry.weeklyGoal) sessions this week")
+    }
+}
+
+// MARK: - Upgrade Placeholder
+
+struct WidgetUpgradeView: View {
+    var body: some View {
+        VStack(spacing: 8) {
+            Image(systemName: "snowflake")
+                .font(.title)
+                .foregroundStyle(Theme.Colors.iceBlue)
+            Text("IceDip Pro")
+                .font(.system(.headline, design: .rounded, weight: .bold))
+                .foregroundStyle(Theme.Colors.textPrimary)
+            Text("Upgrade to unlock")
+                .font(.system(.caption, design: .rounded))
+                .foregroundStyle(Theme.Colors.textSecondary)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .containerBackground(for: .widget) {
+            Theme.Colors.background
+        }
     }
 }

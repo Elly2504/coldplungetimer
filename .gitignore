@@ -13,3 +13,10 @@ DerivedData/
 *.ipa
 *.dSYM.zip
 *.dSYM
+
+# Development prompts
+MONETIZATION_SESSION_PROMPT.md
+MONETIZATION_VERIFICATION_PROMPT.md
+
+# StoreKit local cache
+data/

@@ -7,12 +7,14 @@ struct ContentView: View {
     @Environment(HealthKitService.self) private var healthKitService
     @Environment(AmbientSoundService.self) private var ambientSoundService
     @Environment(PhoneConnectivityService.self) private var phoneConnectivityService
+    @Environment(PurchaseManager.self) private var purchaseManager
     @State private var timerViewModel = TimerViewModel()
     @AppStorage(PreferenceKey.hasOnboarded) private var hasOnboarded = false
     @AppStorage("pendingShortcutStart") private var pendingShortcutStart = false
     @State private var selectedTab = 0
     @State private var orphanedSessions: [PlungeSession] = []
     @State private var showOrphanAlert = false
+    @State private var showShortcutPaywall = false
 
     var body: some View {
         if hasOnboarded {
@@ -47,6 +49,9 @@ struct ContentView: View {
                 pendingShortcutStart = false
                 startFromShortcut()
             }
+            .sheet(isPresented: $showShortcutPaywall) {
+                ProPaywallView()
+            }
             .alert("Incomplete Session Found", isPresented: $showOrphanAlert) {
                 Button("Save") { saveOrphanedSessions() }
                 Button("Discard", role: .destructive) { discardOrphanedSessions() }
@@ -65,6 +70,12 @@ struct ContentView: View {
     private func startFromShortcut() {
         guard !timerViewModel.isRunning else { return }
         selectedTab = 0
+
+        // Siri Shortcuts is a Pro feature — show paywall for free users
+        guard purchaseManager.isProUser else {
+            showShortcutPaywall = true
+            return
+        }
 
         let defaults = UserDefaults.standard
         let shortcutDuration = defaults.double(forKey: "pendingShortcutDuration")

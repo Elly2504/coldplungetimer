@@ -25,7 +25,12 @@ final class PhoneConnectivityService: NSObject, WCSessionDelegate {
         )
         do {
             let data = try JSONEncoder().encode(streakData)
-            try WCSession.default.updateApplicationContext(["streakData": data])
+            let isProUser = UserDefaults(suiteName: SharedModelContainer.appGroupIdentifier)?
+                .bool(forKey: PreferenceKey.isProUser) ?? false
+            try WCSession.default.updateApplicationContext([
+                "streakData": data,
+                "isProUser": isProUser
+            ])
         } catch {
             Self.logger.error("Failed to send streak update: \(error, privacy: .public)")
         }

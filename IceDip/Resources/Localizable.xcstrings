@@ -1215,6 +1215,222 @@
         "ja" : { "stringUnit" : { "state" : "translated", "value" : "エクスポートするセッションがありません。" } },
         "tr" : { "stringUnit" : { "state" : "translated", "value" : "Dışa aktarılacak oturum yok." } }
       }
+    },
+    "Upgrade to Pro" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Auf Pro upgraden" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Mejorar a Pro" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Passer à Pro" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "Proにアップグレード" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Pro'ya Yükselt" } }
+      }
+    },
+    "Unlock the full IceDip experience" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Das volle IceDip-Erlebnis freischalten" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Desbloquea la experiencia completa de IceDip" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Débloquez l'expérience IceDip complète" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "IceDipの全機能をアンロック" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Tam IceDip deneyiminin kilidini aç" } }
+      }
+    },
+    "Unlimited History & Charts" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Unbegrenzte Historie & Diagramme" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Historial y gráficos ilimitados" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Historique et graphiques illimités" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "無制限の履歴とチャート" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Sınırsız Geçmiş ve Grafikler" } }
+      }
+    },
+    "Breathing Exercise & Ambient Sounds" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Atemübungen & Umgebungsgeräusche" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Ejercicio de respiración y sonidos ambientales" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Exercice de respiration et sons ambiants" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "呼吸エクササイズ＆環境音" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Nefes Egzersizi ve Ortam Sesleri" } }
+      }
+    },
+    "Apple Watch & Widget" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Apple Watch & Widget" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Apple Watch y widget" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Apple Watch et widget" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "Apple Watch & ウィジェット" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Apple Watch ve Widget" } }
+      }
+    },
+    "Siri Shortcuts & HealthKit" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Siri-Kurzbefehle & HealthKit" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Atajos de Siri y HealthKit" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Raccourcis Siri et HealthKit" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "Siriショートカット＆HealthKit" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Siri Kısayolları ve HealthKit" } }
+      }
+    },
+    "iCloud Sync & CSV Export" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "iCloud-Sync & CSV-Export" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Sincronización iCloud y exportación CSV" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Synchronisation iCloud et export CSV" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "iCloud同期＆CSVエクスポート" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "iCloud Senkronizasyon ve CSV Dışa Aktarma" } }
+      }
+    },
+    "Custom Zones & Themes" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Eigene Zonen & Designs" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Zonas y temas personalizados" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Zones et thèmes personnalisés" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "カスタムゾーンとテーマ" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Özel Bölgeler ve Temalar" } }
+      }
+    },
+    "Monthly" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Monatlich" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Mensual" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Mensuel" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "月額" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Aylık" } }
+      }
+    },
+    "Yearly" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Jährlich" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Anual" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Annuel" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "年額" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Yıllık" } }
+      }
+    },
+    "Save 44%%" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "44 %% sparen" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Ahorra 44 %%" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Économisez 44 %%" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "44%%お得" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "%%44 Tasarruf" } }
+      }
+    },
+    "Subscribe" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Abonnieren" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Suscribirse" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "S'abonner" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "登録する" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Abone Ol" } }
+      }
+    },
+    "Restore Purchases" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Käufe wiederherstellen" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Restaurar compras" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Restaurer les achats" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "購入を復元" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Satın Alımları Geri Yükle" } }
+      }
+    },
+    "Cancel anytime" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Jederzeit kündbar" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Cancela en cualquier momento" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Annulez à tout moment" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "いつでもキャンセル可能" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "İstediğin zaman iptal et" } }
+      }
+    },
+    "Terms of Use" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Nutzungsbedingungen" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Términos de uso" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Conditions d'utilisation" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "利用規約" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Kullanım Koşulları" } }
+      }
+    },
+    "Privacy Policy" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Datenschutzrichtlinie" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Política de privacidad" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Politique de confidentialité" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "プライバシーポリシー" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Gizlilik Politikası" } }
+      }
+    },
+    "Purchase Failed" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Kauf fehlgeschlagen" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Compra fallida" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Achat échoué" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "購入に失敗しました" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Satın Alma Başarısız" } }
+      }
+    },
+    "Could not complete purchase. Please try again." : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Kauf konnte nicht abgeschlossen werden. Bitte versuchen Sie es erneut." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "No se pudo completar la compra. Inténtalo de nuevo." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "L'achat n'a pas pu être finalisé. Veuillez réessayer." } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "購入を完了できませんでした。もう一度お試しください。" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Satın alma tamamlanamadı. Lütfen tekrar deneyin." } }
+      }
+    },
+    "Pro Feature" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Pro-Funktion" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Función Pro" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Fonctionnalité Pro" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "Pro機能" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Pro Özellik" } }
+      }
+    },
+    "Upgrade to unlock" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Upgraden zum Freischalten" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Mejora para desbloquear" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Passez à Pro pour débloquer" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "アップグレードしてアンロック" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Kilidi açmak için yükselt" } }
+      }
+    },
+    "See all history" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Gesamte Historie anzeigen" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Ver todo el historial" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Voir tout l'historique" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "すべての履歴を表示" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Tüm geçmişi gör" } }
+      }
+    },
+    "IceDip Pro" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "IceDip Pro" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "IceDip Pro" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "IceDip Pro" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "IceDip Pro" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "IceDip Pro" } }
+      }
+    },
+    "Pro Active" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Pro Aktiv" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Pro Activo" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Pro Actif" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "Pro有効" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Pro Aktif" } }
+      }
+    },
+    "Manage Subscription" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Abonnement verwalten" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Gestionar suscripción" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Gérer l'abonnement" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "サブスクリプションを管理" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Aboneliği Yönet" } }
+      }
     }
   },
   "version" : "1.0"

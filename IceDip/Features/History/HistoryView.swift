@@ -5,6 +5,20 @@ struct HistoryView: View {
     @Query(sort: \PlungeSession.startTime, order: .reverse)
     private var sessions: [PlungeSession]
     @Environment(\.modelContext) private var modelContext
+    @Environment(PurchaseManager.self) private var purchaseManager
+    @State private var showPaywall = false
+
+    private var visibleSessions: [PlungeSession] {
+        if purchaseManager.isProUser {
+            return sessions
+        }
+        let cutoff = Calendar.current.date(byAdding: .day, value: -7, to: Date()) ?? Date()
+        return sessions.filter { $0.startTime >= cutoff }
+    }
+
+    private var hasHiddenSessions: Bool {
+        !purchaseManager.isProUser && visibleSessions.count < sessions.count
+    }
 
     var body: some View {
         NavigationStack {
@@ -18,20 +32,23 @@ struct HistoryView: View {
                         LazyVStack(spacing: Theme.Spacing.md) {
                             // Chart with period picker
                             ChartView(sessions: sessions)
+                                .proGated(isProUser: purchaseManager.isProUser)
 
                             // Stats summary
                             statsBar
 
                             // Zone distribution
                             ZoneDistributionView(sessions: sessions)
+                                .proGated(isProUser: purchaseManager.isProUser)
 
                             // Mood trend
                             moodTrend
+                                .proGated(isProUser: purchaseManager.isProUser)
 
                             // Session list
                             sectionHeader("Sessions")
 
-                            ForEach(sessions) { session in
+                            ForEach(visibleSessions) { session in
                                 SessionCard(session: session)
                                     .accessibilityElement(children: .combine)
                                     .contextMenu {
@@ -45,14 +62,41 @@ struct HistoryView: View {
                                     }
                                     .transition(.opacity.combined(with: .slide))
                             }
+
+                            // Pro upgrade banner for hidden sessions
+                            if hasHiddenSessions {
+                                Button { showPaywall = true } label: {
+                                    HStack {
+                                        Image(systemName: "lock.fill")
+                                            .foregroundStyle(Theme.Colors.iceBlue)
+                                        Text("See all history")
+                                            .font(Theme.Fonts.body)
+                                            .foregroundStyle(Theme.Colors.iceBlue)
+                                        Spacer()
+                                        Text("Pro")
+                                            .font(Theme.Fonts.caption)
+                                            .foregroundStyle(Theme.Colors.background)
+                                            .padding(.horizontal, Theme.Spacing.sm)
+                                            .padding(.vertical, Theme.Spacing.xs)
+                                            .background(Theme.Colors.iceBlue)
+                                            .clipShape(Capsule())
+                                    }
+                                    .padding(Theme.Spacing.md)
+                                    .background(Theme.Colors.surface)
+                                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                                }
+                            }
                         }
-                        .animation(.default, value: sessions.count)
+                        .animation(.default, value: visibleSessions.count)
                         .padding(.horizontal, Theme.Spacing.md)
                         .padding(.top, Theme.Spacing.sm)
                     }
                 }
             }
             .navigationTitle("History")
+            .sheet(isPresented: $showPaywall) {
+                ProPaywallView()
+            }
         }
     }
 

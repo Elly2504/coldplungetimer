@@ -9,6 +9,7 @@ struct PlungeEntry: TimelineEntry {
     let weeklyGoal: Int
     let lastZone: BenefitZone?
     let lastPlungeDate: Date?
+    let isProUser: Bool
 
     static var placeholder: PlungeEntry {
         PlungeEntry(
@@ -17,7 +18,8 @@ struct PlungeEntry: TimelineEntry {
             sessionsThisWeek: 2,
             weeklyGoal: 3,
             lastZone: .dopamineZone,
-            lastPlungeDate: .now
+            lastPlungeDate: .now,
+            isProUser: true
         )
     }
 
@@ -28,7 +30,8 @@ struct PlungeEntry: TimelineEntry {
             sessionsThisWeek: 0,
             weeklyGoal: 3,
             lastZone: nil,
-            lastPlungeDate: nil
+            lastPlungeDate: nil,
+            isProUser: false
         )
     }
 }
@@ -66,13 +69,17 @@ struct PlungeTimelineProvider: TimelineProvider {
             .integer(forKey: PreferenceKey.weeklyGoalSessions) ?? 0
         let goal = storedGoal > 0 ? storedGoal : 3
 
+        let isProUser = UserDefaults(suiteName: SharedModelContainer.appGroupIdentifier)?
+            .bool(forKey: PreferenceKey.isProUser) ?? false
+
         return PlungeEntry(
             date: .now,
             currentStreak: calc.currentStreak,
             sessionsThisWeek: calc.sessionsThisWeekCount,
             weeklyGoal: goal,
             lastZone: calc.lastCompletedSession?.zone,
-            lastPlungeDate: calc.lastCompletedSession?.startTime
+            lastPlungeDate: calc.lastCompletedSession?.startTime,
+            isProUser: isProUser
         )
     }
 }

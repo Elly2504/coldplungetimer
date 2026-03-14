@@ -22,8 +22,10 @@ struct SettingsView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(NotificationService.self) private var notificationService
     @Environment(HealthKitService.self) private var healthKitService
+    @Environment(PurchaseManager.self) private var purchaseManager
 
     @State private var showDeleteConfirmation = false
+    @State private var showPaywall = false
     @State private var exportURL: URL?
     @State private var showExportSheet = false
     @State private var showNoSessionsAlert = false
@@ -43,12 +45,59 @@ struct SettingsView: View {
                 Theme.Colors.background.ignoresSafeArea()
 
                 List {
+                    // IceDip Pro
+                    Section("IceDip Pro") {
+                        if purchaseManager.isProUser {
+                            HStack {
+                                Image(systemName: "checkmark.seal.fill")
+                                    .foregroundStyle(Theme.Colors.iceBlue)
+                                Text("Pro Active")
+                                    .font(Theme.Fonts.body)
+                                    .foregroundStyle(Theme.Colors.textPrimary)
+                                Spacer()
+                            }
+                            if let url = URL(string: "https://apps.apple.com/account/subscriptions") {
+                                Link("Manage Subscription", destination: url)
+                            }
+                        } else {
+                            Button {
+                                showPaywall = true
+                            } label: {
+                                HStack {
+                                    Image(systemName: "snowflake")
+                                        .foregroundStyle(Theme.Colors.iceBlue)
+                                    Text("Upgrade to Pro")
+                                        .foregroundStyle(Theme.Colors.iceBlue)
+                                    Spacer()
+                                    Image(systemName: "chevron.right")
+                                        .foregroundStyle(Theme.Colors.textSecondary)
+                                }
+                            }
+                            Button {
+                                Task { await purchaseManager.restorePurchases() }
+                            } label: {
+                                Text("Restore Purchases")
+                            }
+                        }
+                    }
+
                     // Appearance
                     Section("Appearance") {
                         Picker("Theme", selection: $colorSchemePreference) {
                             Text("Dark").tag("dark")
-                            Text("Light").tag("light")
-                            Text("System").tag("system")
+                            if purchaseManager.isProUser {
+                                Text("Light").tag("light")
+                                Text("System").tag("system")
+                            } else {
+                                Label("Light", systemImage: "lock.fill").tag("light_locked")
+                                Label("System", systemImage: "lock.fill").tag("system_locked")
+                            }
+                        }
+                        .onChange(of: colorSchemePreference) { _, newValue in
+                            if !purchaseManager.isProUser && (newValue == "light_locked" || newValue == "system_locked") {
+                                colorSchemePreference = "dark"
+                                showPaywall = true
+                            }
                         }
                     }
 
@@ -59,45 +108,68 @@ struct SettingsView: View {
                                 Text(label).tag(value)
                             }
                         }
-                        Toggle("Breathing Exercise", isOn: $breathingEnabled)
+                        proSettingsRow("Breathing Exercise") {
+                            Toggle("Breathing Exercise", isOn: $breathingEnabled)
+                        }
                     }
 
                     // Zone Thresholds
-                    Section("Zone Thresholds") {
-                        zoneThresholdRow(
-                            zone: .adaptation,
-                            value: $zoneThresholds.adaptation,
-                            min: 10,
-                            max: zoneThresholds.dopamineZone - 10
-                        )
-                        zoneThresholdRow(
-                            zone: .dopamineZone,
-                            value: $zoneThresholds.dopamineZone,
-                            min: zoneThresholds.adaptation + 10,
-                            max: zoneThresholds.metabolicBoost - 10
-                        )
-                        zoneThresholdRow(
-                            zone: .metabolicBoost,
-                            value: $zoneThresholds.metabolicBoost,
-                            min: zoneThresholds.dopamineZone + 10,
-                            max: zoneThresholds.deepResilience - 10
-                        )
-                        zoneThresholdRow(
-                            zone: .deepResilience,
-                            value: $zoneThresholds.deepResilience,
-                            min: zoneThresholds.metabolicBoost + 10,
-                            max: 600
-                        )
+                    if purchaseManager.isProUser {
+                        Section("Zone Thresholds") {
+                            zoneThresholdRow(
+                                zone: .adaptation,
+                                value: $zoneThresholds.adaptation,
+                                min: 10,
+                                max: zoneThresholds.dopamineZone - 10
+                            )
+                            zoneThresholdRow(
+                                zone: .dopamineZone,
+                                value: $zoneThresholds.dopamineZone,
+                                min: zoneThresholds.adaptation + 10,
+                                max: zoneThresholds.metabolicBoost - 10
+                            )
+                            zoneThresholdRow(
+                                zone: .metabolicBoost,
+                                value: $zoneThresholds.metabolicBoost,
+                                min: zoneThresholds.dopamineZone + 10,
+                                max: zoneThresholds.deepResilience - 10
+                            )
+                            zoneThresholdRow(
+                                zone: .deepResilience,
+                                value: $zoneThresholds.deepResilience,
+                                min: zoneThresholds.metabolicBoost + 10,
+                                max: 600
+                            )
 
-                        if zoneThresholds != .default {
-                            Button("Reset to Defaults") {
-                                zoneThresholds = .default
+                            if zoneThresholds != .default {
+                                Button("Reset to Defaults") {
+                                    zoneThresholds = .default
+                                }
                             }
                         }
-                    }
-                    .onChange(of: zoneThresholds) { _, newValue in
-                        UserDefaults(suiteName: SharedModelContainer.appGroupIdentifier)?
-                            .set(newValue.rawValue, forKey: PreferenceKey.zoneThresholds)
+                        .onChange(of: zoneThresholds) { _, newValue in
+                            UserDefaults(suiteName: SharedModelContainer.appGroupIdentifier)?
+                                .set(newValue.rawValue, forKey: PreferenceKey.zoneThresholds)
+                        }
+                    } else {
+                        Section {
+                            Button { showPaywall = true } label: {
+                                HStack {
+                                    Image(systemName: "lock.fill")
+                                        .foregroundStyle(Theme.Colors.iceBlue)
+                                    Text("Zone Thresholds")
+                                        .foregroundStyle(Theme.Colors.textPrimary)
+                                    Spacer()
+                                    Text("Pro")
+                                        .font(Theme.Fonts.caption)
+                                        .foregroundStyle(Theme.Colors.background)
+                                        .padding(.horizontal, Theme.Spacing.sm)
+                                        .padding(.vertical, Theme.Spacing.xs)
+                                        .background(Theme.Colors.iceBlue)
+                                        .clipShape(Capsule())
+                                }
+                            }
+                        }
                     }
 
                     // Units
@@ -116,8 +188,10 @@ struct SettingsView: View {
 
                     // Ambient Sound
                     Section("Ambient Sound") {
-                        Toggle("Play During Plunge", isOn: $ambientSoundEnabled)
-                        if ambientSoundEnabled {
+                        proSettingsRow("Ambient Sound") {
+                            Toggle("Play During Plunge", isOn: $ambientSoundEnabled)
+                        }
+                        if ambientSoundEnabled && purchaseManager.isProUser {
                             Picker("Sound", selection: $selectedAmbientSound) {
                                 ForEach(AmbientSound.allCases) { sound in
                                     Text(sound.displayName).tag(sound.rawValue)
@@ -128,21 +202,23 @@ struct SettingsView: View {
 
                     // Notifications
                     Section("Notifications") {
-                        Toggle("Daily Reminder", isOn: $reminderEnabled)
-                            .onChange(of: reminderEnabled) { _, enabled in
-                                if enabled {
-                                    Task { await notificationService.requestPermission() }
-                                    notificationService.scheduleDailyReminder(
-                                        hour: reminderHour,
-                                        minute: reminderMinute,
-                                        soundEnabled: soundEnabled
-                                    )
-                                } else {
-                                    notificationService.cancelDailyReminder()
+                        proSettingsRow("Daily Reminder") {
+                            Toggle("Daily Reminder", isOn: $reminderEnabled)
+                                .onChange(of: reminderEnabled) { _, enabled in
+                                    if enabled {
+                                        Task { await notificationService.requestPermission() }
+                                        notificationService.scheduleDailyReminder(
+                                            hour: reminderHour,
+                                            minute: reminderMinute,
+                                            soundEnabled: soundEnabled
+                                        )
+                                    } else {
+                                        notificationService.cancelDailyReminder()
+                                    }
                                 }
-                            }
+                        }
 
-                        if reminderEnabled {
+                        if reminderEnabled && purchaseManager.isProUser {
                             DatePicker(
                                 "Reminder Time",
                                 selection: reminderDateBinding,
@@ -156,19 +232,21 @@ struct SettingsView: View {
                     // Health
                     if healthKitService.isAvailable {
                         Section("Health") {
-                            Toggle("Save to Apple Health", isOn: $healthKitEnabled)
-                                .onChange(of: healthKitEnabled) { _, enabled in
-                                    if enabled {
-                                        Task {
-                                            await healthKitService.requestAuthorization()
-                                            if !healthKitService.isAuthorized {
-                                                healthKitEnabled = false
+                            proSettingsRow("Health") {
+                                Toggle("Save to Apple Health", isOn: $healthKitEnabled)
+                                    .onChange(of: healthKitEnabled) { _, enabled in
+                                        if enabled {
+                                            Task {
+                                                await healthKitService.requestAuthorization()
+                                                if !healthKitService.isAuthorized {
+                                                    healthKitEnabled = false
+                                                }
                                             }
                                         }
                                     }
-                                }
+                            }
 
-                            if healthKitEnabled && !healthKitService.isAuthorized {
+                            if healthKitEnabled && !healthKitService.isAuthorized && purchaseManager.isProUser {
                                 Text("Open Settings \u{203A} Health \u{203A} IceDip to enable access.")
                                     .font(Theme.Fonts.caption)
                                     .foregroundStyle(Theme.Colors.textSecondary)
@@ -178,23 +256,44 @@ struct SettingsView: View {
 
                     // Goals
                     Section("Weekly Goal") {
-                        Stepper(
-                            "\(weeklyGoalSessions) sessions per week",
-                            value: $weeklyGoalSessions,
-                            in: 1...14
-                        )
-                        .onChange(of: weeklyGoalSessions) { _, newValue in
-                            UserDefaults(suiteName: SharedModelContainer.appGroupIdentifier)?
-                                .set(newValue, forKey: PreferenceKey.weeklyGoalSessions)
+                        proSettingsRow("Weekly Goal") {
+                            Stepper(
+                                "\(weeklyGoalSessions) sessions per week",
+                                value: $weeklyGoalSessions,
+                                in: 1...14
+                            )
+                            .onChange(of: weeklyGoalSessions) { _, newValue in
+                                UserDefaults(suiteName: SharedModelContainer.appGroupIdentifier)?
+                                    .set(newValue, forKey: PreferenceKey.weeklyGoalSessions)
+                            }
                         }
                     }
 
                     // Data
                     Section("Data") {
-                        Button {
-                            exportCSV()
-                        } label: {
-                            Label("Export Sessions", systemImage: "square.and.arrow.up")
+                        if purchaseManager.isProUser {
+                            Button {
+                                exportCSV()
+                            } label: {
+                                Label("Export Sessions", systemImage: "square.and.arrow.up")
+                            }
+                        } else {
+                            Button { showPaywall = true } label: {
+                                HStack {
+                                    Image(systemName: "lock.fill")
+                                        .foregroundStyle(Theme.Colors.iceBlue)
+                                    Label("Export Sessions", systemImage: "square.and.arrow.up")
+                                        .foregroundStyle(Theme.Colors.textPrimary)
+                                    Spacer()
+                                    Text("Pro")
+                                        .font(Theme.Fonts.caption)
+                                        .foregroundStyle(Theme.Colors.background)
+                                        .padding(.horizontal, Theme.Spacing.sm)
+                                        .padding(.vertical, Theme.Spacing.xs)
+                                        .background(Theme.Colors.iceBlue)
+                                        .clipShape(Capsule())
+                                }
+                            }
                         }
 
                         Button("Delete All Data", role: .destructive) {
@@ -231,6 +330,9 @@ struct SettingsView: View {
             }
             .navigationTitle("Settings")
             .tint(Theme.Colors.iceBlue)
+            .sheet(isPresented: $showPaywall) {
+                ProPaywallView()
+            }
             .sheet(isPresented: $showExportSheet) {
                 if let exportURL {
                     ActivityView(items: [exportURL])
@@ -289,9 +391,11 @@ struct SettingsView: View {
         defaults.removeObject(forKey: PreferenceKey.colorSchemePreference)
         defaults.removeObject(forKey: PreferenceKey.zoneThresholds)
 
-        // Clear app group UserDefaults (widget)
-        UserDefaults(suiteName: SharedModelContainer.appGroupIdentifier)?
-            .removePersistentDomain(forName: SharedModelContainer.appGroupIdentifier)
+        // Clear app group UserDefaults (widget) — preserve Pro status
+        let appGroupDefaults = UserDefaults(suiteName: SharedModelContainer.appGroupIdentifier)
+        let proStatus = appGroupDefaults?.bool(forKey: PreferenceKey.isProUser) ?? false
+        appGroupDefaults?.removePersistentDomain(forName: SharedModelContainer.appGroupIdentifier)
+        appGroupDefaults?.set(proStatus, forKey: PreferenceKey.isProUser)
 
         // Re-sync @AppStorage bindings to defaults
         defaultDuration = 120
@@ -326,6 +430,30 @@ struct SettingsView: View {
         if let url = CSVExportService.writeToTemporaryFile(csv: csv) {
             exportURL = url
             showExportSheet = true
+        }
+    }
+
+    @ViewBuilder
+    private func proSettingsRow<Content: View>(_ label: String, @ViewBuilder content: () -> Content) -> some View {
+        if purchaseManager.isProUser {
+            content()
+        } else {
+            Button { showPaywall = true } label: {
+                HStack {
+                    Image(systemName: "lock.fill")
+                        .foregroundStyle(Theme.Colors.iceBlue)
+                    Text(label)
+                        .foregroundStyle(Theme.Colors.textPrimary)
+                    Spacer()
+                    Text("Pro")
+                        .font(Theme.Fonts.caption)
+                        .foregroundStyle(Theme.Colors.background)
+                        .padding(.horizontal, Theme.Spacing.sm)
+                        .padding(.vertical, Theme.Spacing.xs)
+                        .background(Theme.Colors.iceBlue)
+                        .clipShape(Capsule())
+                }
+            }
         }
     }
 

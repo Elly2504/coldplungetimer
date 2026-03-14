@@ -147,6 +147,7 @@ schemes:
         IceDipWidgetExtension: all
     run:
       config: Debug
+      storeKitConfiguration: IceDip/Resources/IceDipProducts.storekit
     archive:
       config: Release
 

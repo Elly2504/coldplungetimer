@@ -16,4 +16,5 @@ enum PreferenceKey {
     static let selectedAmbientSound = "selectedAmbientSound"
     static let colorSchemePreference = "colorSchemePreference"
     static let zoneThresholds = "zoneThresholds"
+    static let isProUser = "isProUser"
 }

@@ -19,7 +19,9 @@ enum SharedModelContainer {
         }
 
         let isExtension = Bundle.main.bundlePath.hasSuffix(".appex")
-        let cloudKit: ModelConfiguration.CloudKitDatabase = isExtension ? .none : .automatic
+        let isProUser = UserDefaults(suiteName: appGroupIdentifier)?
+            .bool(forKey: PreferenceKey.isProUser) ?? false
+        let cloudKit: ModelConfiguration.CloudKitDatabase = (isExtension || !isProUser) ? .none : .automatic
         let config = ModelConfiguration(url: storeURL, cloudKitDatabase: cloudKit)
 
         do {

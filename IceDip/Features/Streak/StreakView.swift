@@ -5,6 +5,7 @@ struct StreakView: View {
     @Query(sort: \PlungeSession.startTime, order: .reverse)
     private var sessions: [PlungeSession]
     @AppStorage(PreferenceKey.weeklyGoalSessions) private var weeklyGoal = 3
+    @Environment(PurchaseManager.self) private var purchaseManager
 
     var body: some View {
         NavigationStack {
@@ -21,6 +22,7 @@ struct StreakView: View {
 
                         // Weekly goal progress
                         weeklyGoalCard
+                            .proGated(isProUser: purchaseManager.isProUser)
 
                         // Best streak
                         bestStreakCard
