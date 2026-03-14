@@ -80,14 +80,12 @@ final class NotificationService {
             .removePendingNotificationRequests(withIdentifiers: ["daily-reminder"])
     }
 
-    func cancelTimerNotifications() {
-        Task {
-            let requests = await UNUserNotificationCenter.current().pendingNotificationRequests()
-            let timerIds = requests
-                .filter { $0.identifier.hasPrefix("timer-complete-") }
-                .map(\.identifier)
-            UNUserNotificationCenter.current()
-                .removePendingNotificationRequests(withIdentifiers: timerIds)
-        }
+    func cancelTimerNotifications() async {
+        let requests = await UNUserNotificationCenter.current().pendingNotificationRequests()
+        let timerIds = requests
+            .filter { $0.identifier.hasPrefix("timer-complete-") }
+            .map(\.identifier)
+        UNUserNotificationCenter.current()
+            .removePendingNotificationRequests(withIdentifiers: timerIds)
     }
 }

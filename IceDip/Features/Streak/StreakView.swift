@@ -81,7 +81,7 @@ struct StreakView: View {
                                         .foregroundStyle(Theme.Colors.background)
                                 }
                             }
-                        Text(dayLabel(for: date))
+                        Text(date.formattedWeekday)
                             .font(.system(size: 10, design: .rounded))
                             .foregroundStyle(Theme.Colors.textSecondary)
                     }
@@ -218,9 +218,4 @@ struct StreakView: View {
         return sessions.contains { $0.isCompleted && $0.startTime >= dayStart && $0.startTime < dayEnd }
     }
 
-    private func dayLabel(for date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "EEE"
-        return String(formatter.string(from: date).prefix(3))
-    }
 }

@@ -94,13 +94,13 @@ final class TimerViewModel {
         startTimer(hapticsEnabled: hapticsEnabled)
     }
 
-    func stop(modelContext: ModelContext, hapticsEnabled: Bool, notificationService: NotificationService) {
+    func stop(modelContext: ModelContext, hapticsEnabled: Bool, notificationService: NotificationService) async {
         timer?.invalidate()
         timer = nil
         isRunning = false
         isPaused = false
 
-        notificationService.cancelTimerNotifications()
+        await notificationService.cancelTimerNotifications()
 
         if let session = currentSession {
             if elapsedSeconds < 5 {
@@ -140,7 +140,7 @@ final class TimerViewModel {
         timer = nil
     }
 
-    func handleForeground(hapticsEnabled: Bool) {
+    func handleForeground(hapticsEnabled: Bool) async {
         guard let backgroundDate, isRunning, !isPaused else { return }
         let elapsed = Date().timeIntervalSince(backgroundDate)
         self.backgroundDate = nil
@@ -155,7 +155,7 @@ final class TimerViewModel {
         }
 
         if isComplete, let ctx = storedModelContext, let ns = storedNotificationService {
-            stop(modelContext: ctx, hapticsEnabled: storedHapticsEnabled, notificationService: ns)
+            await stop(modelContext: ctx, hapticsEnabled: storedHapticsEnabled, notificationService: ns)
         } else if !isComplete {
             startTimer(hapticsEnabled: hapticsEnabled)
         }
@@ -168,12 +168,12 @@ final class TimerViewModel {
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
             Task { @MainActor in
                 guard let self else { return }
-                self.tick(hapticsEnabled: hapticsEnabled)
+                await self.tick(hapticsEnabled: hapticsEnabled)
             }
         }
     }
 
-    private func tick(hapticsEnabled: Bool) {
+    private func tick(hapticsEnabled: Bool) async {
         elapsedSeconds += 1
 
         let newZone = BenefitZone.zone(for: elapsedSeconds)
@@ -192,7 +192,7 @@ final class TimerViewModel {
 
         // Auto-complete when target duration reached
         if isComplete, let ctx = storedModelContext, let ns = storedNotificationService {
-            stop(modelContext: ctx, hapticsEnabled: hapticsEnabled, notificationService: ns)
+            await stop(modelContext: ctx, hapticsEnabled: hapticsEnabled, notificationService: ns)
         }
     }
 }

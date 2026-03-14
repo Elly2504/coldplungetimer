@@ -80,6 +80,12 @@ extension Date {
             f.timeStyle = .short
             return f
         }()
+
+        static let weekday: DateFormatter = {
+            let f = DateFormatter()
+            f.dateFormat = "EEE"
+            return f
+        }()
     }
 
     var formattedShort: String {
@@ -94,6 +100,10 @@ extension Date {
 
     var formattedMedium: String {
         Formatters.medium.string(from: self)
+    }
+
+    var formattedWeekday: String {
+        String(Formatters.weekday.string(from: self).prefix(3))
     }
 }
 

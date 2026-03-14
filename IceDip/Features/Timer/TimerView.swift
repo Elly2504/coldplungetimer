@@ -12,6 +12,7 @@ struct TimerView: View {
     @AppStorage(PreferenceKey.defaultDuration) private var defaultDuration: TimeInterval = 120
     @State private var showStopConfirmation = false
     @State private var celebrationPulse = false
+    @State private var shareImage: UIImage?
 
     private let durationPresets: [(String, TimeInterval)] = [
         ("1m", 60),
@@ -40,7 +41,7 @@ struct TimerView: View {
             if newPhase == .background {
                 viewModel.handleBackground()
             } else if newPhase == .active && oldPhase == .background {
-                viewModel.handleForeground(hapticsEnabled: hapticsEnabled)
+                Task { await viewModel.handleForeground(hapticsEnabled: hapticsEnabled) }
             }
         }
         .onAppear {
@@ -200,11 +201,13 @@ struct TimerView: View {
         }
         .confirmationDialog("End Session?", isPresented: $showStopConfirmation, titleVisibility: .visible) {
             Button("End Session", role: .destructive) {
-                viewModel.stop(
-                    modelContext: modelContext,
-                    hapticsEnabled: hapticsEnabled,
-                    notificationService: notificationService
-                )
+                Task {
+                    await viewModel.stop(
+                        modelContext: modelContext,
+                        hapticsEnabled: hapticsEnabled,
+                        notificationService: notificationService
+                    )
+                }
             }
             Button("Cancel", role: .cancel) { }
         } message: {
@@ -282,23 +285,54 @@ struct TimerView: View {
 
             Spacer()
 
-            Button {
-                if let moodAfter = viewModel.moodAfter {
-                    viewModel.currentSession?.moodAfter = moodAfter
+            HStack(spacing: Theme.Spacing.md) {
+                if let shareImage {
+                    ShareLink(
+                        item: Image(uiImage: shareImage),
+                        preview: SharePreview("My Cold Plunge", image: Image(uiImage: shareImage))
+                    ) {
+                        Label("Share", systemImage: "square.and.arrow.up")
+                            .font(Theme.Fonts.body)
+                            .foregroundStyle(Theme.Colors.iceBlue)
+                            .frame(height: 56)
+                            .padding(.horizontal, Theme.Spacing.lg)
+                            .background(Theme.Colors.surface)
+                            .clipShape(Capsule())
+                    }
                 }
-                if !viewModel.notes.isEmpty {
-                    viewModel.currentSession?.notes = viewModel.notes
+
+                Button {
+                    if let moodAfter = viewModel.moodAfter {
+                        viewModel.currentSession?.moodAfter = moodAfter
+                    }
+                    if !viewModel.notes.isEmpty {
+                        viewModel.currentSession?.notes = viewModel.notes
+                    }
+                    viewModel.reset()
+                } label: {
+                    Text("Done")
+                        .font(Theme.Fonts.headingSmall)
+                        .foregroundStyle(Theme.Colors.background)
+                        .frame(width: 140, height: 56)
+                        .background(Theme.Colors.iceBlue)
+                        .clipShape(Capsule())
                 }
-                viewModel.reset()
-            } label: {
-                Text("Done")
-                    .font(Theme.Fonts.headingSmall)
-                    .foregroundStyle(Theme.Colors.background)
-                    .frame(width: 200, height: 56)
-                    .background(Theme.Colors.iceBlue)
-                    .clipShape(Capsule())
             }
             .padding(.bottom, Theme.Spacing.xxl)
+        }
+        .task(id: viewModel.showCompletion) {
+            guard viewModel.showCompletion, let session = viewModel.currentSession else {
+                shareImage = nil
+                return
+            }
+            let card = ShareCardView(
+                duration: session.durationFormatted,
+                zone: session.zone,
+                date: session.startTime
+            )
+            let renderer = ImageRenderer(content: card)
+            renderer.scale = 3.0
+            shareImage = renderer.uiImage
         }
     }
 
