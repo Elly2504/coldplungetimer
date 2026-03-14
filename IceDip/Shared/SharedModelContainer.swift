@@ -1,20 +1,27 @@
 import SwiftData
 import Foundation
+import os
 
 enum SharedModelContainer {
     static let appGroupIdentifier = "group.com.icedip.app"
 
-    static let container: ModelContainer = {
-        guard let groupURL = FileManager.default
-            .containerURL(forSecurityApplicationGroupIdentifier: appGroupIdentifier) else {
-            fatalError("App Group container '\(appGroupIdentifier)' not found. Check entitlements.")
-        }
-        let url = groupURL.appendingPathComponent("IceDip.store")
+    private static let logger = Logger(subsystem: "com.icedip.app", category: "ModelContainer")
 
-        // Widget extensions don't have iCloud entitlements — use .none for them
+    static let container: ModelContainer = {
+        // Determine store URL: prefer App Group, fall back to documents
+        let storeURL: URL
+        if let groupURL = FileManager.default
+            .containerURL(forSecurityApplicationGroupIdentifier: appGroupIdentifier) {
+            storeURL = groupURL.appendingPathComponent("IceDip.store")
+        } else {
+            logger.error("App Group container not found — falling back to documents directory")
+            storeURL = URL.documentsDirectory.appendingPathComponent("IceDip.store")
+        }
+
         let isExtension = Bundle.main.bundlePath.hasSuffix(".appex")
         let cloudKit: ModelConfiguration.CloudKitDatabase = isExtension ? .none : .automatic
-        let config = ModelConfiguration(url: url, cloudKitDatabase: cloudKit)
+        let config = ModelConfiguration(url: storeURL, cloudKitDatabase: cloudKit)
+
         do {
             return try ModelContainer(
                 for: PlungeSession.self,
@@ -22,7 +29,27 @@ enum SharedModelContainer {
                 configurations: config
             )
         } catch {
-            fatalError("Failed to create ModelContainer: \(error)")
+            logger.error("ModelContainer creation failed: \(error.localizedDescription) — retrying without CloudKit")
+        }
+
+        // Retry without CloudKit
+        let fallbackConfig = ModelConfiguration(url: storeURL, cloudKitDatabase: .none)
+        do {
+            return try ModelContainer(
+                for: PlungeSession.self,
+                migrationPlan: PlungeSessionMigrationPlan.self,
+                configurations: fallbackConfig
+            )
+        } catch {
+            logger.error("ModelContainer fallback failed: \(error.localizedDescription) — using in-memory store")
+        }
+
+        // Last resort: in-memory
+        let inMemoryConfig = ModelConfiguration(isStoredInMemoryOnly: true)
+        do {
+            return try ModelContainer(for: PlungeSession.self, configurations: inMemoryConfig)
+        } catch {
+            fatalError("Cannot create even an in-memory ModelContainer: \(error)")
         }
     }()
 }

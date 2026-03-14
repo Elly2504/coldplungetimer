@@ -7,6 +7,8 @@ struct ContentView: View {
     @Environment(HealthKitService.self) private var healthKitService
     @State private var timerViewModel = TimerViewModel()
     @AppStorage(PreferenceKey.hasOnboarded) private var hasOnboarded = false
+    @State private var orphanedSessions: [PlungeSession] = []
+    @State private var showOrphanAlert = false
 
     var body: some View {
         if hasOnboarded {
@@ -25,22 +27,47 @@ struct ContentView: View {
             .task {
                 await notificationService.requestPermission()
                 healthKitService.checkAuthorizationStatus()
-                cleanupOrphanedSessions()
+                checkForOrphanedSessions()
+            }
+            .alert("Incomplete Session Found", isPresented: $showOrphanAlert) {
+                Button("Save") { saveOrphanedSessions() }
+                Button("Discard", role: .destructive) { discardOrphanedSessions() }
+            } message: {
+                if orphanedSessions.count == 1 {
+                    Text("An incomplete session was found. Would you like to save it or discard it?")
+                } else {
+                    Text("\(orphanedSessions.count) incomplete sessions were found. Would you like to save them or discard them?")
+                }
             }
         } else {
             OnboardingView()
         }
     }
 
-    private func cleanupOrphanedSessions() {
+    private func checkForOrphanedSessions() {
         let cutoff = Date(timeIntervalSinceNow: -3600)
         let descriptor = FetchDescriptor<PlungeSession>(
             predicate: #Predicate { !$0.isCompleted && $0.startTime < cutoff }
         )
-        if let orphans = try? modelContext.fetch(descriptor) {
-            for session in orphans {
-                modelContext.delete(session)
-            }
+        if let orphans = try? modelContext.fetch(descriptor), !orphans.isEmpty {
+            orphanedSessions = orphans
+            showOrphanAlert = true
         }
+    }
+
+    private func saveOrphanedSessions() {
+        for session in orphanedSessions {
+            session.endTime = session.startTime.addingTimeInterval(session.targetDuration)
+            session.benefitZoneReached = BenefitZone.zone(for: session.targetDuration).rawValue
+            session.isCompleted = true
+        }
+        orphanedSessions = []
+    }
+
+    private func discardOrphanedSessions() {
+        for session in orphanedSessions {
+            modelContext.delete(session)
+        }
+        orphanedSessions = []
     }
 }

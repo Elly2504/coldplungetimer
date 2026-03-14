@@ -16,6 +16,7 @@ final class TimerViewModel {
     var currentZone: BenefitZone = .coldShock
     var showCompletion = false
     var showBreathing = false
+    var healthKitSaveError: String?
 
     // Pre/post plunge inputs
     var waterTemp: Double = 5.0
@@ -179,7 +180,11 @@ final class TimerViewModel {
                 let startDate = session.startTime
                 let waterTemp = session.waterTemp
                 Task {
-                    await hks.saveWorkout(startDate: startDate, endDate: endTime, waterTempCelsius: waterTemp)
+                    do {
+                        try await hks.saveWorkout(startDate: startDate, endDate: endTime, waterTempCelsius: waterTemp)
+                    } catch {
+                        self.healthKitSaveError = error.localizedDescription
+                    }
                 }
             }
 

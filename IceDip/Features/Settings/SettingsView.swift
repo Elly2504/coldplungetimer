@@ -15,9 +15,13 @@ struct SettingsView: View {
     @AppStorage(PreferenceKey.selectedAmbientSound) private var selectedAmbientSound = "ocean"
     @AppStorage(PreferenceKey.colorSchemePreference) private var colorSchemePreference = "dark"
     @AppStorage(PreferenceKey.zoneThresholds) private var zoneThresholds = ZoneThresholds.default
+    @AppStorage(PreferenceKey.hasOnboarded) private var hasOnboarded = false
 
+    @Environment(\.modelContext) private var modelContext
     @Environment(NotificationService.self) private var notificationService
     @Environment(HealthKitService.self) private var healthKitService
+
+    @State private var showDeleteConfirmation = false
 
     private let durationOptions: [(String, TimeInterval)] = [
         ("30 seconds", 30),
@@ -180,6 +184,13 @@ struct SettingsView: View {
                         }
                     }
 
+                    // Data
+                    Section("Data") {
+                        Button("Delete All Data", role: .destructive) {
+                            showDeleteConfirmation = true
+                        }
+                    }
+
                     // About
                     Section("About") {
                         HStack {
@@ -188,9 +199,24 @@ struct SettingsView: View {
                             Text(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0")
                                 .foregroundStyle(Theme.Colors.textSecondary)
                         }
+                        Button("Show Tutorial") {
+                            hasOnboarded = false
+                        }
                     }
                 }
                 .scrollContentBackground(.hidden)
+                .confirmationDialog(
+                    "Delete All Data?",
+                    isPresented: $showDeleteConfirmation,
+                    titleVisibility: .visible
+                ) {
+                    Button("Delete Everything", role: .destructive) {
+                        deleteAllData()
+                    }
+                    Button("Cancel", role: .cancel) { }
+                } message: {
+                    Text("This will permanently delete all sessions and reset all settings. This cannot be undone.")
+                }
             }
             .navigationTitle("Settings")
             .tint(Theme.Colors.iceBlue)
@@ -217,6 +243,55 @@ struct SettingsView: View {
         guard reminderEnabled else { return }
         notificationService.cancelDailyReminder()
         notificationService.scheduleDailyReminder(hour: reminderHour, minute: reminderMinute, soundEnabled: soundEnabled)
+    }
+
+    private func deleteAllData() {
+        // Delete all SwiftData sessions
+        do {
+            try modelContext.delete(model: PlungeSession.self)
+        } catch {
+            // Best-effort deletion
+        }
+
+        // Reset AppStorage keys (not hasOnboarded — user already knows the app)
+        let defaults = UserDefaults.standard
+        defaults.removeObject(forKey: PreferenceKey.defaultDuration)
+        defaults.removeObject(forKey: PreferenceKey.tempUnit)
+        defaults.removeObject(forKey: PreferenceKey.hapticsEnabled)
+        defaults.removeObject(forKey: PreferenceKey.soundEnabled)
+        defaults.removeObject(forKey: PreferenceKey.reminderEnabled)
+        defaults.removeObject(forKey: PreferenceKey.reminderHour)
+        defaults.removeObject(forKey: PreferenceKey.reminderMinute)
+        defaults.removeObject(forKey: PreferenceKey.weeklyGoalSessions)
+        defaults.removeObject(forKey: PreferenceKey.breathingEnabled)
+        defaults.removeObject(forKey: PreferenceKey.healthKitEnabled)
+        defaults.removeObject(forKey: PreferenceKey.ambientSoundEnabled)
+        defaults.removeObject(forKey: PreferenceKey.selectedAmbientSound)
+        defaults.removeObject(forKey: PreferenceKey.colorSchemePreference)
+        defaults.removeObject(forKey: PreferenceKey.zoneThresholds)
+
+        // Clear app group UserDefaults (widget)
+        UserDefaults(suiteName: SharedModelContainer.appGroupIdentifier)?
+            .removePersistentDomain(forName: SharedModelContainer.appGroupIdentifier)
+
+        // Re-sync @AppStorage bindings to defaults
+        defaultDuration = 120
+        tempUnit = "celsius"
+        hapticsEnabled = true
+        soundEnabled = true
+        reminderEnabled = false
+        reminderHour = 7
+        reminderMinute = 0
+        weeklyGoalSessions = 3
+        breathingEnabled = true
+        healthKitEnabled = false
+        ambientSoundEnabled = false
+        selectedAmbientSound = "ocean"
+        colorSchemePreference = "dark"
+        zoneThresholds = .default
+
+        // Cancel scheduled notifications
+        notificationService.cancelDailyReminder()
     }
 
     private func zoneThresholdRow(zone: BenefitZone, value: Binding<TimeInterval>, min: TimeInterval, max: TimeInterval) -> some View {

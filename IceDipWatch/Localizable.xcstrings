@@ -3,72 +3,92 @@
   "strings" : {
     "START" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "BAŞLA" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "START" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "INICIAR" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "DÉMARRER" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "スタート" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "BAŞLA" } }
       }
     },
     "Complete!" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Tamamlandı!" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Geschafft!" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "¡Completado!" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Terminé !" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "完了！" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Tamamlandı!" } }
       }
     },
     "Done" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Bitti" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Fertig" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Hecho" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Terminé" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "完了" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Bitti" } }
       }
     },
     "Day Streak" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Günlük Seri" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Tage-Serie" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Racha de días" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Jours consécutifs" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "日連続" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Günlük Seri" } }
       }
     },
     "Best" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "En İyi" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Beste" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Mejor" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Meilleur" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "最高" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "En İyi" } }
       }
     },
     "This Week" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Bu Hafta" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Diese Woche" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Esta semana" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Cette semaine" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "今週" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Bu Hafta" } }
       }
     },
     "1m" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "1dk" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "1 Min" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "1m" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "1 min" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "1分" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "1dk" } }
       }
     },
     "2m" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "2dk" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "2 Min" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "2m" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "2 min" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "2分" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "2dk" } }
       }
     },
     "3m" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "3dk" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "3 Min" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "3m" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "3 min" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "3分" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "3dk" } }
       }
     },
     "5m" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "5dk" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "5 Min" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "5m" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "5 min" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "5分" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "5dk" } }
       }
     }
   },

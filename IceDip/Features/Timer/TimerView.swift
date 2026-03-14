@@ -21,6 +21,8 @@ struct TimerView: View {
     @State private var showStopConfirmation = false
     @State private var celebrationPulse = false
     @State private var shareImage: UIImage?
+    @State private var showHealthKitError = false
+    @State private var showAudioError = false
 
     private let durationPresets: [(String, TimeInterval)] = [
         ("1m", 60),
@@ -62,6 +64,26 @@ struct TimerView: View {
         }
         .onChange(of: viewModel.showCompletion) { _, show in
             celebrationPulse = show
+        }
+        .onChange(of: viewModel.healthKitSaveError) { _, error in
+            if error != nil { showHealthKitError = true }
+        }
+        .alert("Health Save Failed", isPresented: $showHealthKitError) {
+            Button("OK", role: .cancel) {
+                viewModel.healthKitSaveError = nil
+            }
+        } message: {
+            Text(viewModel.healthKitSaveError ?? "Could not save workout to Apple Health.")
+        }
+        .onChange(of: ambientSoundService.playbackFailed) { _, failed in
+            if failed { showAudioError = true }
+        }
+        .alert("Audio Unavailable", isPresented: $showAudioError) {
+            Button("OK", role: .cancel) {
+                ambientSoundService.playbackFailed = false
+            }
+        } message: {
+            Text("The ambient sound file could not be loaded.")
         }
     }
 

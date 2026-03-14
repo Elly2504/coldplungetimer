@@ -3,772 +3,1136 @@
   "strings" : {
     "Cold Shock" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Soğuk Şoku" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Kälteschock" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Shock de frío" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Choc thermique" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "コールドショック" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Soğuk Şoku" } }
       }
     },
     "Adaptation" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Adaptasyon" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Anpassung" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Adaptación" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Adaptation" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "適応" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Adaptasyon" } }
       }
     },
     "Dopamine Zone" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Dopamin Bölgesi" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Dopamin-Zone" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Zona de dopamina" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Zone dopamine" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ドーパミンゾーン" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Dopamin Bölgesi" } }
       }
     },
     "Metabolic Boost" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Metabolik Artış" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Stoffwechsel-Boost" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Impulso metabólico" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Boost métabolique" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "代謝ブースト" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Metabolik Artış" } }
       }
     },
     "Deep Resilience" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Derin Dayanıklılık" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Tiefe Resilienz" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Resiliencia profunda" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Résilience profonde" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ディープレジリエンス" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Derin Dayanıklılık" } }
       }
     },
     "Adrenaline spike, fight-or-flight response activating" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Adrenalin yükselişi, savaş ya da kaç tepkisi aktif" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Adrenalinstoß, Kampf-oder-Flucht-Reaktion wird aktiviert" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Pico de adrenalina, respuesta de lucha o huida activándose" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Pic d'adrénaline, réponse combat-fuite en activation" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "アドレナリン急上昇、闘争・逃走反応が作動中" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Adrenalin yükselişi, savaş ya da kaç tepkisi aktif" } }
       }
     },
     "Body adjusting, norepinephrine rising" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Vücut uyum sağlıyor, norepinefrin yükseliyor" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Körper passt sich an, Noradrenalin steigt" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Cuerpo adaptándose, norepinefrina en aumento" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Corps en adaptation, noradrénaline en hausse" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "身体が適応中、ノルエピネフリン上昇" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Vücut uyum sağlıyor, norepinefrin yükseliyor" } }
       }
     },
     "Dopamine +250%, norepinephrine +530%" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Dopamin +%250, norepinefrin +%530" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Dopamin +250 %, Noradrenalin +530 %" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Dopamina +250 %, norepinefrina +530 %" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Dopamine +250 %, noradrénaline +530 %" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ドーパミン+250%、ノルエピネフリン+530%" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Dopamin +%250, norepinefrin +%530" } }
       }
     },
     "Brown fat activation, doubled metabolic rate" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Kahverengi yağ aktivasyonu, iki kat metabolizma hızı" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Braunes Fett aktiviert, doppelte Stoffwechselrate" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Activación de grasa parda, tasa metabólica duplicada" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Activation graisse brune, métabolisme doublé" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "褐色脂肪活性化、代謝率2倍" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Kahverengi yağ aktivasyonu, iki kat metabolizma hızı" } }
       }
     },
     "Cellular cleanup, autophagy activation" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Hücresel temizlik, otofaji aktivasyonu" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Zelluläre Reinigung, Autophagie aktiviert" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Limpieza celular, activación de autofagia" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Nettoyage cellulaire, activation de l'autophagie" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "細胞クリーンアップ、オートファジー活性化" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Hücresel temizlik, otofaji aktivasyonu" } }
       }
     },
     "Breathe In" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Nefes Al" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Einatmen" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Inhalar" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Inspirez" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "吸って" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Nefes Al" } }
       }
     },
     "Hold" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Tut" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Halten" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Mantener" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Retenez" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "止めて" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Tut" } }
       }
     },
     "Breathe Out" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Nefes Ver" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Ausatmen" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Exhalar" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Expirez" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "吐いて" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Nefes Ver" } }
       }
     },
     "Ocean Waves" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Okyanus Dalgaları" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Meereswellen" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Olas del mar" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Vagues de l'océan" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "波の音" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Okyanus Dalgaları" } }
       }
     },
     "Rain" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Yağmur" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Regen" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Lluvia" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Pluie" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "雨" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Yağmur" } }
       }
     },
     "Today" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Bugün" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Heute" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Hoy" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Aujourd'hui" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "今日" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Bugün" } }
       }
     },
     "Yesterday" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Dün" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Gestern" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Ayer" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Hier" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "昨日" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Dün" } }
       }
     },
     "Timer" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Zamanlayıcı" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Timer" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Temporizador" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Minuteur" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "タイマー" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Zamanlayıcı" } }
       }
     },
     "History" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Geçmiş" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Verlauf" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Historial" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Historique" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "履歴" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Geçmiş" } }
       }
     },
     "Streak" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Seri" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Serie" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Racha" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Série" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "連続記録" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Seri" } }
       }
     },
     "Settings" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Ayarlar" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Einstellungen" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Ajustes" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Réglages" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "設定" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Ayarlar" } }
       }
     },
     "START" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "BAŞLA" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "START" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "INICIAR" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "DÉMARRER" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "スタート" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "BAŞLA" } }
       }
     },
     "Done" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Bitti" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Fertig" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Hecho" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Terminé" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "完了" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Bitti" } }
       }
     },
     "Plunge Complete!" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Dalış Tamamlandı!" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Eisbad abgeschlossen!" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "¡Inmersión completada!" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Immersion terminée !" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "プランジ完了！" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Dalış Tamamlandı!" } }
       }
     },
     "End Session?" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Oturumu Bitir?" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Sitzung beenden?" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "¿Terminar sesión?" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Terminer la séance ?" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "セッションを終了しますか？" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Oturumu Bitir?" } }
       }
     },
     "End Session" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Oturumu Bitir" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Sitzung beenden" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Terminar sesión" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Terminer la séance" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "セッションを終了" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Oturumu Bitir" } }
       }
     },
     "Cancel" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "İptal" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Abbrechen" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Cancelar" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Annuler" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "キャンセル" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "İptal" } }
       }
     },
     "Your session will be saved with the current duration." : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Oturumunuz mevcut süreyle kaydedilecek." }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Ihre Sitzung wird mit der aktuellen Dauer gespeichert." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Tu sesión se guardará con la duración actual." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Votre séance sera enregistrée avec la durée actuelle." } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "現在の時間でセッションが保存されます。" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Oturumunuz mevcut süreyle kaydedilecek." } }
       }
     },
     "Duration" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Süre" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Dauer" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Duración" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Durée" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "時間" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Süre" } }
       }
     },
     "Zone Reached" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Ulaşılan Bölge" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Erreichte Zone" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Zona alcanzada" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Zone atteinte" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "到達ゾーン" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Ulaşılan Bölge" } }
       }
     },
     "Water Temp" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Su Sıcaklığı" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Wassertemp." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Temp. del agua" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Temp. eau" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "水温" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Su Sıcaklığı" } }
       }
     },
     "How do you feel?" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Nasıl hissediyorsun?" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Wie fühlst du dich?" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "¿Cómo te sientes?" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Comment vous sentez-vous ?" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "気分はどうですか？" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Nasıl hissediyorsun?" } }
       }
     },
     "How do you feel now?" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Şimdi nasıl hissediyorsun?" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Wie fühlst du dich jetzt?" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "¿Cómo te sientes ahora?" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Comment vous sentez-vous maintenant ?" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "今の気分は？" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Şimdi nasıl hissediyorsun?" } }
       }
     },
     "Add a note..." : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Not ekle..." }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Notiz hinzufügen …" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Añadir una nota…" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Ajouter une note…" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "メモを追加…" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Not ekle..." } }
       }
     },
     "Share" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Paylaş" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Teilen" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Compartir" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Partager" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "共有" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Paylaş" } }
       }
     },
     "My Cold Plunge" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Soğuk Dalışım" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Mein Eisbad" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Mi inmersión fría" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Mon bain froid" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "マイコールドプランジ" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Soğuk Dalışım" } }
       }
     },
     "Water Temperature" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Su Sıcaklığı" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Wassertemperatur" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Temperatura del agua" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Température de l'eau" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "水温" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Su Sıcaklığı" } }
       }
     },
     "Cold Plunge Complete" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Soğuk Dalış Tamamlandı" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Eisbad abgeschlossen" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Inmersión fría completada" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Bain froid terminé" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "コールドプランジ完了" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Soğuk Dalış Tamamlandı" } }
       }
     },
     "IceDip" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "IceDip" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "IceDip" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "IceDip" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "IceDip" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "IceDip" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "IceDip" } }
       }
     },
     "Prepare Your Breath" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Nefesini Hazırla" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Bereite deinen Atem vor" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Prepara tu respiración" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Préparez votre respiration" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "呼吸を整えましょう" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Nefesini Hazırla" } }
       }
     },
     "Cycle %lld of %lld" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Döngü %lld / %lld" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Zyklus %lld von %lld" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Ciclo %lld de %lld" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Cycle %lld sur %lld" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "サイクル %lld / %lld" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Döngü %lld / %lld" } }
       }
     },
     "Skip" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Atla" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Überspringen" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Omitir" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Passer" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "スキップ" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Atla" } }
       }
     },
     "Appearance" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Görünüm" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Erscheinungsbild" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Apariencia" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Apparence" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "外観" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Görünüm" } }
       }
     },
     "Theme" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Tema" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Design" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Tema" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Thème" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "テーマ" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Tema" } }
       }
     },
     "Dark" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Koyu" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Dunkel" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Oscuro" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Sombre" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ダーク" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Koyu" } }
       }
     },
     "Light" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Açık" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Hell" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Claro" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Clair" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ライト" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Açık" } }
       }
     },
     "System" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Sistem" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "System" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Sistema" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Système" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "システム" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Sistem" } }
       }
     },
     "Default Duration" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Varsayılan Süre" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Standarddauer" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Duración predeterminada" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Durée par défaut" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "デフォルト時間" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Varsayılan Süre" } }
       }
     },
     "30 seconds" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "30 saniye" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "30 Sekunden" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "30 segundos" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "30 secondes" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "30秒" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "30 saniye" } }
       }
     },
     "1 minute" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "1 dakika" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "1 Minute" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "1 minuto" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "1 minute" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "1分" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "1 dakika" } }
       }
     },
     "2 minutes" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "2 dakika" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "2 Minuten" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "2 minutos" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "2 minutes" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "2分" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "2 dakika" } }
       }
     },
     "3 minutes" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "3 dakika" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "3 Minuten" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "3 minutos" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "3 minutes" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "3分" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "3 dakika" } }
       }
     },
     "5 minutes" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "5 dakika" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "5 Minuten" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "5 minutos" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "5 minutes" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "5分" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "5 dakika" } }
       }
     },
     "10 minutes" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "10 dakika" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "10 Minuten" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "10 minutos" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "10 minutes" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "10分" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "10 dakika" } }
       }
     },
     "Breathing Exercise" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Nefes Egzersizi" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Atemübung" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Ejercicio de respiración" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Exercice de respiration" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "呼吸エクササイズ" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Nefes Egzersizi" } }
       }
     },
     "Zone Thresholds" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Bölge Eşikleri" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Zonen-Schwellenwerte" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Umbrales de zona" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Seuils de zone" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ゾーンしきい値" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Bölge Eşikleri" } }
       }
     },
     "Reset to Defaults" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Varsayılanlara Sıfırla" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Auf Standard zurücksetzen" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Restablecer valores" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Réinitialiser" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "デフォルトに戻す" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Varsayılanlara Sıfırla" } }
       }
     },
     "Units" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Birimler" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Einheiten" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Unidades" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Unités" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "単位" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Birimler" } }
       }
     },
     "Temperature" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Sıcaklık" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Temperatur" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Temperatura" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Température" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "温度" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Sıcaklık" } }
       }
     },
     "Celsius (°C)" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Santigrat (°C)" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Celsius (°C)" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Celsius (°C)" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Celsius (°C)" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "摂氏 (°C)" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Santigrat (°C)" } }
       }
     },
     "Fahrenheit (°F)" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Fahrenheit (°F)" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Fahrenheit (°F)" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Fahrenheit (°F)" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Fahrenheit (°F)" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "華氏 (°F)" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Fahrenheit (°F)" } }
       }
     },
     "Feedback" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Geri Bildirim" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Rückmeldung" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Comentarios" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Retour" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "フィードバック" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Geri Bildirim" } }
       }
     },
     "Haptic Feedback" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Dokunsal Geri Bildirim" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Haptisches Feedback" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Vibración háptica" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Retour haptique" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "触覚フィードバック" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Dokunsal Geri Bildirim" } }
       }
     },
     "Sound Effects" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Ses Efektleri" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Soundeffekte" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Efectos de sonido" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Effets sonores" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "サウンドエフェクト" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Ses Efektleri" } }
       }
     },
     "Ambient Sound" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Ortam Sesi" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Umgebungsgeräusch" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Sonido ambiental" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Son ambiant" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "環境音" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Ortam Sesi" } }
       }
     },
     "Play During Plunge" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Dalış Sırasında Çal" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Während Eisbad abspielen" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Reproducir durante inmersión" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Jouer pendant l'immersion" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "プランジ中に再生" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Dalış Sırasında Çal" } }
       }
     },
     "Sound" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Ses" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Ton" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Sonido" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Son" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "サウンド" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Ses" } }
       }
     },
     "Notifications" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Bildirimler" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Mitteilungen" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Notificaciones" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Notifications" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "通知" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Bildirimler" } }
       }
     },
     "Daily Reminder" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Günlük Hatırlatıcı" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Tägliche Erinnerung" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Recordatorio diario" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Rappel quotidien" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "毎日のリマインダー" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Günlük Hatırlatıcı" } }
       }
     },
     "Reminder Time" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Hatırlatma Saati" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Erinnerungszeit" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Hora del recordatorio" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Heure du rappel" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "リマインダー時刻" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Hatırlatma Saati" } }
       }
     },
     "Health" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Sağlık" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Gesundheit" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Salud" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Santé" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ヘルスケア" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Sağlık" } }
       }
     },
     "Save to Apple Health" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Apple Health'e Kaydet" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "In Apple Health speichern" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Guardar en Apple Salud" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Enregistrer dans Apple Santé" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "Apple Healthに保存" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Apple Health'e Kaydet" } }
       }
     },
     "Open Settings › Health › IceDip to enable access." : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Erişimi etkinleştirmek için Ayarlar › Sağlık › IceDip'i açın." }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Öffne Einstellungen › Gesundheit › IceDip, um den Zugriff zu aktivieren." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Abre Ajustes › Salud › IceDip para habilitar el acceso." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Ouvrez Réglages › Santé › IceDip pour activer l'accès." } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "設定 › ヘルスケア › IceDip でアクセスを有効にしてください。" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Erişimi etkinleştirmek için Ayarlar › Sağlık › IceDip'i açın." } }
       }
     },
     "Weekly Goal" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Haftalık Hedef" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Wochenziel" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Objetivo semanal" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Objectif hebdomadaire" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "週間目標" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Haftalık Hedef" } }
       }
     },
     "%lld sessions per week" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Haftada %lld oturum" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "%lld Sitzungen pro Woche" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "%lld sesiones por semana" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "%lld séances par semaine" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "週%lld回" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Haftada %lld oturum" } }
       }
     },
     "About" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Hakkında" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Über" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Acerca de" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "À propos" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "アプリについて" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Hakkında" } }
       }
     },
     "Version" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Sürüm" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Version" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Versión" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Version" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "バージョン" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Sürüm" } }
       }
     },
     "Welcome to IceDip" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "IceDip'e Hoş Geldiniz" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Willkommen bei IceDip" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Bienvenido a IceDip" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Bienvenue sur IceDip" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "IceDipへようこそ" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "IceDip'e Hoş Geldiniz" } }
       }
     },
     "Track your cold plunge sessions and build resilience through consistent cold exposure." : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Soğuk dalış seanslarınızı takip edin ve düzenli soğuk maruziyetiyle dayanıklılık kazanın." }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Verfolge deine Eisbad-Sitzungen und baue Widerstandskraft durch regelmäßige Kälteexposition auf." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Registra tus sesiones de inmersión fría y desarrolla resiliencia con exposición constante al frío." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Suivez vos séances de bain froid et développez votre résilience grâce à une exposition régulière au froid." } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "コールドプランジのセッションを記録し、継続的な冷水浴でレジリエンスを高めましょう。" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Soğuk dalış seanslarınızı takip edin ve düzenli soğuk maruziyetiyle dayanıklılık kazanın." } }
       }
     },
     "Science-Backed Zones" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Bilimsel Bölgeler" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Wissenschaftlich fundierte Zonen" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Zonas respaldadas por la ciencia" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Zones validées scientifiquement" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "科学に基づくゾーン" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Bilimsel Bölgeler" } }
       }
     },
     "See real-time benefit zones as you progress through your plunge — from cold shock to deep resilience." : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Dalışınız boyunca gerçek zamanlı fayda bölgelerini görün — soğuk şokundan derin dayanıklılığa." }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Sieh die Nutzenzonen in Echtzeit während deines Eisbads — vom Kälteschock bis zur tiefen Resilienz." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Observa las zonas de beneficio en tiempo real durante tu inmersión — del shock de frío a la resiliencia profunda." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Visualisez les zones de bénéfices en temps réel pendant votre immersion — du choc thermique à la résilience profonde." } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "プランジの進行に合わせてリアルタイムで効果ゾーンを確認 — コールドショックからディープレジリエンスまで。" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Dalışınız boyunca gerçek zamanlı fayda bölgelerini görün — soğuk şokundan derin dayanıklılığa." } }
       }
     },
     "Build Your Streak" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Serinizi Oluşturun" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Baue deine Serie auf" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Construye tu racha" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Construisez votre série" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "連続記録を作ろう" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Serinizi Oluşturun" } }
       }
     },
     "Track your consistency, set weekly goals, and watch your cold tolerance grow over time." : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Tutarlılığınızı takip edin, haftalık hedefler belirleyin ve soğuk toleransınızın zamanla artışını izleyin." }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Verfolge deine Regelmäßigkeit, setze Wochenziele und beobachte, wie deine Kältetoleranz mit der Zeit wächst." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Registra tu constancia, establece metas semanales y observa cómo crece tu tolerancia al frío." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Suivez votre régularité, fixez des objectifs hebdomadaires et observez votre tolérance au froid progresser." } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "継続性を追跡し、週間目標を設定して、冷水耐性の成長を見守りましょう。" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Tutarlılığınızı takip edin, haftalık hedefler belirleyin ve soğuk toleransınızın zamanla artışını izleyin." } }
       }
     },
     "Get Started" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Başla" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Los geht's" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Comenzar" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Commencer" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "はじめる" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Başla" } }
       }
     },
     "No sessions yet" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Henüz oturum yok" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Noch keine Sitzungen" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Aún no hay sesiones" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Aucune séance pour le moment" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "まだセッションがありません" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Henüz oturum yok" } }
       }
     },
     "Complete your first cold plunge to see it here" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "İlk soğuk dalışınızı tamamlayın ve burada görün" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Schließe dein erstes Eisbad ab, um es hier zu sehen" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Completa tu primera inmersión fría para verla aquí" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Terminez votre premier bain froid pour le voir ici" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "最初のコールドプランジを完了するとここに表示されます" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "İlk soğuk dalışınızı tamamlayın ve burada görün" } }
       }
     },
     "Sessions" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Oturumlar" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Sitzungen" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Sesiones" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Séances" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "セッション" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Oturumlar" } }
       }
     },
     "Total" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Toplam" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Gesamt" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Total" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Total" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "合計" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Toplam" } }
       }
     },
     "Average" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Ortalama" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Durchschnitt" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Promedio" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Moyenne" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "平均" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Ortalama" } }
       }
     },
     "Mood Impact" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Ruh Hali Etkisi" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Stimmungseffekt" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Impacto en el ánimo" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Impact sur l'humeur" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "気分への影響" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Ruh Hali Etkisi" } }
       }
     },
     "Before" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Önce" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Vorher" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Antes" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Avant" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "前" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Önce" } }
       }
     },
     "After" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Sonra" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Nachher" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Después" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Après" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "後" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Sonra" } }
       }
     },
     "Change" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Değişim" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Änderung" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Cambio" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Changement" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "変化" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Değişim" } }
       }
     },
     "Delete Session" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Oturumu Sil" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Sitzung löschen" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Eliminar sesión" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Supprimer la séance" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "セッションを削除" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Oturumu Sil" } }
       }
     },
     "Zone Distribution" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Bölge Dağılımı" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Zonenverteilung" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Distribución por zonas" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Répartition par zone" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ゾーン分布" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Bölge Dağılımı" } }
       }
     },
     "Complete sessions to see zone data" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Bölge verilerini görmek için oturumları tamamlayın" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Schließe Sitzungen ab, um Zonendaten zu sehen" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Completa sesiones para ver datos de zonas" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Terminez des séances pour voir les données par zone" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ゾーンデータを表示するにはセッションを完了してください" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Bölge verilerini görmek için oturumları tamamlayın" } }
       }
     },
     "Day Streak" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Günlük Seri" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Tage-Serie" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Racha de días" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Jours consécutifs" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "日連続" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Günlük Seri" } }
       }
     },
     "Last 7 Days" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Son 7 Gün" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Letzte 7 Tage" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Últimos 7 días" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "7 derniers jours" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "過去7日間" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Son 7 Gün" } }
       }
     },
     "Goal reached!" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Hedefe ulaşıldı!" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Ziel erreicht!" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "¡Objetivo alcanzado!" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Objectif atteint !" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "目標達成！" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Hedefe ulaşıldı!" } }
       }
     },
     "Best Streak" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "En İyi Seri" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Beste Serie" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Mejor racha" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Meilleure série" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "最高連続記録" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "En İyi Seri" } }
       }
     },
     "%lld days" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "%lld gün" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "%lld Tage" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "%lld días" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "%lld jours" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "%lld日" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "%lld gün" } }
       }
     },
     "Week" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Hafta" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Woche" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Semana" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Semaine" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "週" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Hafta" } }
       }
     },
     "Month" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Ay" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Monat" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Mes" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Mois" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "月" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Ay" } }
       }
     },
     "All" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Tümü" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Alle" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Todo" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Tout" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "すべて" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Tümü" } }
       }
     },
     "Period" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Dönem" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Zeitraum" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Periodo" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Période" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "期間" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Dönem" } }
       }
     },
     "1m" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "1dk" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "1 Min" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "1m" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "1 min" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "1分" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "1dk" } }
       }
     },
     "2m" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "2dk" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "2 Min" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "2m" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "2 min" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "2分" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "2dk" } }
       }
     },
     "3m" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "3dk" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "3 Min" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "3m" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "3 min" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "3分" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "3dk" } }
       }
     },
     "5m" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "5dk" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "5 Min" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "5m" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "5 min" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "5分" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "5dk" } }
       }
     },
     "10m" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "10dk" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "10 Min" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "10m" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "10 min" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "10分" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "10dk" } }
+      }
+    },
+    "Show Tutorial" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Tutorial anzeigen" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Mostrar tutorial" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Afficher le tutoriel" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "チュートリアルを表示" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Tanıtımı Göster" } }
+      }
+    },
+    "Audio Unavailable" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Audio nicht verfügbar" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Audio no disponible" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Audio indisponible" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "オーディオ利用不可" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Ses Kullanılamıyor" } }
+      }
+    },
+    "The ambient sound file could not be loaded." : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Die Umgebungsgeräusch-Datei konnte nicht geladen werden." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "No se pudo cargar el archivo de sonido ambiental." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Le fichier de son ambiant n'a pas pu être chargé." } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "環境音ファイルを読み込めませんでした。" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Ortam ses dosyası yüklenemedi." } }
+      }
+    },
+    "OK" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "OK" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Aceptar" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "OK" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "OK" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Tamam" } }
+      }
+    },
+    "Health Save Failed" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Gesundheitsdaten nicht gespeichert" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Error al guardar en Salud" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Échec de l'enregistrement santé" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ヘルスケア保存失敗" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Sağlık Kaydı Başarısız" } }
+      }
+    },
+    "Could not save workout to Apple Health." : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Das Training konnte nicht in Apple Health gespeichert werden." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "No se pudo guardar el entrenamiento en Apple Salud." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Impossible d'enregistrer l'entraînement dans Apple Santé." } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "Apple Healthにワークアウトを保存できませんでした。" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Egzersiz Apple Health'e kaydedilemedi." } }
+      }
+    },
+    "Data" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Daten" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Datos" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Données" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "データ" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Veri" } }
+      }
+    },
+    "Delete All Data" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Alle Daten löschen" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Eliminar todos los datos" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Supprimer toutes les données" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "すべてのデータを削除" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Tüm Verileri Sil" } }
+      }
+    },
+    "Delete All Data?" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Alle Daten löschen?" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "¿Eliminar todos los datos?" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Supprimer toutes les données ?" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "すべてのデータを削除しますか？" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Tüm Verileri Sil?" } }
+      }
+    },
+    "Delete Everything" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Alles löschen" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Eliminar todo" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Tout supprimer" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "すべて削除" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Her Şeyi Sil" } }
+      }
+    },
+    "This will permanently delete all sessions and reset all settings. This cannot be undone." : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Alle Sitzungen werden dauerhaft gelöscht und alle Einstellungen zurückgesetzt. Dies kann nicht rückgängig gemacht werden." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Esto eliminará permanentemente todas las sesiones y restablecerá todos los ajustes. Esta acción no se puede deshacer." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Toutes les séances seront définitivement supprimées et tous les réglages réinitialisés. Cette action est irréversible." } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "すべてのセッションが完全に削除され、すべての設定がリセットされます。この操作は取り消せません。" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Bu işlem tüm oturumları kalıcı olarak silecek ve tüm ayarları sıfırlayacaktır. Bu geri alınamaz." } }
+      }
+    },
+    "Incomplete Session Found" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Unvollständige Sitzung gefunden" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Sesión incompleta encontrada" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Séance incomplète trouvée" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "未完了のセッションが見つかりました" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Tamamlanmamış Oturum Bulundu" } }
+      }
+    },
+    "Save" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Speichern" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Guardar" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Enregistrer" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "保存" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Kaydet" } }
+      }
+    },
+    "Discard" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Verwerfen" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Descartar" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Supprimer" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "破棄" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Sil" } }
+      }
+    },
+    "An incomplete session was found. Would you like to save it or discard it?" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Eine unvollständige Sitzung wurde gefunden. Möchtest du sie speichern oder verwerfen?" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Se encontró una sesión incompleta. ¿Deseas guardarla o descartarla?" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Une séance incomplète a été trouvée. Voulez-vous l'enregistrer ou la supprimer ?" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "未完了のセッションが見つかりました。保存しますか、それとも破棄しますか？" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Tamamlanmamış bir oturum bulundu. Kaydetmek mi yoksa silmek mi istersiniz?" } }
+      }
+    },
+    "%lld incomplete sessions were found. Would you like to save them or discard them?" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "%lld unvollständige Sitzungen wurden gefunden. Möchtest du sie speichern oder verwerfen?" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Se encontraron %lld sesiones incompletas. ¿Deseas guardarlas o descartarlas?" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "%lld séances incomplètes ont été trouvées. Voulez-vous les enregistrer ou les supprimer ?" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "%lld件の未完了セッションが見つかりました。保存しますか、それとも破棄しますか？" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "%lld tamamlanmamış oturum bulundu. Kaydetmek mi yoksa silmek mi istersiniz?" } }
       }
     }
   },

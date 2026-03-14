@@ -4,17 +4,22 @@ import AVFoundation
 @Observable
 final class AmbientSoundService {
     private var audioPlayer: AVAudioPlayer?
+    var playbackFailed = false
 
     func play(sound: AmbientSound) {
         stop()
+        playbackFailed = false
         configureAudioSession()
-        guard let url = Bundle.main.url(forResource: sound.fileName, withExtension: "wav") else { return }
+        guard let url = Bundle.main.url(forResource: sound.fileName, withExtension: "wav") else {
+            playbackFailed = true
+            return
+        }
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: url)
             audioPlayer?.numberOfLoops = -1
             audioPlayer?.play()
         } catch {
-            print("Ambient sound error: \(error)")
+            playbackFailed = true
         }
     }
 

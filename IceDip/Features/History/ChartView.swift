@@ -68,6 +68,7 @@ struct ChartView: View {
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: .now)
         let symbols = Calendar.current.shortWeekdaySymbols
+        guard !symbols.isEmpty else { return [] }
         let weekdays = Array(symbols.dropFirst()) + [symbols[0]]
 
         // .weekday returns 1=Sunday in Gregorian calendar regardless of locale

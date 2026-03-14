@@ -31,7 +31,7 @@ final class HealthKitService {
         isAuthorized = healthStore.authorizationStatus(for: workoutType) == .sharingAuthorized
     }
 
-    func saveWorkout(startDate: Date, endDate: Date, waterTempCelsius: Double?) async {
+    func saveWorkout(startDate: Date, endDate: Date, waterTempCelsius: Double?) async throws {
         guard isAvailable, isAuthorized else { return }
 
         let config = HKWorkoutConfiguration()
@@ -44,14 +44,10 @@ final class HealthKitService {
             metadata["WaterTemperatureCelsius"] = temp
         }
 
-        do {
-            let builder = HKWorkoutBuilder(healthStore: healthStore, configuration: config, device: .local())
-            try await builder.beginCollection(at: startDate)
-            try await builder.addMetadata(metadata)
-            try await builder.endCollection(at: endDate)
-            try await builder.finishWorkout()
-        } catch {
-            print("HealthKit save error: \(error)")
-        }
+        let builder = HKWorkoutBuilder(healthStore: healthStore, configuration: config, device: .local())
+        try await builder.beginCollection(at: startDate)
+        try await builder.addMetadata(metadata)
+        try await builder.endCollection(at: endDate)
+        try await builder.finishWorkout()
     }
 }

@@ -3,30 +3,38 @@
   "strings" : {
     "day streak" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "günlük seri" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Tage-Serie" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "racha de días" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "jour consécutif" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "日連続" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "günlük seri" } }
       }
     },
     "days streak" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "günlük seri" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Tage-Serie" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "racha de días" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "jours consécutifs" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "日連続" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "günlük seri" } }
       }
     },
     "streak" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "seri" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Serie" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "racha" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "série" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "連続" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "seri" } }
       }
     },
     "%lld/%lld this week" : {
       "localizations" : {
-        "tr" : {
-          "stringUnit" : { "state" : "translated", "value" : "Bu hafta %lld/%lld" }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "%lld/%lld diese Woche" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "%lld/%lld esta semana" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "%lld/%lld cette semaine" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "今週 %lld/%lld" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Bu hafta %lld/%lld" } }
       }
     }
   },
