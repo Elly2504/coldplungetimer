@@ -1,56 +1,49 @@
-# IceDip — Cold Plunge Timer: Session 3 Continuation Prompt
+# IceDip — Cold Plunge Timer: Session 5 Continuation Prompt
 
 ## Who You Are
 Senior iOS developer continuing work on IceDip, a cold plunge timer app. SwiftUI + SwiftData + MVVM with `@Observable`, iOS 17+, Swift 6.0.
 
 ## Project Setup
 - **Location:** `/Volumes/T7SSD/MacMini/Projects/Coldplungetimer/`
-- **Build:** XcodeGen → `xcodegen generate` → `xcodebuild build -scheme IceDip -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.5' -quiet`
+- **Build:** XcodeGen → `xcodegen generate` → `xcodebuild build -scheme IceDip -destination 'generic/platform=iOS' -quiet`
 - **NEVER modify `.pbxproj`** — edit `project.yml` and run `xcodegen generate`
 - **Team ID:** `9B5THFVGW7` | **Bundle:** `com.icedip.app` | **Version:** 1.0.0
 
-## Current State (3 commits on `main`, builds with zero warnings)
+## Current State (5 commits on `main`, builds with zero warnings)
 - `66d9df5` Initial commit
 - `70171eb` Fix 17 bugs for App Store readiness
 - `94431d0` Fix 12 remaining bugs and add Tier 1 enhancements
+- `8d69a7d` Fix 2 bugs, add app icon, and share achievement feature
+- `NEW` Add breathing exercise and weekly/monthly stats enhancements
 
-## What Was Done This Session (commit `94431d0`)
+## What Was Done in Session 4
 
-### 12 Bug Fixes (all verified, building clean)
-**P1 Critical:**
-- **Orphan cleanup** (`ContentView.swift:cleanupOrphanedSessions`): Now uses 1-hour cutoff via `Date(timeIntervalSinceNow: -3600)` in SwiftData `#Predicate` — only deletes stale incomplete sessions
-- **Notification cancel** (`NotificationService.swift`): Added `cancelDailyReminder()` targeting only `"daily-reminder"` identifier. `SettingsView.swift` now calls this instead of `cancelPendingNotifications()` at lines 65 and 125
-- **timeFormatted** (`TimerViewModel.swift:44`): Added `if showCompletion { return "0:00" }` guard to prevent "+0:00" flash on auto-complete
+### ENHANCE 5: Breathing Exercise — DONE
+Optional box breathing (4s inhale → 4s hold → 4s exhale × 3 cycles) shown between setup and active timer. Toggle in Settings (default: on).
 
-**P2 UX:**
-- **Tab badge** (`ContentView.swift`): `TimerViewModel` ownership moved from `TimerView` to `ContentView` as `@State`. TimerView now accepts `@Bindable var viewModel: TimerViewModel`. Badge: `.badge(timerViewModel.isRunning ? 1 : 0)`
-- **Completion view** (`TimerView.swift`): Large `session.durationFormatted` in `Theme.Fonts.timerDisplay` above "Plunge Complete!" text
-- **Celebration animation** (`TimerView.swift`): `@State celebrationPulse` drives 2 pulsing `Circle` rings + shadow around checkmark, toggled via `.onChange(of: viewModel.showCompletion)`
-- **Mood emojis** (`SessionCard.swift`): Replaced arrow icons with `moodEmoji()` before→after display. `moodEmoji()` extracted from TimerView to `Extensions.swift` as top-level function
-- **Delete animation** (`HistoryView.swift`): `withAnimation { modelContext.delete(session) }` + `.transition(.opacity.combined(with: .slide))` + `.animation(.default, value: sessions.count)`
+- **New file:** `IceDip/Features/Timer/BreathingView.swift` (119 lines) — animated breath circle with `RadialGradient`, `scaleEffect` 0.6→1.0, phase labels ("Breathe In"/"Hold"/"Breathe Out"), cycle counter, Skip button. Private `BreathingPhase` enum. `Task` with `isCancelled` guards for clean teardown.
+- **TimerViewModel.swift changes:** `showBreathing` state (line 17). `pendingModelContext` (line 33) + `pendingSoundEnabled` (line 34) store params during breathing. `beginSession()` (line 63) checks `breathingEnabled` — if true, stores params and sets `showBreathing = true`; if false, calls `start()` directly. `breathingComplete()` (line 75) sets `showBreathing = false`, calls `start()` with stored params, clears `pendingModelContext`. `skipBreathing()` (line 82) delegates to `breathingComplete()`. `reset()` (line 152) clears `showBreathing` and `pendingModelContext`.
+- **TimerView.swift changes:** `@AppStorage(PreferenceKey.breathingEnabled)` (line 13). Conditional chain (lines 32-42): `showCompletion → completionView → isRunning → activeTimerView → showBreathing → BreathingView(onComplete:, onSkip:) → setupView`. START button (line 129) calls `viewModel.beginSession(...)` with `breathingEnabled` param.
+- **SettingsView.swift changes:** `@AppStorage(PreferenceKey.breathingEnabled)` (line 12). `Toggle("Breathing Exercise", isOn: $breathingEnabled)` in Timer section (line 38).
+- **UserPreferences.swift:** `breathingEnabled` key (line 13).
 
-**P3 Polish:**
-- **DateFormatter cache** (`Extensions.swift`): Private `Formatters` enum with `static let` cached formatters. Initially used `nonisolated(unsafe)` but removed it — Swift 6.0 on this Xcode treats `DateFormatter` as `Sendable`
-- **Locale comments** (`ChartView.swift:54`, `StreakView.swift:203`): Documented `(weekday + 5) % 7` formula
-- **Streak comment** (`StreakView.swift:185`): Clarified that 1-day streak for single session is correct behavior
-- **NotificationService cleanup** (`NotificationService.swift`): Removed `@preconcurrency import`, removed all `nonisolated` keywords, converted `cancelTimerNotifications` to async `Task { await ... pendingNotificationRequests() }`
+### ENHANCE 6: Weekly/Monthly Stats — DONE
+Segmented control (Week/Month/All Time) on chart. Zone distribution bars. Mood impact section.
 
-### 3 Tier 1 Enhancements
-- **Launch screen** (`project.yml`, `Info.plist`, `LaunchBackground.colorset`): Dark navy (#0A1628) background. Switched from `GENERATE_INFOPLIST_FILE` to explicit `Info.plist` with XcodeGen `info: path:` + `properties:` merge
-- **Onboarding** (`OnboardingView.swift`, `UserPreferences.swift`, `ContentView.swift`): 3-page `TabView(.page)` gated by `@AppStorage("hasOnboarded")`. Pages: snowflake/brain/flame icons. "Get Started" button on page 3
-- **Session notes** (`PlungeSession.swift`, `TimerViewModel.swift`, `TimerView.swift`, `SessionCard.swift`): Added `notes: String?` to model (SwiftData lightweight migration). `TextField` with `axis: .vertical` on completion screen. Displayed in SessionCard below zone/temp row
+- **ChartView.swift rewritten:** `ChartPeriod` enum (`.week`, `.month`, `.all`) with `@State period`. Segmented `Picker`. Three data modes: Week = Mon-Sun daily bars (original logic), Month = W1-W4 weekly buckets (last 4 weeks), All = monthly bars (MMM labels, last 6 months). Inline `DateFormatter` for month labels.
+- **New file:** `IceDip/Features/History/ZoneDistributionView.swift` (76 lines) — horizontal bars per `BenefitZone` with zone icon/name/color, proportional fill via `GeometryReader`, count label. Private `ZoneCount` struct.
+- **HistoryView.swift changes:** Added `ZoneDistributionView(sessions:)` after statsBar. Added `moodTrend` computed view: filters sessions with both mood values, shows avg before → avg after with emoji + numeric delta (green/red). Added `sectionHeader()` and `moodStat()` helpers. "Sessions" header before session list.
 
-## What Was Tried But Didn't Work
+## What Was Tried But Didn't Work (All Sessions)
 
-1. **`nonisolated(unsafe)` on static DateFormatter**: Swift 6.0 with Xcode 26.2 treats `DateFormatter` as `Sendable`, so `nonisolated(unsafe)` generated warnings. Fix: just use plain `static let`.
+1. **`nonisolated(unsafe)` on static DateFormatter**: Swift 6.0/Xcode 26.2 treats `DateFormatter` as `Sendable`. Fix: plain `static let`.
+2. **XcodeGen `info:` without `path:`**: Requires explicit `info: path: <plist>`.
+3. **`GENERATE_INFOPLIST_FILE` + explicit Info.plist**: Conflict. Must remove all `INFOPLIST_KEY_*` build settings.
+4. **`var viewModel: TimerViewModel` without `@Bindable`**: `$viewModel.property` requires `@Bindable`.
+5. **Boot disk full during builds**: DerivedData on Macintosh HD fills volume. Fix: `rm -rf ~/Library/Developer/Xcode/DerivedData/*`.
+6. **`platform=iOS Simulator,name=iPhone 16,OS=18.5`**: No simulators available on this machine. Fix: use `generic/platform=iOS` destination.
 
-2. **XcodeGen `info:` without `path:`**: Adding `info: properties: UILaunchScreen: ...` under the target without a `path` key fails with "Decoding failed at 'path': Nothing found". XcodeGen requires `info: path: <plist file>` when using the `info:` block. Fix: created explicit `IceDip/Resources/Info.plist` and referenced it via `info: path: IceDip/Resources/Info.plist`.
-
-3. **`GENERATE_INFOPLIST_FILE` + explicit Info.plist**: These conflict. When switching to `info: path:` in XcodeGen, had to remove `GENERATE_INFOPLIST_FILE`, `INFOPLIST_GENERATION_MODE`, and all `INFOPLIST_KEY_*` build settings. The plist values now live in `Info.plist` directly + XcodeGen `properties:` merge.
-
-4. **`var viewModel: TimerViewModel` without `@Bindable`**: Moving TimerViewModel ownership from `@State` in TimerView to `@State` in ContentView means TimerView receives it as a plain `var`. But `$viewModel.property` bindings require `@Bindable`. Fix: `@Bindable var viewModel: TimerViewModel`.
-
-## Current File Structure (21 Swift files + resources)
+## Current File Structure (24 Swift files + resources)
 ```
 IceDip/
 ├── App/
@@ -58,71 +51,89 @@ IceDip/
 │   └── ContentView.swift          # TabView + onboarding gate + orphan cleanup + tab badge
 ├── Features/
 │   ├── Timer/
-│   │   ├── TimerView.swift         # @Bindable viewModel, celebration animation, notes field
-│   │   ├── TimerViewModel.swift    # @Observable, notes property, showCompletion guard
+│   │   ├── TimerView.swift         # @Bindable viewModel, breathing integration, ShareLink
+│   │   ├── TimerViewModel.swift    # @Observable, breathing state, async stop/tick
+│   │   ├── BreathingView.swift     # Animated box breathing (3 cycles)
+│   │   ├── ShareCardView.swift     # Styled share card rendered to UIImage
 │   │   ├── BenefitZone.swift
 │   │   ├── ZoneGradientBackground.swift
 │   │   └── ZoneIndicatorView.swift
 │   ├── History/
-│   │   ├── HistoryView.swift       # Delete animation
+│   │   ├── HistoryView.swift       # Zone dist + mood trend + section headers
 │   │   ├── SessionCard.swift       # Mood emojis, notes display
-│   │   └── ChartView.swift
+│   │   ├── ChartView.swift         # Week/Month/All picker with 3 data modes
+│   │   └── ZoneDistributionView.swift  # Horizontal zone bar chart
 │   ├── Streak/
-│   │   └── StreakView.swift
+│   │   └── StreakView.swift        # Cached formattedWeekday
 │   ├── Settings/
-│   │   └── SettingsView.swift      # cancelDailyReminder()
+│   │   └── SettingsView.swift      # Breathing toggle, cancelDailyReminder()
 │   └── Onboarding/
-│       └── OnboardingView.swift    # NEW: 3-page onboarding
+│       └── OnboardingView.swift    # 3-page onboarding
 ├── Models/
-│   ├── PlungeSession.swift         # notes: String? added
-│   └── UserPreferences.swift       # hasOnboarded key added
+│   ├── PlungeSession.swift         # notes: String? property
+│   └── UserPreferences.swift       # breathingEnabled key
 ├── Services/
 │   ├── HapticService.swift
-│   └── NotificationService.swift   # cancelDailyReminder(), no nonisolated
+│   └── NotificationService.swift   # async cancelTimerNotifications()
 └── Shared/
     ├── Theme.swift
-    ├── Extensions.swift            # Cached formatters, moodEmoji()
+    ├── Extensions.swift            # Cached Formatters enum, moodEmoji()
     └── Components/
         └── CircularTimerView.swift
 
+Scripts/
+└── generate_icon.swift             # CoreGraphics icon generator
+
 IceDip/Resources/
-├── Info.plist                      # NEW: explicit plist with UILaunchScreen
+├── Info.plist                      # UILaunchScreen with LaunchBackground color
 ├── Assets.xcassets/
-│   ├── AppIcon.appiconset/         # NO actual icon image — just Contents.json
+│   ├── AppIcon.appiconset/         # AppIcon.png (1024x1024 snowflake)
 │   ├── AccentColor.colorset/
-│   └── LaunchBackground.colorset/  # NEW: #0A1628
+│   └── LaunchBackground.colorset/  # #0A1628
 └── PrivacyInfo.xcprivacy
 ```
 
+## Key Architectural Decisions
+- **Async notification chain**: `stop()` → `tick()` → `handleForeground()` are all async. Timer closure uses `Task { @MainActor in await self.tick(...) }`
+- **ImageRenderer for sharing**: `ShareCardView` rendered at @3x in `.task(id: viewModel.showCompletion)`
+- **TimerViewModel ownership**: Owned by `ContentView` as `@State`, passed to `TimerView` as `@Bindable` — enables tab badge
+- **Deferred start pattern**: `beginSession()` stores params in pending vars, `breathingComplete()` calls `start()` — no PlungeSession during breathing prevents orphans
+- **ChartPeriod is view-local**: `ChartPeriod` enum + `@State period` live inside ChartView, not HistoryView
+- **DateFormatter caching**: All formatters in private `Formatters` enum inside `Date` extension in `Extensions.swift`
+
+## Remaining Known Issues
+- **celebrationPulse `.repeatForever`** (`TimerView.swift`): Safe — view conditionally rendered
+- **Hard-coded zone thresholds** (`BenefitZone.swift`): Time thresholds in `startSeconds` and `zone(for:)` — risk of inconsistency
+- **ChartView English weekday names**: Hard-coded, not localized
+- **App icon is programmatic**: May want professionally designed icon for App Store
+
 ## Priority Next Steps
 
-### MUST-DO: App Icon (ENHANCE 1)
-- `IceDip/Resources/Assets.xcassets/AppIcon.appiconset/` has `Contents.json` but NO 1024x1024 PNG
-- Design direction: dark navy (#0A1628) background, ice crystal/snowflake in ice blue (#64D2FF), minimalist premium
-- After adding image: `xcodegen generate` to pick up the asset
-
 ### Tier 2 Enhancements (Post-Launch High Value)
-1. **Breathing Exercise** (ENHANCE 5): New `BreathingView` between setup and active timer, animated breath circle, toggle in Settings
-2. **Weekly/Monthly Stats** (ENHANCE 6): Segmented control in HistoryView for Week/Month/All Time, avg duration trend, temp correlation, mood tracking over time, zone distribution
-3. **Widget Support** (ENHANCE 7): WidgetKit target, App Group for shared SwiftData, streak/goal/status widgets
-4. **Apple Watch** (ENHANCE 8): watchOS target, WatchConnectivity for session sync
-5. **HealthKit** (ENHANCE 9): Log sessions as "Mind and Body" workouts, add capability to project.yml
-6. **Share Achievement** (ENHANCE 10): Render styled SwiftUI view to UIImage on completion screen
+1. **Widget Support** (ENHANCE 7): WidgetKit target, App Group for shared SwiftData, streak/goal/status widgets
+2. **Apple Watch** (ENHANCE 8): watchOS target, WatchConnectivity for session sync
+3. **HealthKit** (ENHANCE 9): Log sessions as "Mind and Body" workouts
 
 ### Tier 3 Nice-to-Have
-7. **Ambient Sound** (ENHANCE 11): AVAudioPlayer with bundled ocean/rain audio
-8. **Custom Zone Thresholds** (ENHANCE 12): Override BenefitZone time ranges in Settings
-9. **Theme Toggle** (ENHANCE 13): Dark/Light/System picker in Settings
-10. **Localization** (ENHANCE 14): Extract hardcoded strings to Localizable.strings
-11. **iCloud Sync** (ENHANCE 15): SwiftData + CloudKit
+4. **Ambient Sound** (ENHANCE 11): AVAudioPlayer with bundled ocean/rain audio
+5. **Custom Zone Thresholds** (ENHANCE 12): Override BenefitZone time ranges in Settings
+6. **Theme Toggle** (ENHANCE 13): Dark/Light/System picker in Settings
+7. **Localization** (ENHANCE 14): Extract hardcoded strings to Localizable.strings
+8. **iCloud Sync** (ENHANCE 15): SwiftData + CloudKit
 
-### Known Issues to Watch
-- `StreakView.dayLabel(for:)` at line 219 still creates a new `DateFormatter` each call (was missed in the caching pass — it's a private function, not a Date extension)
-- The `celebrationPulse` animation uses `.repeatForever` which may cause issues if the view is reused without resetting state — currently mitigated by `.onChange(of: viewModel.showCompletion)` toggling it off
-- `NotificationService.cancelTimerNotifications()` uses `Task { await ... }` fire-and-forget — timer notifications might not be cancelled before the next one is scheduled if `stop()` and `start()` are called in rapid succession (edge case)
+### Quality Improvements
+- Refactor `BenefitZone.zone(for:)` to derive from `startSeconds` (eliminate duplication)
+- Localize ChartView weekday labels
+- Consider professionally designed app icon
+
+## Design Spec
+- **Background:** #0A1628 | **Surface:** #111D2E | **Accent:** #64D2FF
+- **Zone colors:** coldShock #FF6B35, adaptation #FFB800, dopamineZone #00E5FF, metabolicBoost #1565C0, deepResilience #B0BEC5
+- **Timer font:** SF Mono 72pt light | **Headings:** SF Pro Rounded bold | **Body:** SF Pro Rounded
+- **Aesthetic:** Dark, calm, premium — "luxury ice"
 
 ## Implementation Rules (unchanged)
-1. Build after each fix: `xcodebuild build -scheme IceDip -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.5' -quiet`
+1. Build: `xcodegen generate && xcodebuild build -scheme IceDip -destination 'generic/platform=iOS' -quiet`
 2. Run `xcodegen generate` first if new files/directories created
 3. NEVER modify `.pbxproj` directly
 4. SwiftUI + SwiftData + @Observable + MVVM architecture
@@ -130,9 +141,3 @@ IceDip/Resources/
 6. No third-party libraries
 7. Swift 6.0 strict concurrency — zero warnings
 8. Don't over-engineer
-
-## Design Spec
-- **Background:** #0A1628 | **Surface:** #111D2E | **Accent:** #64D2FF
-- **Zone colors:** coldShock #FF6B35, adaptation #FFB800, dopamineZone #00E5FF, metabolicBoost #1565C0, deepResilience #B0BEC5
-- **Timer font:** SF Mono 72pt light | **Headings:** SF Pro Rounded bold | **Body:** SF Pro Rounded
-- **Aesthetic:** Dark, calm, premium — "luxury ice"

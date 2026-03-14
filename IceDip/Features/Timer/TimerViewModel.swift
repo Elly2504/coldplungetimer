@@ -14,6 +14,7 @@ final class TimerViewModel {
     var currentSession: PlungeSession?
     var currentZone: BenefitZone = .coldShock
     var showCompletion = false
+    var showBreathing = false
 
     // Pre/post plunge inputs
     var waterTemp: Double = 5.0
@@ -29,6 +30,8 @@ final class TimerViewModel {
     private var storedModelContext: ModelContext?
     private var storedNotificationService: NotificationService?
     private var storedHapticsEnabled: Bool = true
+    private var pendingModelContext: ModelContext?
+    private var pendingSoundEnabled: Bool = true
 
     // MARK: - Computed
 
@@ -56,6 +59,29 @@ final class TimerViewModel {
     }
 
     // MARK: - Actions
+
+    func beginSession(modelContext: ModelContext, hapticsEnabled: Bool, soundEnabled: Bool, notificationService: NotificationService, breathingEnabled: Bool) {
+        if breathingEnabled {
+            pendingModelContext = modelContext
+            storedNotificationService = notificationService
+            storedHapticsEnabled = hapticsEnabled
+            pendingSoundEnabled = soundEnabled
+            showBreathing = true
+        } else {
+            start(modelContext: modelContext, hapticsEnabled: hapticsEnabled, soundEnabled: soundEnabled, notificationService: notificationService)
+        }
+    }
+
+    func breathingComplete() {
+        showBreathing = false
+        guard let ctx = pendingModelContext, let ns = storedNotificationService else { return }
+        start(modelContext: ctx, hapticsEnabled: storedHapticsEnabled, soundEnabled: pendingSoundEnabled, notificationService: ns)
+        pendingModelContext = nil
+    }
+
+    func skipBreathing() {
+        breathingComplete()
+    }
 
     func start(modelContext: ModelContext, hapticsEnabled: Bool, soundEnabled: Bool, notificationService: NotificationService) {
         let session = PlungeSession(targetDuration: selectedDuration)
@@ -126,11 +152,13 @@ final class TimerViewModel {
     func reset() {
         currentSession = nil
         showCompletion = false
+        showBreathing = false
         moodBefore = nil
         moodAfter = nil
         notes = ""
         storedModelContext = nil
         storedNotificationService = nil
+        pendingModelContext = nil
     }
 
     func handleBackground() {

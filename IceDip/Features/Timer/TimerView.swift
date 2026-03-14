@@ -10,6 +10,7 @@ struct TimerView: View {
     @AppStorage(PreferenceKey.soundEnabled) private var soundEnabled = true
     @AppStorage(PreferenceKey.tempUnit) private var tempUnit = "celsius"
     @AppStorage(PreferenceKey.defaultDuration) private var defaultDuration: TimeInterval = 120
+    @AppStorage(PreferenceKey.breathingEnabled) private var breathingEnabled = true
     @State private var showStopConfirmation = false
     @State private var celebrationPulse = false
     @State private var shareImage: UIImage?
@@ -33,6 +34,11 @@ struct TimerView: View {
                 completionView
             } else if viewModel.isRunning {
                 activeTimerView
+            } else if viewModel.showBreathing {
+                BreathingView(
+                    onComplete: { viewModel.breathingComplete() },
+                    onSkip: { viewModel.skipBreathing() }
+                )
             } else {
                 setupView
             }
@@ -123,11 +129,12 @@ struct TimerView: View {
 
             // Start button
             Button {
-                viewModel.start(
+                viewModel.beginSession(
                     modelContext: modelContext,
                     hapticsEnabled: hapticsEnabled,
                     soundEnabled: soundEnabled,
-                    notificationService: notificationService
+                    notificationService: notificationService,
+                    breathingEnabled: breathingEnabled
                 )
             } label: {
                 Text("START")

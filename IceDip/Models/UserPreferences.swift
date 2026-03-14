@@ -10,4 +10,5 @@ enum PreferenceKey {
     static let reminderMinute = "reminderMinute"
     static let weeklyGoalSessions = "weeklyGoalSessions"
     static let hasOnboarded = "hasOnboarded"
+    static let breathingEnabled = "breathingEnabled"
 }

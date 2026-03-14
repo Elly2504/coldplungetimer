@@ -9,6 +9,7 @@ struct SettingsView: View {
     @AppStorage(PreferenceKey.reminderHour) private var reminderHour = 7
     @AppStorage(PreferenceKey.reminderMinute) private var reminderMinute = 0
     @AppStorage(PreferenceKey.weeklyGoalSessions) private var weeklyGoalSessions = 3
+    @AppStorage(PreferenceKey.breathingEnabled) private var breathingEnabled = true
 
     @Environment(NotificationService.self) private var notificationService
 
@@ -34,6 +35,7 @@ struct SettingsView: View {
                                 Text(label).tag(value)
                             }
                         }
+                        Toggle("Breathing Exercise", isOn: $breathingEnabled)
                     }
 
                     // Units

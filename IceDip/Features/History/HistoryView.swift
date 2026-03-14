@@ -16,13 +16,21 @@ struct HistoryView: View {
                 } else {
                     ScrollView {
                         LazyVStack(spacing: Theme.Spacing.md) {
-                            // Weekly chart
+                            // Chart with period picker
                             ChartView(sessions: sessions)
 
                             // Stats summary
                             statsBar
 
+                            // Zone distribution
+                            ZoneDistributionView(sessions: sessions)
+
+                            // Mood trend
+                            moodTrend
+
                             // Session list
+                            sectionHeader("Sessions")
+
                             ForEach(sessions) { session in
                                 SessionCard(session: session)
                                     .accessibilityElement(children: .combine)
@@ -88,5 +96,62 @@ struct HistoryView: View {
                 .foregroundStyle(Theme.Colors.textSecondary)
         }
         .frame(maxWidth: .infinity)
+    }
+
+    private func sectionHeader(_ title: String) -> some View {
+        HStack {
+            Text(title)
+                .font(Theme.Fonts.headingSmall)
+                .foregroundStyle(Theme.Colors.textPrimary)
+            Spacer()
+        }
+    }
+
+    @ViewBuilder
+    private var moodTrend: some View {
+        let withMood = sessions.filter { $0.isCompleted && $0.moodBefore != nil && $0.moodAfter != nil }
+        if !withMood.isEmpty {
+            let avgBefore = Double(withMood.compactMap(\.moodBefore).reduce(0, +)) / Double(withMood.count)
+            let avgAfter = Double(withMood.compactMap(\.moodAfter).reduce(0, +)) / Double(withMood.count)
+
+            VStack(alignment: .leading, spacing: Theme.Spacing.sm) {
+                Text("Mood Impact")
+                    .font(Theme.Fonts.headingSmall)
+                    .foregroundStyle(Theme.Colors.textPrimary)
+
+                HStack(spacing: Theme.Spacing.lg) {
+                    moodStat("Before", avg: avgBefore)
+                    Image(systemName: "arrow.right")
+                        .foregroundStyle(Theme.Colors.iceBlue)
+                    moodStat("After", avg: avgAfter)
+                    Spacer()
+                    VStack(spacing: Theme.Spacing.xs) {
+                        let delta = avgAfter - avgBefore
+                        Text(delta >= 0 ? "+\(String(format: "%.1f", delta))" : String(format: "%.1f", delta))
+                            .font(Theme.Fonts.headingSmall)
+                            .foregroundStyle(delta >= 0 ? .green : .red)
+                        Text("Change")
+                            .font(Theme.Fonts.caption)
+                            .foregroundStyle(Theme.Colors.textSecondary)
+                    }
+                }
+            }
+            .padding(Theme.Spacing.md)
+            .background(Theme.Colors.surface)
+            .clipShape(RoundedRectangle(cornerRadius: 16))
+        }
+    }
+
+    private func moodStat(_ label: String, avg: Double) -> some View {
+        VStack(spacing: Theme.Spacing.xs) {
+            Text(moodEmoji(Int(avg.rounded())))
+                .font(.title2)
+            Text(String(format: "%.1f", avg))
+                .font(Theme.Fonts.caption)
+                .foregroundStyle(Theme.Colors.textPrimary)
+            Text(label)
+                .font(Theme.Fonts.caption)
+                .foregroundStyle(Theme.Colors.textSecondary)
+        }
     }
 }
