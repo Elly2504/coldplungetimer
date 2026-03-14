@@ -1,4 +1,4 @@
-# IceDip — Cold Plunge Timer: Session 8 Continuation Prompt
+# IceDip — Cold Plunge Timer: Session 9 Continuation Prompt
 
 ## Who You Are
 Senior iOS developer continuing work on IceDip, a cold plunge timer app. SwiftUI + SwiftData + MVVM with `@Observable`, iOS 17+, Swift 6.0.
@@ -12,36 +12,37 @@ Senior iOS developer continuing work on IceDip, a cold plunge timer app. SwiftUI
 - **Team ID:** `9B5THFVGW7` | **Bundle:** `com.icedip.app` | **Version:** 1.0.0
 - **Signing identity:** Apple Development: Yusuf Can Samiloglu (CM8U56F8SP)
 
-## Current State (6 commits on `main`, all committed, builds with zero warnings)
+## Current State (8 commits on `main`, all committed, builds with zero warnings)
 - `66d9df5` Initial commit
 - `70171eb` Fix 17 bugs for App Store readiness
 - `94431d0` Fix 12 remaining bugs and add Tier 1 enhancements
 - `8d69a7d` Fix 2 bugs, add app icon, and share achievement feature
 - `7c994c4` Add breathing exercise and weekly/monthly stats enhancements
 - `f0c91a1` Add widget, Watch app, HealthKit, ambient sound, and connectivity fixes
+- `88e9e7f` Update continuation prompt for Session 8
+- `b42160f` Refactor BenefitZone, localize weekdays, and add SwiftData schema versioning
 
-## What Was Done in Session 7
+## What Was Done in Session 8
 
-### Three critical connectivity fixes — ALL DONE
+### Three quality improvements — ALL DONE
 
-1. **Wired `PhoneConnectivityService.sendStreakUpdate()`** (`IceDip/Services/PhoneConnectivityService.swift`):
-   - After `insertSession()` saves a Watch session to SwiftData, it now fetches all sessions via `FetchDescriptor`, computes streak with `StreakCalculator`, and calls `sendStreakUpdate()` to push data back to Watch.
+1. **BenefitZone refactor** (`IceDip/Features/Timer/BenefitZone.swift:63-70`):
+   - Replaced hard-coded switch in `zone(for:)` with a loop that derives from `startSeconds`.
+   - Iterates `Self.allCases.reversed()`, returns first zone where `elapsedSeconds >= zone.startSeconds`.
+   - `startSeconds` is now the single source of truth for all zone thresholds.
 
-2. **Wired streak send after iOS session completion** (`IceDip/Features/Timer/TimerViewModel.swift` + `TimerView.swift`):
-   - Added `storedPhoneConnectivityService: PhoneConnectivityService?` to `TimerViewModel`, threaded through `beginSession()` → `start()` → `breathingComplete()`.
-   - In `stop()`, after `WidgetCenter.shared.reloadAllTimelines()`, fetches all sessions from `storedModelContext`, computes streak via `StreakCalculator`, and calls `storedPhoneConnectivityService?.sendStreakUpdate(...)`.
-   - Cleaned up in `reset()`.
-   - `TimerView` adds `@Environment(PhoneConnectivityService.self)` and passes it to `beginSession()`.
+2. **Localized ChartView weekday labels** (`IceDip/Features/History/ChartView.swift:70-71`):
+   - Replaced `["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]` with `Calendar.current.shortWeekdaySymbols`.
+   - Rotated array to start from Monday: `Array(symbols.dropFirst()) + [symbols[0]]`.
+   - Now respects device locale automatically.
+   - Note: `Extensions.swift` has a `formattedWeekday` property (DateFormatter "EEE") but `shortWeekdaySymbols` is more direct for generating a full week.
 
-3. **Fixed Watch auto-complete session send** (`IceDipWatch/Features/Timer/WatchTimerViewModel.swift` + `WatchTimerView.swift`):
-   - Added `connectivityService: WatchConnectivityService?` property to `WatchTimerViewModel`.
-   - Moved `connectivityService.sendSession(sessionData)` into `stop()` itself (before `return`), so all 3 stop paths (manual button, `tick()` auto-complete, `handleForeground()` auto-complete) send the session.
-   - `WatchTimerView` wires the service via `.onAppear { viewModel.connectivityService = connectivityService }`.
-   - Manual stop button simplified to `_ = viewModel.stop()` (no duplicate send).
-
-4. **Added Watch app icon** (`IceDipWatch/Assets.xcassets/AppIcon.appiconset/`):
-   - Copied iOS AppIcon.png (1024x1024) to Watch assets with `"platform": "watchos"` in Contents.json.
-   - Added `ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon` to `IceDipWatch` target in `project.yml`.
+3. **SwiftData VersionedSchema** (new file `IceDip/Models/PlungeSessionSchemaV1.swift` + `IceDip/Shared/SharedModelContainer.swift`):
+   - Created `PlungeSessionSchemaV1` (VersionedSchema, version 1.0.0) referencing `PlungeSession.self`.
+   - Created `PlungeSessionMigrationPlan` (SchemaMigrationPlan) with V1 as only schema and empty stages.
+   - `SharedModelContainer` now passes `migrationPlan: PlungeSessionMigrationPlan.self` to `ModelContainer`.
+   - Added `PlungeSessionSchemaV1.swift` to widget extension sources in `project.yml`.
+   - **Future migrations**: Add V2 schema enum, add migration stage, update `schemas` array.
 
 ## What Was Tried But Didn't Work (All Sessions)
 
@@ -57,8 +58,9 @@ Senior iOS developer continuing work on IceDip, a cold plunge timer app. SwiftUI
 10. **`@preconcurrency` on `WCSessionDelegate` conformance**: Swift 6.0/Xcode 26.2 says it has no effect. Fix: remove `@preconcurrency`, use `nonisolated func` for delegate methods and dispatch to `@MainActor` with `Task { @MainActor in ... }`.
 11. **Embedding Watch app as iOS dependency in project.yml**: Fails with "watchOS 26.2 must be installed". Fix: watchOS 10+ apps are independent — do NOT add `IceDipWatch` as a dependency of the iOS target. Build via separate `IceDipWatch` scheme.
 12. **`xcodebuild -destination 'generic/platform=watchOS'` for Watch builds**: Fails because watchOS 26.2 platform isn't fully installed (needs download from Xcode > Settings > Components). Fix: use `xcrun --sdk watchos swiftc -typecheck -target arm64-apple-watchos10.0 -swift-version 6 <files>` for compilation verification.
+13. **`static var versionIdentifier` in VersionedSchema**: Swift 6.0 strict concurrency flags `var` as non-safe. Fix: `static let versionIdentifier`.
 
-## Current File Structure (35 Swift files + resources)
+## Current File Structure (36 Swift files + resources)
 ```
 IceDip/
 ├── App/
@@ -70,13 +72,13 @@ IceDip/
 │   │   ├── TimerViewModel.swift     # @Observable, breathing, async stop/tick, WidgetKit, HK save, ambient sound lifecycle, streak push to Watch
 │   │   ├── BreathingView.swift      # Animated box breathing (3 cycles)
 │   │   ├── ShareCardView.swift      # Styled share card rendered to UIImage
-│   │   ├── BenefitZone.swift        # Zone enum, thresholds, colors, icons (SHARED with widget + watch)
+│   │   ├── BenefitZone.swift        # Zone enum, single-source thresholds via startSeconds, colors, icons (SHARED with widget + watch)
 │   │   ├── ZoneGradientBackground.swift
 │   │   └── ZoneIndicatorView.swift
 │   ├── History/
 │   │   ├── HistoryView.swift        # Zone dist + mood trend + section headers
 │   │   ├── SessionCard.swift        # Mood emojis, notes display
-│   │   ├── ChartView.swift          # Week/Month/All picker with 3 data modes
+│   │   ├── ChartView.swift          # Week/Month/All picker with 3 data modes, locale-aware weekday labels
 │   │   └── ZoneDistributionView.swift
 │   ├── Streak/
 │   │   └── StreakView.swift          # Delegates to StreakCalculator
@@ -86,6 +88,7 @@ IceDip/
 │       └── OnboardingView.swift     # 3-page onboarding
 ├── Models/
 │   ├── PlungeSession.swift          # @Model, notes: String?, zone computed property
+│   ├── PlungeSessionSchemaV1.swift  # VersionedSchema V1 + SchemaMigrationPlan (shared with widget)
 │   ├── UserPreferences.swift        # All AppStorage keys incl. ambientSoundEnabled, selectedAmbientSound
 │   └── AmbientSound.swift           # Enum: ocean, rain
 ├── Services/
@@ -97,7 +100,7 @@ IceDip/
 └── Shared/
     ├── Theme.swift                  # Colors, Fonts, Spacing, Animations (SHARED with widget + watch)
     ├── Extensions.swift             # Color(hex:), TimeInterval, Date, moodEmoji(), temp conversion (SHARED)
-    ├── SharedModelContainer.swift   # App Group-aware ModelContainer (shared with widget)
+    ├── SharedModelContainer.swift   # App Group-aware ModelContainer with migration plan (shared with widget)
     ├── StreakCalculator.swift        # Extracted streak/goal logic (shared with widget)
     ├── WatchSessionData.swift       # Codable structs for Watch↔Phone sync (SHARED with watch)
     └── Components/
@@ -142,7 +145,7 @@ IceDip/Resources/
 ```
 
 ## Key Architectural Decisions
-- **Shared SwiftData via App Group**: `SharedModelContainer` provides single `ModelContainer` at `group.com.icedip.app/IceDip.store`. Used by both main app and widget extension.
+- **Shared SwiftData via App Group**: `SharedModelContainer` provides single `ModelContainer` at `group.com.icedip.app/IceDip.store`. Used by both main app and widget extension. Now includes `PlungeSessionMigrationPlan`.
 - **StreakCalculator as shared logic**: Struct taking `[PlungeSession]`, reused by `StreakView`, widget `PlungeTimelineProvider`, `PhoneConnectivityService.insertSession()`, and `TimerViewModel.stop()`.
 - **Service injection pattern**: All services (`NotificationService`, `HealthKitService`, `AmbientSoundService`, `PhoneConnectivityService`) are `@MainActor @Observable`, created as `@State` in `IceDipApp`, injected via `.environment()`. Optional services stored in ViewModel during session lifecycle.
 - **Watch architecture**: Standalone timer (not phone-dependent). No SwiftData on Watch. `WatchTimerViewModel` is a simplified version of iOS `TimerViewModel`. `WKExtendedRuntimeSession` keeps timer alive. Sessions sync via `transferUserInfo()` (guaranteed delivery), streak data via `updateApplicationContext()` (latest state).
@@ -152,11 +155,10 @@ IceDip/Resources/
 - **Widget timeline**: Refreshes every 2 hours + `WidgetCenter.shared.reloadAllTimelines()` on session complete.
 - **TimerViewModel ownership**: Owned by `ContentView` as `@State`, passed to `TimerView` as `@Bindable`.
 - **Deferred start pattern**: `beginSession()` stores all params (incl. services) in pending vars during breathing, `breathingComplete()` calls `start()`.
+- **Schema versioning**: `PlungeSessionSchemaV1` captures current model. Future model changes: add new VersionedSchema enum, add MigrationStage, update `PlungeSessionMigrationPlan.schemas` and `.stages`.
 
 ## Remaining Known Issues
 - **celebrationPulse `.repeatForever`** (`TimerView.swift`): Safe — view conditionally rendered.
-- **Hard-coded zone thresholds** (`BenefitZone.swift`): Duplication risk between `startSeconds` and `zone(for:)`.
-- **ChartView English weekday names**: Hard-coded, not localized.
 - **App icon is programmatic**: May want professionally designed icon for App Store.
 - **Code signing**: App Groups + HealthKit capabilities must be registered in Apple Developer Portal.
 - **Generated ambient sounds**: Basic sine/noise — may want higher quality audio files for production.
@@ -170,9 +172,6 @@ IceDip/Resources/
 4. **iCloud Sync** (ENHANCE 15): SwiftData + CloudKit for cross-device data
 
 ### Quality Improvements
-- Refactor `BenefitZone.zone(for:)` to derive from `startSeconds` (eliminate threshold duplication)
-- Localize ChartView weekday labels
-- Add SwiftData `VersionedSchema` + `SchemaMigrationPlan` for future-proofing
 - Replace generated ambient audio with higher-quality loops
 - Consider professionally designed app icon
 
