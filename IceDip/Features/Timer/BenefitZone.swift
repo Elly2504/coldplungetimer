@@ -61,12 +61,11 @@ enum BenefitZone: String, CaseIterable, Codable, Identifiable {
     }
 
     static func zone(for elapsedSeconds: TimeInterval) -> BenefitZone {
-        switch elapsedSeconds {
-        case ..<30: .coldShock
-        case ..<60: .adaptation
-        case ..<120: .dopamineZone
-        case ..<180: .metabolicBoost
-        default: .deepResilience
+        for zone in Self.allCases.reversed() {
+            if elapsedSeconds >= zone.startSeconds {
+                return zone
+            }
         }
+        return .coldShock
     }
 }

@@ -12,7 +12,11 @@ enum SharedModelContainer {
         let url = groupURL.appendingPathComponent("IceDip.store")
         let config = ModelConfiguration(url: url)
         do {
-            return try ModelContainer(for: PlungeSession.self, configurations: config)
+            return try ModelContainer(
+                for: PlungeSession.self,
+                migrationPlan: PlungeSessionMigrationPlan.self,
+                configurations: config
+            )
         } catch {
             fatalError("Failed to create ModelContainer: \(error)")
         }

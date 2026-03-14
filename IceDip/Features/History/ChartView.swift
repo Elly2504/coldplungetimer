@@ -67,7 +67,8 @@ struct ChartView: View {
     private var weeklyData: [DayData] {
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: .now)
-        let weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+        let symbols = Calendar.current.shortWeekdaySymbols
+        let weekdays = Array(symbols.dropFirst()) + [symbols[0]]
 
         // .weekday returns 1=Sunday in Gregorian calendar regardless of locale
         // Formula maps to 0=Monday, 1=Tuesday, ..., 6=Sunday

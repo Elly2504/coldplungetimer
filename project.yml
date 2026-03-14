@@ -58,6 +58,7 @@ targets:
         excludes:
           - "**/.DS_Store"
       - path: IceDip/Models/PlungeSession.swift
+      - path: IceDip/Models/PlungeSessionSchemaV1.swift
       - path: IceDip/Models/UserPreferences.swift
       - path: IceDip/Features/Timer/BenefitZone.swift
       - path: IceDip/Shared/Extensions.swift
