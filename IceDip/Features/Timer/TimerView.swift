@@ -352,6 +352,7 @@ struct TimerView: View {
                 zone: session.zone,
                 date: session.startTime
             )
+            .environment(\.colorScheme, .dark)
             let renderer = ImageRenderer(content: card)
             renderer.scale = 3.0
             shareImage = renderer.uiImage

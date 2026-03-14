@@ -1,5 +1,34 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "day streak" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "günlük seri" }
+        }
+      }
+    },
+    "days streak" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "günlük seri" }
+        }
+      }
+    },
+    "streak" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "seri" }
+        }
+      }
+    },
+    "%lld/%lld this week" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Bu hafta %lld/%lld" }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

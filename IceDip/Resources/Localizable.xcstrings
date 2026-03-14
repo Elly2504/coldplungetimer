@@ -1,5 +1,776 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "Cold Shock" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Soğuk Şoku" }
+        }
+      }
+    },
+    "Adaptation" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Adaptasyon" }
+        }
+      }
+    },
+    "Dopamine Zone" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Dopamin Bölgesi" }
+        }
+      }
+    },
+    "Metabolic Boost" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Metabolik Artış" }
+        }
+      }
+    },
+    "Deep Resilience" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Derin Dayanıklılık" }
+        }
+      }
+    },
+    "Adrenaline spike, fight-or-flight response activating" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Adrenalin yükselişi, savaş ya da kaç tepkisi aktif" }
+        }
+      }
+    },
+    "Body adjusting, norepinephrine rising" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Vücut uyum sağlıyor, norepinefrin yükseliyor" }
+        }
+      }
+    },
+    "Dopamine +250%, norepinephrine +530%" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Dopamin +%250, norepinefrin +%530" }
+        }
+      }
+    },
+    "Brown fat activation, doubled metabolic rate" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Kahverengi yağ aktivasyonu, iki kat metabolizma hızı" }
+        }
+      }
+    },
+    "Cellular cleanup, autophagy activation" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Hücresel temizlik, otofaji aktivasyonu" }
+        }
+      }
+    },
+    "Breathe In" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Nefes Al" }
+        }
+      }
+    },
+    "Hold" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Tut" }
+        }
+      }
+    },
+    "Breathe Out" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Nefes Ver" }
+        }
+      }
+    },
+    "Ocean Waves" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Okyanus Dalgaları" }
+        }
+      }
+    },
+    "Rain" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Yağmur" }
+        }
+      }
+    },
+    "Today" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Bugün" }
+        }
+      }
+    },
+    "Yesterday" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Dün" }
+        }
+      }
+    },
+    "Timer" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Zamanlayıcı" }
+        }
+      }
+    },
+    "History" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Geçmiş" }
+        }
+      }
+    },
+    "Streak" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Seri" }
+        }
+      }
+    },
+    "Settings" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Ayarlar" }
+        }
+      }
+    },
+    "START" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "BAŞLA" }
+        }
+      }
+    },
+    "Done" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Bitti" }
+        }
+      }
+    },
+    "Plunge Complete!" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Dalış Tamamlandı!" }
+        }
+      }
+    },
+    "End Session?" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Oturumu Bitir?" }
+        }
+      }
+    },
+    "End Session" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Oturumu Bitir" }
+        }
+      }
+    },
+    "Cancel" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "İptal" }
+        }
+      }
+    },
+    "Your session will be saved with the current duration." : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Oturumunuz mevcut süreyle kaydedilecek." }
+        }
+      }
+    },
+    "Duration" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Süre" }
+        }
+      }
+    },
+    "Zone Reached" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Ulaşılan Bölge" }
+        }
+      }
+    },
+    "Water Temp" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Su Sıcaklığı" }
+        }
+      }
+    },
+    "How do you feel?" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Nasıl hissediyorsun?" }
+        }
+      }
+    },
+    "How do you feel now?" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Şimdi nasıl hissediyorsun?" }
+        }
+      }
+    },
+    "Add a note..." : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Not ekle..." }
+        }
+      }
+    },
+    "Share" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Paylaş" }
+        }
+      }
+    },
+    "My Cold Plunge" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Soğuk Dalışım" }
+        }
+      }
+    },
+    "Water Temperature" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Su Sıcaklığı" }
+        }
+      }
+    },
+    "Cold Plunge Complete" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Soğuk Dalış Tamamlandı" }
+        }
+      }
+    },
+    "IceDip" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "IceDip" }
+        }
+      }
+    },
+    "Prepare Your Breath" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Nefesini Hazırla" }
+        }
+      }
+    },
+    "Cycle %lld of %lld" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Döngü %lld / %lld" }
+        }
+      }
+    },
+    "Skip" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Atla" }
+        }
+      }
+    },
+    "Appearance" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Görünüm" }
+        }
+      }
+    },
+    "Theme" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Tema" }
+        }
+      }
+    },
+    "Dark" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Koyu" }
+        }
+      }
+    },
+    "Light" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Açık" }
+        }
+      }
+    },
+    "System" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Sistem" }
+        }
+      }
+    },
+    "Default Duration" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Varsayılan Süre" }
+        }
+      }
+    },
+    "30 seconds" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "30 saniye" }
+        }
+      }
+    },
+    "1 minute" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "1 dakika" }
+        }
+      }
+    },
+    "2 minutes" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "2 dakika" }
+        }
+      }
+    },
+    "3 minutes" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "3 dakika" }
+        }
+      }
+    },
+    "5 minutes" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "5 dakika" }
+        }
+      }
+    },
+    "10 minutes" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "10 dakika" }
+        }
+      }
+    },
+    "Breathing Exercise" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Nefes Egzersizi" }
+        }
+      }
+    },
+    "Zone Thresholds" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Bölge Eşikleri" }
+        }
+      }
+    },
+    "Reset to Defaults" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Varsayılanlara Sıfırla" }
+        }
+      }
+    },
+    "Units" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Birimler" }
+        }
+      }
+    },
+    "Temperature" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Sıcaklık" }
+        }
+      }
+    },
+    "Celsius (°C)" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Santigrat (°C)" }
+        }
+      }
+    },
+    "Fahrenheit (°F)" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Fahrenheit (°F)" }
+        }
+      }
+    },
+    "Feedback" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Geri Bildirim" }
+        }
+      }
+    },
+    "Haptic Feedback" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Dokunsal Geri Bildirim" }
+        }
+      }
+    },
+    "Sound Effects" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Ses Efektleri" }
+        }
+      }
+    },
+    "Ambient Sound" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Ortam Sesi" }
+        }
+      }
+    },
+    "Play During Plunge" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Dalış Sırasında Çal" }
+        }
+      }
+    },
+    "Sound" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Ses" }
+        }
+      }
+    },
+    "Notifications" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Bildirimler" }
+        }
+      }
+    },
+    "Daily Reminder" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Günlük Hatırlatıcı" }
+        }
+      }
+    },
+    "Reminder Time" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Hatırlatma Saati" }
+        }
+      }
+    },
+    "Health" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Sağlık" }
+        }
+      }
+    },
+    "Save to Apple Health" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Apple Health'e Kaydet" }
+        }
+      }
+    },
+    "Open Settings › Health › IceDip to enable access." : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Erişimi etkinleştirmek için Ayarlar › Sağlık › IceDip'i açın." }
+        }
+      }
+    },
+    "Weekly Goal" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Haftalık Hedef" }
+        }
+      }
+    },
+    "%lld sessions per week" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Haftada %lld oturum" }
+        }
+      }
+    },
+    "About" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Hakkında" }
+        }
+      }
+    },
+    "Version" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Sürüm" }
+        }
+      }
+    },
+    "Welcome to IceDip" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "IceDip'e Hoş Geldiniz" }
+        }
+      }
+    },
+    "Track your cold plunge sessions and build resilience through consistent cold exposure." : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Soğuk dalış seanslarınızı takip edin ve düzenli soğuk maruziyetiyle dayanıklılık kazanın." }
+        }
+      }
+    },
+    "Science-Backed Zones" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Bilimsel Bölgeler" }
+        }
+      }
+    },
+    "See real-time benefit zones as you progress through your plunge — from cold shock to deep resilience." : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Dalışınız boyunca gerçek zamanlı fayda bölgelerini görün — soğuk şokundan derin dayanıklılığa." }
+        }
+      }
+    },
+    "Build Your Streak" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Serinizi Oluşturun" }
+        }
+      }
+    },
+    "Track your consistency, set weekly goals, and watch your cold tolerance grow over time." : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Tutarlılığınızı takip edin, haftalık hedefler belirleyin ve soğuk toleransınızın zamanla artışını izleyin." }
+        }
+      }
+    },
+    "Get Started" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Başla" }
+        }
+      }
+    },
+    "No sessions yet" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Henüz oturum yok" }
+        }
+      }
+    },
+    "Complete your first cold plunge to see it here" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "İlk soğuk dalışınızı tamamlayın ve burada görün" }
+        }
+      }
+    },
+    "Sessions" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Oturumlar" }
+        }
+      }
+    },
+    "Total" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Toplam" }
+        }
+      }
+    },
+    "Average" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Ortalama" }
+        }
+      }
+    },
+    "Mood Impact" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Ruh Hali Etkisi" }
+        }
+      }
+    },
+    "Before" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Önce" }
+        }
+      }
+    },
+    "After" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Sonra" }
+        }
+      }
+    },
+    "Change" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Değişim" }
+        }
+      }
+    },
+    "Delete Session" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Oturumu Sil" }
+        }
+      }
+    },
+    "Zone Distribution" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Bölge Dağılımı" }
+        }
+      }
+    },
+    "Complete sessions to see zone data" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Bölge verilerini görmek için oturumları tamamlayın" }
+        }
+      }
+    },
+    "Day Streak" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Günlük Seri" }
+        }
+      }
+    },
+    "Last 7 Days" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Son 7 Gün" }
+        }
+      }
+    },
+    "Goal reached!" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Hedefe ulaşıldı!" }
+        }
+      }
+    },
+    "Best Streak" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "En İyi Seri" }
+        }
+      }
+    },
+    "%lld days" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "%lld gün" }
+        }
+      }
+    },
+    "Week" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Hafta" }
+        }
+      }
+    },
+    "Month" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Ay" }
+        }
+      }
+    },
+    "All" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Tümü" }
+        }
+      }
+    },
+    "Period" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Dönem" }
+        }
+      }
+    },
+    "1m" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "1dk" }
+        }
+      }
+    },
+    "2m" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "2dk" }
+        }
+      }
+    },
+    "3m" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "3dk" }
+        }
+      }
+    },
+    "5m" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "5dk" }
+        }
+      }
+    },
+    "10m" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "10dk" }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

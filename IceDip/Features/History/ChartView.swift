@@ -15,7 +15,7 @@ struct ChartView: View {
         VStack(alignment: .leading, spacing: Theme.Spacing.sm) {
             Picker("Period", selection: $period) {
                 ForEach(ChartPeriod.allCases, id: \.self) { p in
-                    Text(p.rawValue).tag(p)
+                    Text(LocalizedStringKey(p.rawValue)).tag(p)
                 }
             }
             .pickerStyle(.segmented)

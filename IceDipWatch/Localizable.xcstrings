@@ -1,5 +1,76 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "START" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "BAŞLA" }
+        }
+      }
+    },
+    "Complete!" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Tamamlandı!" }
+        }
+      }
+    },
+    "Done" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Bitti" }
+        }
+      }
+    },
+    "Day Streak" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Günlük Seri" }
+        }
+      }
+    },
+    "Best" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "En İyi" }
+        }
+      }
+    },
+    "This Week" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "Bu Hafta" }
+        }
+      }
+    },
+    "1m" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "1dk" }
+        }
+      }
+    },
+    "2m" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "2dk" }
+        }
+      }
+    },
+    "3m" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "3dk" }
+        }
+      }
+    },
+    "5m" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : { "state" : "translated", "value" : "5dk" }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

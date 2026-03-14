@@ -64,13 +64,13 @@ extension Date {
     private enum Formatters {
         static let short: DateFormatter = {
             let f = DateFormatter()
-            f.dateFormat = "MMM d"
+            f.setLocalizedDateFormatFromTemplate("MMMd")
             return f
         }()
 
         static let time: DateFormatter = {
             let f = DateFormatter()
-            f.dateFormat = "h:mm a"
+            f.setLocalizedDateFormatFromTemplate("jmm")
             return f
         }()
 
@@ -83,7 +83,7 @@ extension Date {
 
         static let weekday: DateFormatter = {
             let f = DateFormatter()
-            f.dateFormat = "EEE"
+            f.setLocalizedDateFormatFromTemplate("EEE")
             return f
         }()
     }
