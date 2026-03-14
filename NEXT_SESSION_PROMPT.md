@@ -1,7 +1,7 @@
-# IceDip — Cold Plunge Timer: Session 11 Continuation Prompt
+# IceDip — Cold Plunge Timer: Session 12 Continuation Prompt
 
 ## Who You Are
-Senior iOS developer continuing work on IceDip, a cold plunge timer app. SwiftUI + SwiftData + MVVM with `@Observable`, iOS 17+, Swift 6.0. All critical and high-priority App Store readiness issues were resolved in Session 10. This session focuses on **final polish and App Store submission preparation**.
+Senior iOS developer continuing work on IceDip, a cold plunge timer app. SwiftUI + SwiftData + MVVM with `@Observable`, iOS 17+, Swift 6.0. All critical and high-priority issues are resolved. Session 11 added App Store metadata documents and localized notification strings. This session focuses on **final pre-submission fixes** — privacy manifests for extensions, Watch entitlements, and replacing print() with os.Logger.
 
 ## Project Setup
 - **Location:** `/Volumes/T7SSD/MacMini/Projects/Coldplungetimer/`
@@ -12,7 +12,7 @@ Senior iOS developer continuing work on IceDip, a cold plunge timer app. SwiftUI
 - **Team ID:** `9B5THFVGW7` | **Bundle:** `com.icedip.app` | **Version:** 1.0.0
 - **Signing identity:** Apple Development: Yusuf Can Samiloglu (CM8U56F8SP)
 
-## Current State (14 commits on `main`, all committed, builds with zero warnings)
+## Current State (15 commits on `main`, all committed, builds with zero warnings)
 - `66d9df5` Initial commit
 - `70171eb` Fix 17 bugs for App Store readiness
 - `94431d0` Fix 12 remaining bugs and add Tier 1 enhancements
@@ -27,64 +27,27 @@ Senior iOS developer continuing work on IceDip, a cold plunge timer app. SwiftUI
 - `f5b65d2` Add light mode polish, locale-aware formatters, and Turkish localization
 - `374b659` Update continuation prompt for Session 10
 - `d92cc56` Fix App Store blockers, add error handling, and localize into 4 new languages
+- `04d63e3` Update continuation prompt for Session 11
+- *(Session 11 changes — uncommitted or pending commit)*
 
-## What Was Done in Session 10 (commit d92cc56)
+## What Was Done in Session 11
 
-### 1. [C1] PrivacyInfo.xcprivacy — DONE
-- **File:** `IceDip/Resources/PrivacyInfo.xcprivacy`
-- Added `NSPrivacyCollectedDataTypes` with `NSPrivacyCollectedDataTypeHealthAndFitness`
-- **Key decision:** HealthKit and CloudKit are NOT "required reason APIs" — they don't belong in `NSPrivacyAccessedAPITypes`. The correct fix was populating `NSPrivacyCollectedDataTypes` to declare health & fitness data collection. The Session 9 audit incorrectly suggested adding them to `NSPrivacyAccessedAPITypes`.
+### 1. Notification Cancel-Before-Schedule Safety (L2) — DONE
+- **File:** `IceDip/Services/NotificationService.swift`
+- Added `cancelDailyReminder()` as first line of `scheduleDailyReminder()` — API is now self-contained, no caller needs to cancel first
 
-### 2. [C2] SharedModelContainer fatalError Removal — DONE
-- **File:** `IceDip/Shared/SharedModelContainer.swift`
-- Replaced both `fatalError()` with 4-tier graceful fallback:
-  1. App Group container + CloudKit + migration (happy path)
-  2. Documents directory fallback (if App Group missing)
-  3. No CloudKit retry (if CloudKit entitlement fails)
-  4. In-memory store (last resort — app launches but data won't persist)
-- Uses `os.Logger` (subsystem: `com.icedip.app`, category: `ModelContainer`) instead of `print()`
+### 2. Localized Notification Strings — DONE
+- **File:** `IceDip/Services/NotificationService.swift`
+- Replaced 5 hardcoded English strings with `String(localized:)`:
+  - `"Plunge Complete!"`, `"Great job! You stayed in for Xm Xs."`, `"Great job! You stayed in for X seconds."`, `"Time for Your Cold Plunge"`, `"Build your resilience — start today's cold exposure session."`
+- **File:** `IceDip/Resources/Localizable.xcstrings` — Added translations for all 5 strings × 5 languages (de, es, fr, ja, tr)
+- App now has 96+ localized strings across 6 languages
 
-### 3. [C3] Delete All Data (GDPR) — DONE
-- **File:** `IceDip/Features/Settings/SettingsView.swift`
-- Added "Data" section with destructive "Delete All Data" button
-- `.confirmationDialog` with "Delete Everything" (destructive) and "Cancel"
-- `deleteAllData()` method: deletes all PlungeSession objects, resets 14 AppStorage keys (NOT `hasOnboarded`), clears app group UserDefaults, cancels notifications
-- **Key decision:** `hasOnboarded` is NOT reset — deleting data should not force re-onboarding
+### 3. App Store Metadata Document — DONE
+- **File:** `APP_STORE_METADATA.md` — Contains app name, subtitle, keywords (100 chars), full description, promotional text, screenshot dimensions & suggested screens, age rating, categories
 
-### 4. [H1] HealthKit Save Error Surfacing — DONE
-- **File:** `IceDip/Services/HealthKitService.swift` — `saveWorkout()` changed to `async throws`
-- **File:** `IceDip/Features/Timer/TimerViewModel.swift` — Added `healthKitSaveError: String?`, catch in `stop()`
-- **File:** `IceDip/Features/Timer/TimerView.swift` — `.alert("Health Save Failed", ...)` shown via `.onChange(of: viewModel.healthKitSaveError)`
-
-### 5. [H2] Ambient Sound Error Surfacing — DONE
-- **File:** `IceDip/Services/AmbientSoundService.swift` — Added `playbackFailed: Bool`, set on audio file missing or AVAudioPlayer init failure
-- **File:** `IceDip/Features/Timer/TimerView.swift` — `.alert("Audio Unavailable", ...)` shown via `.onChange(of: ambientSoundService.playbackFailed)`
-
-### 6. [H3] Show Tutorial — DONE
-- **File:** `IceDip/Features/Settings/SettingsView.swift`
-- Added "Show Tutorial" button in About section, sets `hasOnboarded = false`
-- ContentView already gates on `hasOnboarded` — triggers OnboardingView
-
-### 7. [H4] Orphaned Session Recovery — DONE
-- **File:** `IceDip/App/ContentView.swift`
-- Replaced silent `cleanupOrphanedSessions()` auto-delete with interactive alert
-- `checkForOrphanedSessions()` finds incomplete sessions older than 1 hour
-- Alert: "Incomplete Session Found" with Save / Discard buttons
-- **Save:** Sets `endTime = startTime + targetDuration`, calculates zone, marks completed
-- **Discard:** Deletes from modelContext
-- **Key decision:** Don't use `session.complete()` for orphan save — it sets `endTime = Date()` giving wildly wrong durations. Manually set properties instead.
-
-### 8. [H5] ChartView Calendar Guard — DONE
-- **File:** `IceDip/Features/History/ChartView.swift`
-- Added `guard !symbols.isEmpty else { return [] }` before weekday array rotation
-
-### 9. Multi-Language Localization — DONE
-- Added German (de), Spanish (es), French (fr), Japanese (ja) to all 3 `.xcstrings` files
-- **Main app:** 91 strings × 4 languages = 364 new translations
-- **Watch:** 10 strings × 4 languages = 40 new translations
-- **Widget:** 4 strings × 4 languages = 16 new translations
-- App now supports 6 languages: English (source), Turkish, German, Spanish, French, Japanese
-- Also deduplicated a "Cancel" entry that appeared twice in main Localizable.xcstrings
+### 4. App Store Review Notes — DONE
+- **File:** `REVIEW_NOTES.md` — Structured notes for reviewers: HealthKit justification, iCloud/CloudKit usage, notification types, data deletion (GDPR), privacy declarations, no background modes, no IAP
 
 ## What Was Tried But Didn't Work (All Sessions)
 
@@ -103,28 +66,67 @@ Senior iOS developer continuing work on IceDip, a cold plunge timer app. SwiftUI
 13. **`static var versionIdentifier` in VersionedSchema**: Swift 6.0 strict concurrency flags `var` as non-safe. Fix: `static let versionIdentifier`.
 14. **Session 9 audit suggested adding HealthKit/CloudKit to `NSPrivacyAccessedAPITypes`**: These are NOT required reason APIs. The valid categories are only: FileTimestamp, SystemBootTime, DiskSpace, ActiveKeyboards, UserDefaults. Fix: declare health data collection in `NSPrivacyCollectedDataTypes` instead.
 
-## Remaining Items from Session 9 Audit (LOW Priority — Not Blocking)
+## Session 12 Tasks — Final Pre-Submission Fixes
 
-### L1. No Network Status Awareness
-- CloudKit sync enabled but no UI indicator for sync status
-- If user is offline, no feedback that data isn't syncing
-- Could add a small sync indicator in History or Settings
+### Task 1: Widget Extension Privacy Manifest (HIGH)
+- **Create:** `IceDipWidget/PrivacyInfo.xcprivacy`
+- The widget reads from App Group UserDefaults (for streak/session data), so it needs `NSPrivacyAccessedAPICategoryUserDefaults` with reason `CA92.1`
+- No data collection (widget only displays data)
+- Set `NSPrivacyTracking: false`, empty `NSPrivacyTrackingDomains`
+- Reference the main app's `IceDip/Resources/PrivacyInfo.xcprivacy` for format — the widget version should be simpler (no collected data types, just the UserDefaults API access)
+- Add `PrivacyInfo.xcprivacy` to the widget target sources in `project.yml` if not auto-included
 
-### L2. Notification Rate Limiting
-- Daily reminder rescheduled on every toggle/time change
-- Rapidly toggling could queue multiple notifications
-- Should cancel existing before scheduling new (may already work via `cancelDailyReminder()` call)
+### Task 2: Watch App Privacy Manifest (HIGH)
+- **Create:** `IceDipWatch/PrivacyInfo.xcprivacy`
+- The Watch app does NOT use UserDefaults, HealthKit, or CloudKit directly — it only uses WatchConnectivity
+- WatchConnectivity is NOT a required reason API
+- Minimal manifest: `NSPrivacyTracking: false`, empty arrays for collected data, tracking domains, accessed APIs
+- Add to Watch target sources in `project.yml` if not auto-included
 
-### L3. Water Temperature Range
-- TimerView water temp slider may need extended range for extreme cold (below 0°C for salt water)
+### Task 3: Watch App Entitlements (MEDIUM)
+- **Create:** `IceDipWatch/IceDipWatch.entitlements`
+- Currently no `CODE_SIGN_ENTITLEMENTS` in Watch target settings in `project.yml` (line 97-110)
+- The Watch app does NOT use App Groups, HealthKit, or iCloud directly — sessions are sent to iPhone via WatchConnectivity
+- However, if it needs App Groups for shared UserDefaults or data, add `group.com.icedip.app`
+- **Investigate first:** Check if `WatchConnectivityService.swift` or any Watch code reads from `UserDefaults(suiteName: "group.com.icedip.app")`. If not, an empty entitlements file may suffice, or this task can be skipped entirely if code signing works without it
+- Add `CODE_SIGN_ENTITLEMENTS: IceDipWatch/IceDipWatch.entitlements` to `project.yml` under Watch target settings if file is created
 
-### L4. Professional App Icon
-- Current icon is programmatically generated (snowflake on gradient)
-- Consider professionally designed icon for App Store presence
+### Task 4: Replace print() with os.Logger (MEDIUM)
+- 8 `print()` statements in production code need replacement with structured `os.Logger` logging
+- **Pattern to follow** — `SharedModelContainer.swift` already uses `os.Logger` correctly:
+  ```swift
+  import os
+  private static let logger = Logger(subsystem: "com.icedip.app", category: "CategoryName")
+  // Then: logger.error("Message: \(error)")
+  ```
+- **Files to update:**
+  1. `IceDip/Services/NotificationService.swift:15` — `print("Notification permission error: \(error)")` → `logger.error(...)`, category: `Notifications`
+  2. `IceDip/Services/HealthKitService.swift:22` — `print("HealthKit authorization error: \(error)")` → `logger.error(...)`, category: `HealthKit`
+  3. `IceDip/Services/PhoneConnectivityService.swift:28` — `print("Failed to send streak update: \(error)")` → `logger.error(...)`, category: `Connectivity`
+  4. `IceDip/Services/PhoneConnectivityService.swift:50` — `print("Failed to decode watch session: \(error)")` → `logger.error(...)`, category: `Connectivity`
+  5. `IceDip/Services/PhoneConnectivityService.swift:75` — `print("Failed to save watch session: \(error)")` → `logger.error(...)`, category: `Connectivity`
+  6. `IceDip/Features/Timer/TimerViewModel.swift:205` — `print("Failed to fetch sessions for streak update: \(error)")` → `logger.error(...)`, category: `Timer`
+  7. `IceDipWatch/Services/WatchConnectivityService.swift:21` — `print("Failed to encode session: \(error)")` → `logger.error(...)`, category: `Connectivity`
+  8. `IceDipWatch/Services/WatchConnectivityService.swift:45` — `print("Failed to decode streak data: \(error)")` → `logger.error(...)`, category: `Connectivity`
+- **Do NOT touch** `Scripts/*.swift` — those are build-time scripts, `print()` is fine there
+- **Swift 6.0 note:** `Logger` is `Sendable`, no concurrency issues. Use `\(error, privacy: .public)` for error descriptions (they contain no user data)
 
-### L5. Higher Quality Ambient Sounds
-- Current ocean.wav and rain.wav are basic sine/noise (15s loops generated by script)
-- Consider royalty-free high-quality ambient loops
+### Task 5: Build Verification
+- After all changes: `xcodegen generate && xcodebuild build -scheme IceDip -destination 'generic/platform=iOS' -quiet CODE_SIGN_IDENTITY='' CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO`
+- Verify Watch files: `xcrun --sdk watchos swiftc -typecheck -target arm64-apple-watchos10.0 -swift-version 6 <watch swift files>`
+- Zero warnings expected
+
+### Task 6: Commit All Changes
+- Commit Session 11 uncommitted changes (NotificationService localization, Localizable.xcstrings translations, APP_STORE_METADATA.md, REVIEW_NOTES.md) + Session 12 fixes in a single commit
+- Suggested message: "Add privacy manifests for extensions, replace print with os.Logger, and localize notifications"
+
+## Items NOT in Scope (Already Decided)
+
+- **L1 (Network status awareness):** CloudKit handles offline gracefully. Not needed for v1.0.
+- **L3 (Water temp range):** 0–15°C covers all practical scenarios. Salt water below 0°C is too niche.
+- **L4 (Professional app icon):** Current programmatic snowflake works for launch. Can be swapped later without code changes.
+- **L5 (Higher quality ambient sounds):** Requires sourcing royalty-free audio. Out of scope.
+- **Unit tests / CI:** Premature for solo dev first submission. Can be added post-launch.
 
 ## Current File Structure (37 Swift files + resources)
 ```
@@ -161,13 +163,13 @@ IceDip/
 ├── Services/
 │   ├── HapticService.swift          # Static methods for haptic feedback
 │   ├── HealthKitService.swift       # @Observable, HKWorkoutBuilder, auth management, saveWorkout throws
-│   ├── NotificationService.swift    # async cancelTimerNotifications()
+│   ├── NotificationService.swift    # async cancelTimerNotifications(), localized strings, cancel-before-schedule
 │   ├── AmbientSoundService.swift    # @Observable, AVAudioPlayer, play/pause/resume/stop, playbackFailed flag
 │   └── PhoneConnectivityService.swift # WCSessionDelegate, receives Watch sessions, sends streak updates
 └── Shared/
     ├── Theme.swift                  # Adaptive Color("Theme*") + hex zone colors, Fonts, Spacing, Animations (SHARED)
     ├── Extensions.swift             # Color(hex:), TimeInterval, Date (locale-aware formatters), moodEmoji(), temp (SHARED)
-    ├── SharedModelContainer.swift   # App Group + CloudKit (.automatic for app, .none for extensions), 4-tier fallback (SHARED with widget)
+    ├── SharedModelContainer.swift   # App Group + CloudKit (.automatic for app, .none for extensions), 4-tier fallback, os.Logger (SHARED with widget)
     ├── StreakCalculator.swift        # Extracted streak/goal logic (shared with widget)
     ├── WatchSessionData.swift       # Codable structs for Watch↔Phone sync (SHARED with watch)
     └── Components/
@@ -192,18 +194,19 @@ IceDipWidget/
 ├── IceDipWidgetBundle.swift         # @main widget entry point
 ├── IceDipWidget.swift               # PlungeEntry, PlungeTimelineProvider, IceDipWidget
 ├── IceDipWidgetEntryView.swift      # SmallWidgetView + MediumWidgetView (hardcoded dark colors)
-├── IceDipWidget.entitlements        # App Group
+├── IceDipWidget.entitlements        # App Group: group.com.icedip.app
 ├── Localizable.xcstrings           # Widget localization catalog (4 strings, en + de + es + fr + ja + tr)
 └── Info.plist                       # WidgetKit extension point
 
 Scripts/
-├── generate_icon.swift              # CoreGraphics icon generator
-└── generate_ambient_sounds.swift    # Generates ocean.wav + rain.wav
+├── generate_icon.swift              # CoreGraphics icon generator (print() OK here)
+└── generate_ambient_sounds.swift    # Generates ocean.wav + rain.wav (print() OK here)
 
 IceDip/Resources/
 ├── Info.plist                       # UILaunchScreen, HealthKit usage descriptions, orientations
 ├── IceDip.entitlements              # App Group + HealthKit + iCloud/CloudKit
-├── Localizable.xcstrings           # Main app localization catalog (91 strings, en + de + es + fr + ja + tr)
+├── Localizable.xcstrings           # Main app localization catalog (96 strings, en + de + es + fr + ja + tr)
+├── PrivacyInfo.xcprivacy            # UserDefaults API + HealthAndFitness data collection declared
 ├── Sounds/
 │   ├── ocean.wav                    # 15s ambient loop (generated)
 │   └── rain.wav                     # 15s ambient loop (generated)
@@ -216,36 +219,51 @@ IceDip/Resources/
 │   ├── ThemeIceBlue.colorset/       # dark: #64D2FF, light: #0891B2
 │   ├── ThemeTextPrimary.colorset/   # dark: white, light: #0F172A
 │   └── ThemeTextSecondary.colorset/ # dark: white@60%, light: #64748B
-└── PrivacyInfo.xcprivacy            # UserDefaults API + HealthAndFitness data collection declared
+└── (APP_STORE_METADATA.md + REVIEW_NOTES.md at project root)
 ```
 
 ## Key Architectural Decisions
 - **Shared SwiftData via App Group**: `SharedModelContainer` provides single `ModelContainer` at `group.com.icedip.app/IceDip.store`. CloudKit enabled for main app, disabled for extensions. V2 schema with migration plan. 4-tier fallback prevents crashes.
 - **Adaptive theme colors**: 5 theme colors + AccentColor + LaunchBackground use asset catalogs with dark/light variants. Zone colors stay hardcoded hex (same both modes). Widget uses inline hex (dark only).
 - **Custom zone thresholds**: `ZoneThresholds` struct stored as JSON in AppStorage via `RawRepresentable`. Read by TimerViewModel from UserDefaults. Mirrored to app group for widget. Watch uses defaults.
-- **Localization**: `String(localized:)` for non-SwiftUI computed String properties. SwiftUI `Text()` literals auto-localize via `LocalizedStringKey`. `.xcstrings` catalogs populated with 91+ strings across 6 languages (en, tr, de, es, fr, ja). `SWIFT_EMIT_LOC_STRINGS: "YES"` on all 3 targets.
-- **Error surfacing pattern**: Services expose observable error properties (`HealthKitService.saveWorkout` throws, `AmbientSoundService.playbackFailed`). ViewModels catch and store errors. Views observe via `.onChange` and show `.alert`. Non-critical errors (Watch sync, orphan cleanup) remain print-only.
+- **Localization**: `String(localized:)` for non-SwiftUI computed String properties and notification content. SwiftUI `Text()` literals auto-localize via `LocalizedStringKey`. `.xcstrings` catalogs populated with 96+ strings across 6 languages (en, tr, de, es, fr, ja). `SWIFT_EMIT_LOC_STRINGS: "YES"` on all 3 targets.
+- **Error surfacing pattern**: Services expose observable error properties (`HealthKitService.saveWorkout` throws, `AmbientSoundService.playbackFailed`). ViewModels catch and store errors. Views observe via `.onChange` and show `.alert`. Non-critical errors use `os.Logger` (or `print()` — to be migrated this session).
 - **StreakCalculator as shared logic**: Struct taking `[PlungeSession]`, reused by StreakView, widget, PhoneConnectivityService, TimerViewModel.
 - **Service injection pattern**: All services `@MainActor @Observable`, created as `@State` in `IceDipApp`, injected via `.environment()`.
-- **Watch architecture**: Standalone timer, no SwiftData. Sessions sync via `transferUserInfo()`, streak via `updateApplicationContext()`.
+- **Watch architecture**: Standalone timer, no SwiftData. Sessions sync via `transferUserInfo()`, streak via `updateApplicationContext()`. No App Groups or HealthKit on Watch.
 - **iCloud sync**: `cloudKitDatabase: .automatic` on ModelConfiguration. Last-writer-wins conflict resolution. Widget excluded via `.appex` bundle path check.
 - **GDPR compliance**: "Delete All Data" in Settings deletes all SwiftData sessions, resets 14 AppStorage keys, clears app group defaults, cancels notifications. Does NOT reset `hasOnboarded`.
 
-## Session 11 Suggested Focus Areas
-
-### App Store Submission Preparation
-1. **App Store Connect metadata** — Screenshots, app description, keywords, categories
-2. **Provisioning profiles** — Ensure App Groups + HealthKit + iCloud capabilities are registered in Apple Developer Portal
-3. **Code signing** — Verify signing with proper provisioning profile (not just compilation-only builds)
-4. **App Store review notes** — Document HealthKit usage, iCloud sync, data deletion capability
-
-### Polish (LOW Priority Items from Audit)
-5. **[L2] Notification rate limiting** — Verify `cancelDailyReminder()` prevents duplicate notifications on rapid toggle
-6. **[L3] Water temp range** — Consider extending slider for salt water scenarios (below 0°C)
-
-### Testing
-7. **Simulator test** — Run full flow: onboarding → timer → completion → history → streak → settings
-8. **Edge cases** — Orphan recovery alert, Delete All Data, HealthKit permission denial, ambient sound error
+## project.yml Watch Target (for reference — needs entitlements addition)
+```yaml
+IceDipWatch:
+  type: application
+  platform: watchOS
+  sources:
+    - path: IceDipWatch
+      excludes:
+        - "**/.DS_Store"
+    - path: IceDip/Models/ZoneThresholds.swift
+    - path: IceDip/Features/Timer/BenefitZone.swift
+    - path: IceDip/Shared/Extensions.swift
+    - path: IceDip/Shared/Theme.swift
+    - path: IceDip/Shared/WatchSessionData.swift
+  settings:
+    base:
+      CODE_SIGN_STYLE: Automatic
+      MARKETING_VERSION: "1.0.0"
+      CURRENT_PROJECT_VERSION: 1
+      PRODUCT_BUNDLE_IDENTIFIER: com.icedip.app.watchkitapp
+      ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+      INFOPLIST_FILE: IceDipWatch/Info.plist
+      SWIFT_EMIT_LOC_STRINGS: "YES"
+      # ADD: CODE_SIGN_ENTITLEMENTS: IceDipWatch/IceDipWatch.entitlements (if needed)
+  info:
+    path: IceDipWatch/Info.plist
+    properties:
+      CFBundleDisplayName: IceDip
+      WKCompanionAppBundleIdentifier: com.icedip.app
+```
 
 ## Design Spec
 - **Dark — Background:** #0A1628 | **Surface:** #111D2E | **Accent:** #64D2FF

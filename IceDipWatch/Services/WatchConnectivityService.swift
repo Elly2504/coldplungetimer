@@ -1,9 +1,11 @@
 import Foundation
 import WatchConnectivity
+import os
 
 @MainActor
 @Observable
 final class WatchConnectivityService: NSObject, WCSessionDelegate {
+    private static let logger = Logger(subsystem: "com.icedip.app", category: "Connectivity")
     var streakData = WatchStreakData(currentStreak: 0, bestStreak: 0, sessionsThisWeek: 0, lastSessionDate: nil)
 
     func activate() {
@@ -18,7 +20,7 @@ final class WatchConnectivityService: NSObject, WCSessionDelegate {
             let data = try JSONEncoder().encode(session)
             WCSession.default.transferUserInfo(["sessionData": data])
         } catch {
-            print("Failed to encode session: \(error)")
+            Self.logger.error("Failed to encode session: \(error, privacy: .public)")
         }
     }
 
@@ -42,7 +44,7 @@ final class WatchConnectivityService: NSObject, WCSessionDelegate {
         do {
             streakData = try JSONDecoder().decode(WatchStreakData.self, from: data)
         } catch {
-            print("Failed to decode streak data: \(error)")
+            Self.logger.error("Failed to decode streak data: \(error, privacy: .public)")
         }
     }
 }

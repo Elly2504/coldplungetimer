@@ -1134,6 +1134,51 @@
         "ja" : { "stringUnit" : { "state" : "translated", "value" : "%lld件の未完了セッションが見つかりました。保存しますか、それとも破棄しますか？" } },
         "tr" : { "stringUnit" : { "state" : "translated", "value" : "%lld tamamlanmamış oturum bulundu. Kaydetmek mi yoksa silmek mi istersiniz?" } }
       }
+    },
+    "Plunge Complete!" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Eisbad geschafft!" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "¡Inmersión completada!" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Immersion terminée !" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "プランジ完了！" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Buz Banyosu Tamamlandı!" } }
+      }
+    },
+    "Great job! You stayed in for %lldm %llds." : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Großartig! Du warst %lldm %llds im Wasser." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "¡Genial! Aguantaste %lldm %llds." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Bravo ! Vous êtes resté(e) %lldm %llds." } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "お疲れさまです！%lld分%lld秒入りました。" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Harika! %llddk %ldsn dayanabildin." } }
+      }
+    },
+    "Great job! You stayed in for %lld seconds." : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Großartig! Du warst %lld Sekunden im Wasser." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "¡Genial! Aguantaste %lld segundos." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Bravo ! Vous êtes resté(e) %lld secondes." } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "お疲れさまです！%lld秒入りました。" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Harika! %lld saniye dayanabildin." } }
+      }
+    },
+    "Time for Your Cold Plunge" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Zeit für dein Eisbad" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Hora de tu inmersión fría" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "C'est l'heure de votre bain froid" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "コールドプランジの時間です" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Buz Banyosu Zamanı" } }
+      }
+    },
+    "Build your resilience — start today's cold exposure session." : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Stärke deine Widerstandskraft – starte deine heutige Kälteexposition." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Fortalece tu resistencia — comienza tu sesión de exposición al frío de hoy." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Renforcez votre résilience — commencez votre séance d'exposition au froid." } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "レジリエンスを鍛えましょう — 今日の冷水セッションを始めましょう。" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Dayanıklılığını güçlendir — bugünkü soğuk maruziyetine başla." } }
+      }
     }
   },
   "version" : "1.0"

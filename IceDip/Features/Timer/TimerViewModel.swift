@@ -2,10 +2,12 @@ import Foundation
 import SwiftData
 import SwiftUI
 import WidgetKit
+import os
 
 @MainActor
 @Observable
 final class TimerViewModel {
+    private static let logger = Logger(subsystem: "com.icedip.app", category: "Timer")
     // MARK: - State
 
     var selectedDuration: TimeInterval = 120
@@ -202,7 +204,7 @@ final class TimerViewModel {
                         lastSessionDate: calculator.lastCompletedSession?.startTime
                     )
                 } catch {
-                    print("Failed to fetch sessions for streak update: \(error)")
+                    Self.logger.error("Failed to fetch sessions for streak update: \(error, privacy: .public)")
                 }
             }
 

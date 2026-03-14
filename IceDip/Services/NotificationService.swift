@@ -1,9 +1,11 @@
 import Foundation
 import UserNotifications
+import os
 
 @MainActor
 @Observable
 final class NotificationService {
+    private static let logger = Logger(subsystem: "com.icedip.app", category: "Notifications")
     var isAuthorized = false
 
     func requestPermission() async {
@@ -12,7 +14,7 @@ final class NotificationService {
                 .requestAuthorization(options: [.alert, .sound, .badge])
             self.isAuthorized = granted
         } catch {
-            print("Notification permission error: \(error)")
+            Self.logger.error("Notification permission error: \(error, privacy: .public)")
         }
     }
 
@@ -23,13 +25,13 @@ final class NotificationService {
 
     func scheduleTimerComplete(duration: TimeInterval, soundEnabled: Bool) {
         let content = UNMutableNotificationContent()
-        content.title = "Plunge Complete!"
+        content.title = String(localized: "Plunge Complete!")
         let minutes = Int(duration) / 60
         let seconds = Int(duration) % 60
         if minutes > 0 {
-            content.body = "Great job! You stayed in for \(minutes)m \(seconds)s."
+            content.body = String(localized: "Great job! You stayed in for \(minutes)m \(seconds)s.")
         } else {
-            content.body = "Great job! You stayed in for \(seconds) seconds."
+            content.body = String(localized: "Great job! You stayed in for \(seconds) seconds.")
         }
         content.sound = soundEnabled ? .default : nil
 
@@ -48,9 +50,10 @@ final class NotificationService {
     }
 
     func scheduleDailyReminder(hour: Int, minute: Int, soundEnabled: Bool) {
+        cancelDailyReminder()
         let content = UNMutableNotificationContent()
-        content.title = "Time for Your Cold Plunge"
-        content.body = "Build your resilience — start today's cold exposure session."
+        content.title = String(localized: "Time for Your Cold Plunge")
+        content.body = String(localized: "Build your resilience — start today's cold exposure session.")
         content.sound = soundEnabled ? .default : nil
 
         var dateComponents = DateComponents()

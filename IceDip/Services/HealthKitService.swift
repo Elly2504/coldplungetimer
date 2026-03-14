@@ -1,9 +1,11 @@
 import Foundation
 import HealthKit
+import os
 
 @MainActor
 @Observable
 final class HealthKitService {
+    private static let logger = Logger(subsystem: "com.icedip.app", category: "HealthKit")
     var isAuthorized = false
 
     var isAvailable: Bool {
@@ -19,7 +21,7 @@ final class HealthKitService {
             try await healthStore.requestAuthorization(toShare: [workoutType], read: [])
             checkAuthorizationStatus()
         } catch {
-            print("HealthKit authorization error: \(error)")
+            Self.logger.error("HealthKit authorization error: \(error, privacy: .public)")
         }
     }
 

@@ -1,10 +1,12 @@
 import Foundation
 import SwiftData
 import WatchConnectivity
+import os
 
 @MainActor
 @Observable
 final class PhoneConnectivityService: NSObject, WCSessionDelegate {
+    private static let logger = Logger(subsystem: "com.icedip.app", category: "Connectivity")
     var modelContainer: ModelContainer?
 
     func activate() {
@@ -25,7 +27,7 @@ final class PhoneConnectivityService: NSObject, WCSessionDelegate {
             let data = try JSONEncoder().encode(streakData)
             try WCSession.default.updateApplicationContext(["streakData": data])
         } catch {
-            print("Failed to send streak update: \(error)")
+            Self.logger.error("Failed to send streak update: \(error, privacy: .public)")
         }
     }
 
@@ -41,13 +43,13 @@ final class PhoneConnectivityService: NSObject, WCSessionDelegate {
 
     nonisolated func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {
         guard let data = userInfo["sessionData"] as? Data else { return }
-        do {
-            let sessionData = try JSONDecoder().decode(WatchSessionData.self, from: data)
-            Task { @MainActor in
+        Task { @MainActor in
+            do {
+                let sessionData = try JSONDecoder().decode(WatchSessionData.self, from: data)
                 insertSession(sessionData)
+            } catch {
+                Self.logger.error("Failed to decode watch session: \(error, privacy: .public)")
             }
-        } catch {
-            print("Failed to decode watch session: \(error)")
         }
     }
 
@@ -72,7 +74,7 @@ final class PhoneConnectivityService: NSObject, WCSessionDelegate {
                 lastSessionDate: calculator.lastCompletedSession?.startTime
             )
         } catch {
-            print("Failed to save watch session: \(error)")
+            Self.logger.error("Failed to save watch session: \(error, privacy: .public)")
         }
     }
 }
