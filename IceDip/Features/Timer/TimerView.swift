@@ -14,6 +14,7 @@ struct TimerView: View {
     @AppStorage(PreferenceKey.healthKitEnabled) private var healthKitEnabled = false
     @AppStorage(PreferenceKey.ambientSoundEnabled) private var ambientSoundEnabled = false
     @AppStorage(PreferenceKey.selectedAmbientSound) private var selectedAmbientSound = "ocean"
+    @AppStorage(PreferenceKey.zoneThresholds) private var zoneThresholds = ZoneThresholds.default
     @Environment(HealthKitService.self) private var healthKitService
     @Environment(AmbientSoundService.self) private var ambientSoundService
     @Environment(PhoneConnectivityService.self) private var phoneConnectivityService
@@ -177,7 +178,8 @@ struct TimerView: View {
 
             ZoneIndicatorView(
                 currentZone: viewModel.currentZone,
-                elapsedSeconds: viewModel.elapsedSeconds
+                elapsedSeconds: viewModel.elapsedSeconds,
+                thresholds: zoneThresholds
             )
             .padding(.horizontal, Theme.Spacing.xl)
 

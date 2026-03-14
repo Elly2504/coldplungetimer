@@ -64,6 +64,7 @@ targets:
       - path: IceDip/Shared/Extensions.swift
       - path: IceDip/Shared/Theme.swift
       - path: IceDip/Shared/SharedModelContainer.swift
+      - path: IceDip/Models/ZoneThresholds.swift
       - path: IceDip/Shared/StreakCalculator.swift
     settings:
       base:
@@ -87,6 +88,7 @@ targets:
       - path: IceDipWatch
         excludes:
           - "**/.DS_Store"
+      - path: IceDip/Models/ZoneThresholds.swift
       - path: IceDip/Features/Timer/BenefitZone.swift
       - path: IceDip/Shared/Extensions.swift
       - path: IceDip/Shared/Theme.swift

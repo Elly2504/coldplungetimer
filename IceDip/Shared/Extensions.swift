@@ -89,8 +89,8 @@ extension Date {
     }
 
     var formattedShort: String {
-        if isToday { return "Today" }
-        if isYesterday { return "Yesterday" }
+        if isToday { return String(localized: "Today") }
+        if isYesterday { return String(localized: "Yesterday") }
         return Formatters.short.string(from: self)
     }
 

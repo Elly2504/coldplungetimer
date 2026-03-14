@@ -53,7 +53,6 @@ struct HistoryView: View {
                 }
             }
             .navigationTitle("History")
-            .toolbarColorScheme(.dark, for: .navigationBar)
         }
     }
 

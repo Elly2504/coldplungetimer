@@ -10,7 +10,11 @@ enum SharedModelContainer {
             fatalError("App Group container '\(appGroupIdentifier)' not found. Check entitlements.")
         }
         let url = groupURL.appendingPathComponent("IceDip.store")
-        let config = ModelConfiguration(url: url)
+
+        // Widget extensions don't have iCloud entitlements — use .none for them
+        let isExtension = Bundle.main.bundlePath.hasSuffix(".appex")
+        let cloudKit: ModelConfiguration.CloudKitDatabase = isExtension ? .none : .automatic
+        let config = ModelConfiguration(url: url, cloudKitDatabase: cloudKit)
         do {
             return try ModelContainer(
                 for: PlungeSession.self,

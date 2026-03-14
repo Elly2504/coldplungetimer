@@ -3,6 +3,7 @@ import SwiftUI
 struct ZoneIndicatorView: View {
     let currentZone: BenefitZone
     let elapsedSeconds: TimeInterval
+    var thresholds: ZoneThresholds = .default
 
     var body: some View {
         VStack(spacing: Theme.Spacing.sm) {
@@ -34,7 +35,7 @@ struct ZoneIndicatorView: View {
 
     private func zoneOpacity(for zone: BenefitZone) -> Double {
         if zone == currentZone { return 1.0 }
-        if zone.startSeconds < elapsedSeconds { return 0.5 }
+        if thresholds.startSeconds(for: zone) < elapsedSeconds { return 0.5 }
         return 0.15
     }
 }

@@ -7,13 +7,22 @@ struct IceDipApp: App {
     @State private var healthKitService = HealthKitService()
     @State private var ambientSoundService = AmbientSoundService()
     @State private var phoneConnectivityService = PhoneConnectivityService()
+    @AppStorage(PreferenceKey.colorSchemePreference) private var colorSchemePreference = "dark"
 
     private let container = SharedModelContainer.container
+
+    private var resolvedColorScheme: ColorScheme? {
+        switch colorSchemePreference {
+        case "dark": .dark
+        case "light": .light
+        default: nil
+        }
+    }
 
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .preferredColorScheme(.dark)
+                .preferredColorScheme(resolvedColorScheme)
                 .environment(notificationService)
                 .environment(healthKitService)
                 .environment(ambientSoundService)

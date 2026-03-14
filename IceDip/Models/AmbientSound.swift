@@ -8,8 +8,8 @@ enum AmbientSound: String, CaseIterable, Identifiable {
 
     var displayName: String {
         switch self {
-        case .ocean: "Ocean Waves"
-        case .rain: "Rain"
+        case .ocean: String(localized: "Ocean Waves")
+        case .rain: String(localized: "Rain")
         }
     }
 

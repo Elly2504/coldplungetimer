@@ -30,7 +30,6 @@ struct StreakView: View {
                 }
             }
             .navigationTitle("Streak")
-            .toolbarColorScheme(.dark, for: .navigationBar)
         }
     }
 

@@ -10,5 +10,14 @@
 	<true/>
 	<key>com.apple.developer.healthkit.access</key>
 	<array/>
+	<key>com.apple.developer.icloud-containers</key>
+	<array>
+		<string>iCloud.com.icedip.app</string>
+	</array>
+	<key>com.apple.developer.icloud-services</key>
+	<array>
+		<string>CloudDocuments</string>
+		<string>CloudKit</string>
+	</array>
 </dict>
 </plist>

@@ -24,6 +24,16 @@ final class TimerViewModel {
     var moodAfter: Int? = nil
     var notes: String = ""
 
+    // MARK: - Zone Thresholds
+
+    private var zoneThresholds: ZoneThresholds {
+        guard let raw = UserDefaults.standard.string(forKey: PreferenceKey.zoneThresholds),
+              let thresholds = ZoneThresholds(rawValue: raw) else {
+            return .default
+        }
+        return thresholds
+    }
+
     // MARK: - Private
 
     private var timer: Timer?
@@ -157,7 +167,8 @@ final class TimerViewModel {
             session.complete(
                 waterTemp: hasWaterTemp ? waterTemp : nil,
                 moodBefore: moodBefore,
-                moodAfter: moodAfter
+                moodAfter: moodAfter,
+                thresholds: zoneThresholds
             )
 
             if hapticsEnabled {
@@ -226,7 +237,7 @@ final class TimerViewModel {
         // Check for zone transitions that happened while backgrounded
         let previousZone = currentZone
         elapsedSeconds += elapsed
-        currentZone = BenefitZone.zone(for: elapsedSeconds)
+        currentZone = BenefitZone.zone(for: elapsedSeconds, thresholds: zoneThresholds)
 
         if currentZone != previousZone && hapticsEnabled {
             HapticService.zoneTransition()
@@ -254,7 +265,7 @@ final class TimerViewModel {
     private func tick(hapticsEnabled: Bool) async {
         elapsedSeconds += 1
 
-        let newZone = BenefitZone.zone(for: elapsedSeconds)
+        let newZone = BenefitZone.zone(for: elapsedSeconds, thresholds: zoneThresholds)
         if newZone != currentZone {
             currentZone = newZone
             if hapticsEnabled {

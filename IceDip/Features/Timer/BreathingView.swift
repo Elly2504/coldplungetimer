@@ -111,9 +111,9 @@ private enum BreathingPhase: String {
 
     var label: String {
         switch self {
-        case .inhale: "Breathe In"
-        case .hold: "Hold"
-        case .exhale: "Breathe Out"
+        case .inhale: String(localized: "Breathe In")
+        case .hold: String(localized: "Hold")
+        case .exhale: String(localized: "Breathe Out")
         }
     }
 }

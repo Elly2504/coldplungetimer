@@ -11,21 +11,21 @@ enum BenefitZone: String, CaseIterable, Codable, Identifiable {
 
     var displayName: String {
         switch self {
-        case .coldShock: "Cold Shock"
-        case .adaptation: "Adaptation"
-        case .dopamineZone: "Dopamine Zone"
-        case .metabolicBoost: "Metabolic Boost"
-        case .deepResilience: "Deep Resilience"
+        case .coldShock: String(localized: "Cold Shock")
+        case .adaptation: String(localized: "Adaptation")
+        case .dopamineZone: String(localized: "Dopamine Zone")
+        case .metabolicBoost: String(localized: "Metabolic Boost")
+        case .deepResilience: String(localized: "Deep Resilience")
         }
     }
 
     var description: String {
         switch self {
-        case .coldShock: "Adrenaline spike, fight-or-flight response activating"
-        case .adaptation: "Body adjusting, norepinephrine rising"
-        case .dopamineZone: "Dopamine +250%, norepinephrine +530%"
-        case .metabolicBoost: "Brown fat activation, doubled metabolic rate"
-        case .deepResilience: "Cellular cleanup, autophagy activation"
+        case .coldShock: String(localized: "Adrenaline spike, fight-or-flight response activating")
+        case .adaptation: String(localized: "Body adjusting, norepinephrine rising")
+        case .dopamineZone: String(localized: "Dopamine +250%, norepinephrine +530%")
+        case .metabolicBoost: String(localized: "Brown fat activation, doubled metabolic rate")
+        case .deepResilience: String(localized: "Cellular cleanup, autophagy activation")
         }
     }
 
@@ -60,9 +60,9 @@ enum BenefitZone: String, CaseIterable, Codable, Identifiable {
         }
     }
 
-    static func zone(for elapsedSeconds: TimeInterval) -> BenefitZone {
+    static func zone(for elapsedSeconds: TimeInterval, thresholds: ZoneThresholds = .default) -> BenefitZone {
         for zone in Self.allCases.reversed() {
-            if elapsedSeconds >= zone.startSeconds {
+            if elapsedSeconds >= thresholds.startSeconds(for: zone) {
                 return zone
             }
         }

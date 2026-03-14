@@ -2,11 +2,11 @@ import SwiftUI
 
 enum Theme {
     enum Colors {
-        static let background = Color(hex: "0A1628")
-        static let surface = Color(hex: "111D2E")
-        static let iceBlue = Color(hex: "64D2FF")
-        static let textPrimary = Color.white
-        static let textSecondary = Color.white.opacity(0.6)
+        static let background = Color("ThemeBackground")
+        static let surface = Color("ThemeSurface")
+        static let iceBlue = Color("ThemeIceBlue")
+        static let textPrimary = Color("ThemeTextPrimary")
+        static let textSecondary = Color("ThemeTextSecondary")
 
         // Zone colors
         static let coldShock = Color(hex: "FF6B35")

@@ -14,4 +14,6 @@ enum PreferenceKey {
     static let healthKitEnabled = "healthKitEnabled"
     static let ambientSoundEnabled = "ambientSoundEnabled"
     static let selectedAmbientSound = "selectedAmbientSound"
+    static let colorSchemePreference = "colorSchemePreference"
+    static let zoneThresholds = "zoneThresholds"
 }

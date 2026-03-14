@@ -3,16 +3,16 @@ import SwiftData
 
 @Model
 final class PlungeSession {
-    var id: UUID
-    var startTime: Date
+    var id: UUID = UUID()
+    var startTime: Date = Date()
     var endTime: Date?
-    var targetDuration: TimeInterval
+    var targetDuration: TimeInterval = 0
     var waterTemp: Double?
     var benefitZoneReached: String?
     var moodBefore: Int?
     var moodAfter: Int?
     var notes: String?
-    var isCompleted: Bool
+    var isCompleted: Bool = false
 
     var duration: TimeInterval {
         guard let endTime else { return Date().timeIntervalSince(startTime) }
@@ -41,12 +41,12 @@ final class PlungeSession {
         self.isCompleted = false
     }
 
-    func complete(waterTemp: Double?, moodBefore: Int?, moodAfter: Int?) {
+    func complete(waterTemp: Double?, moodBefore: Int?, moodAfter: Int?, thresholds: ZoneThresholds = .default) {
         self.endTime = Date()
         self.waterTemp = waterTemp
         self.moodBefore = moodBefore
         self.moodAfter = moodAfter
-        self.benefitZoneReached = BenefitZone.zone(for: duration).rawValue
+        self.benefitZoneReached = BenefitZone.zone(for: duration, thresholds: thresholds).rawValue
         self.isCompleted = true
     }
 }

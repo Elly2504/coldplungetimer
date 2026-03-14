@@ -13,6 +13,8 @@ struct SettingsView: View {
     @AppStorage(PreferenceKey.healthKitEnabled) private var healthKitEnabled = false
     @AppStorage(PreferenceKey.ambientSoundEnabled) private var ambientSoundEnabled = false
     @AppStorage(PreferenceKey.selectedAmbientSound) private var selectedAmbientSound = "ocean"
+    @AppStorage(PreferenceKey.colorSchemePreference) private var colorSchemePreference = "dark"
+    @AppStorage(PreferenceKey.zoneThresholds) private var zoneThresholds = ZoneThresholds.default
 
     @Environment(NotificationService.self) private var notificationService
     @Environment(HealthKitService.self) private var healthKitService
@@ -32,6 +34,15 @@ struct SettingsView: View {
                 Theme.Colors.background.ignoresSafeArea()
 
                 List {
+                    // Appearance
+                    Section("Appearance") {
+                        Picker("Theme", selection: $colorSchemePreference) {
+                            Text("Dark").tag("dark")
+                            Text("Light").tag("light")
+                            Text("System").tag("system")
+                        }
+                    }
+
                     // Timer Defaults
                     Section("Timer") {
                         Picker("Default Duration", selection: $defaultDuration) {
@@ -40,6 +51,44 @@ struct SettingsView: View {
                             }
                         }
                         Toggle("Breathing Exercise", isOn: $breathingEnabled)
+                    }
+
+                    // Zone Thresholds
+                    Section("Zone Thresholds") {
+                        zoneThresholdRow(
+                            zone: .adaptation,
+                            value: $zoneThresholds.adaptation,
+                            min: 10,
+                            max: zoneThresholds.dopamineZone - 10
+                        )
+                        zoneThresholdRow(
+                            zone: .dopamineZone,
+                            value: $zoneThresholds.dopamineZone,
+                            min: zoneThresholds.adaptation + 10,
+                            max: zoneThresholds.metabolicBoost - 10
+                        )
+                        zoneThresholdRow(
+                            zone: .metabolicBoost,
+                            value: $zoneThresholds.metabolicBoost,
+                            min: zoneThresholds.dopamineZone + 10,
+                            max: zoneThresholds.deepResilience - 10
+                        )
+                        zoneThresholdRow(
+                            zone: .deepResilience,
+                            value: $zoneThresholds.deepResilience,
+                            min: zoneThresholds.metabolicBoost + 10,
+                            max: 600
+                        )
+
+                        if zoneThresholds != .default {
+                            Button("Reset to Defaults") {
+                                zoneThresholds = .default
+                            }
+                        }
+                    }
+                    .onChange(of: zoneThresholds) { _, newValue in
+                        UserDefaults(suiteName: SharedModelContainer.appGroupIdentifier)?
+                            .set(newValue.rawValue, forKey: PreferenceKey.zoneThresholds)
                     }
 
                     // Units
@@ -144,7 +193,6 @@ struct SettingsView: View {
                 .scrollContentBackground(.hidden)
             }
             .navigationTitle("Settings")
-            .toolbarColorScheme(.dark, for: .navigationBar)
             .tint(Theme.Colors.iceBlue)
         }
     }
@@ -169,5 +217,19 @@ struct SettingsView: View {
         guard reminderEnabled else { return }
         notificationService.cancelDailyReminder()
         notificationService.scheduleDailyReminder(hour: reminderHour, minute: reminderMinute, soundEnabled: soundEnabled)
+    }
+
+    private func zoneThresholdRow(zone: BenefitZone, value: Binding<TimeInterval>, min: TimeInterval, max: TimeInterval) -> some View {
+        Stepper(value: value, in: min...max, step: 5) {
+            HStack(spacing: Theme.Spacing.sm) {
+                Circle()
+                    .fill(zone.color)
+                    .frame(width: 10, height: 10)
+                Text(zone.displayName)
+                Spacer()
+                Text("\(Int(value.wrappedValue))s")
+                    .foregroundStyle(Theme.Colors.textSecondary)
+            }
+        }
     }
 }
