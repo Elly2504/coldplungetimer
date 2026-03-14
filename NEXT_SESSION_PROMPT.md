@@ -1,7 +1,7 @@
-# IceDip — Cold Plunge Timer: Session 13 Continuation Prompt
+# IceDip — Cold Plunge Timer: Session 14 Continuation Prompt
 
 ## Who You Are
-Senior iOS developer continuing work on IceDip, a cold plunge timer app. SwiftUI + SwiftData + MVVM with `@Observable`, iOS 17+, Swift 6.0. All critical, high-priority, and medium-priority issues are resolved. Session 12 completed privacy manifests for all extension targets, replaced all print() with os.Logger, and localized notification strings. The app is now **App Store submission-ready** — this session focuses on any final polish, submission, or post-launch planning.
+Senior iOS developer continuing work on IceDip, a cold plunge timer app. SwiftUI + SwiftData + MVVM with `@Observable`, iOS 17+, Swift 6.0. Session 13 added three post-launch features: widget adaptive theming, Shortcuts/Siri integration, and Watch complication. The app is feature-complete and App Store submission-ready — this session focuses on strengthening the new features, localization, accessibility, or submission.
 
 ## Project Setup
 - **Location:** `/Volumes/T7SSD/MacMini/Projects/Coldplungetimer/`
@@ -12,7 +12,7 @@ Senior iOS developer continuing work on IceDip, a cold plunge timer app. SwiftUI
 - **Team ID:** `9B5THFVGW7` | **Bundle:** `com.icedip.app` | **Version:** 1.0.0
 - **Signing identity:** Apple Development: Yusuf Can Samiloglu (CM8U56F8SP)
 
-## Current State (16 commits on `main`, all committed, builds with zero warnings)
+## Current State (18 commits on `main`, all committed, builds with zero warnings)
 - `66d9df5` Initial commit
 - `70171eb` Fix 17 bugs for App Store readiness
 - `94431d0` Fix 12 remaining bugs and add Tier 1 enhancements
@@ -29,40 +29,49 @@ Senior iOS developer continuing work on IceDip, a cold plunge timer app. SwiftUI
 - `d92cc56` Fix App Store blockers, add error handling, and localize into 4 new languages
 - `04d63e3` Update continuation prompt for Session 11
 - `ad87c20` Add privacy manifests for extensions, replace print with os.Logger, and localize notifications
+- `c64d6ea` Update continuation prompt for Session 12
+- `01f2186` Add widget adaptive theming, Shortcuts/Siri integration, and Watch complication
 
-## What Was Done in Session 12
+## What Was Done in Session 13
 
-### 1. Widget Extension Privacy Manifest — DONE
-- **Created:** `IceDipWidget/PrivacyInfo.xcprivacy`
-- Declares `NSPrivacyAccessedAPICategoryUserDefaults` with reason `CA92.1` (widget reads App Group UserDefaults for streak/session data)
-- No data collection, no tracking
-- Auto-included by `project.yml` via `path: IceDipWidget` source — no project.yml changes needed
+### 1. Widget Adaptive Theming — DONE
+- **Created:** `IceDipWidget/Assets.xcassets/` with 5 theme color sets (ThemeBackground, ThemeSurface, ThemeIceBlue, ThemeTextPrimary, ThemeTextSecondary) — copied from `IceDipWatch/Assets.xcassets/`
+- **Modified:** `IceDipWidget/IceDipWidgetEntryView.swift` — replaced all hardcoded hex colors with `Theme.Colors.*` references
+- Widget now respects system light/dark mode automatically via named color assets
+- `Theme.swift` was already compiled into widget target (project.yml line 66) — only needed the color asset catalog
+- No project.yml changes required — `path: IceDipWidget` auto-includes new Assets.xcassets
 
-### 2. Watch App Privacy Manifest — DONE
-- **Created:** `IceDipWatch/PrivacyInfo.xcprivacy`
-- Minimal manifest: all empty arrays (Watch only uses WatchConnectivity, not a required-reason API)
-- Auto-included by `project.yml` via `path: IceDipWatch` source — no project.yml changes needed
+### 2. Shortcuts/Siri Integration — DONE
+- **Created:** `IceDip/Intents/StartPlungeIntent.swift` — `AppIntent` with `openAppWhenRun = true`, sets `pendingShortcutStart` flag in UserDefaults
+- **Created:** `IceDip/Intents/IceDipShortcuts.swift` — `AppShortcutsProvider` with 4 Siri phrases ("Start my cold plunge in IceDip", etc.)
+- **Modified:** `IceDip/App/ContentView.swift`:
+  - Added `@State private var selectedTab = 0` with `TabView(selection:)` binding and `.tag()` on each tab
+  - Added `@AppStorage("pendingShortcutStart")` flag observer
+  - Added `startFromShortcut()` method: sets tab to Timer, reads user's saved `defaultDuration` preference, calls `timerViewModel.beginSession(...)` with all saved preferences
+  - Handles both cold launch (via `.task`) and warm launch (via `.onChange(of: pendingShortcutStart)`)
+- No project.yml changes — AppIntents framework is built-in at iOS 17+
 
-### 3. Watch App Entitlements — SKIPPED (Not Needed)
-- Investigation confirmed `WatchConnectivityService.swift` does NOT use `UserDefaults(suiteName:)` or App Groups
-- Watch uses WatchConnectivity exclusively — no capabilities require entitlements
-- Watch target builds and signs without `CODE_SIGN_ENTITLEMENTS`
-
-### 4. Replaced print() with os.Logger — DONE (8 statements, 5 files)
-- **Pattern:** `private static let logger = Logger(subsystem: "com.icedip.app", category: "CategoryName")`
-- **Files updated:**
-  - `IceDip/Services/NotificationService.swift` — category: `Notifications` (1 statement)
-  - `IceDip/Services/HealthKitService.swift` — category: `HealthKit` (1 statement)
-  - `IceDip/Services/PhoneConnectivityService.swift` — category: `Connectivity` (3 statements)
-  - `IceDip/Features/Timer/TimerViewModel.swift` — category: `Timer` (1 statement)
-  - `IceDipWatch/Services/WatchConnectivityService.swift` — category: `Connectivity` (2 statements)
-- All production code now uses structured `os.Logger` — only `Scripts/*.swift` retain `print()` (build-time scripts)
-
-### 5. Session 11 Changes Also Committed in Same Commit
-- Localized 5 notification strings with `String(localized:)` in `NotificationService.swift`
-- Added translations for all 5 strings × 5 languages in `Localizable.xcstrings`
-- Added `cancelDailyReminder()` as first line of `scheduleDailyReminder()` for cancel-before-schedule safety
-- Created `APP_STORE_METADATA.md` and `REVIEW_NOTES.md`
+### 3. Watch Complication (WidgetKit) — DONE
+- **Created:** `IceDipWatch/Complications/` directory with 6 files:
+  - `WatchComplicationProvider.swift` — `TimelineProvider` reading streak from `UserDefaults.standard`, refreshes at midnight
+  - `WatchComplicationViews.swift` — 3 families: `.accessoryCircular` (flame + count), `.accessoryRectangular` (streak + sessions this week), `.accessoryInline` (label)
+  - `IceDipWatchWidget.swift` — `Widget` config with `StaticConfiguration`, entry view switching on `widgetFamily`
+  - `IceDipWatchWidgetBundle.swift` — `@main WidgetBundle`
+  - `Info.plist` — `com.apple.widgetkit-extension` extension point
+  - `PrivacyInfo.xcprivacy` — UserDefaults API (CA92.1)
+- **Modified:** `IceDipWatch/Services/WatchConnectivityService.swift`:
+  - Added `import WidgetKit`
+  - Added `persistForComplication()` method: writes streak fields to UserDefaults + calls `WidgetCenter.shared.reloadAllTimelines()`
+  - Called after `decodeStreakData()` succeeds
+- **Modified:** `IceDipWatch/Features/Timer/WatchTimerViewModel.swift`:
+  - Added `import WidgetKit`
+  - In `stop()`: after `connectivityService?.sendSession()`, increments `complication_sessionsThisWeek` in UserDefaults and reloads timelines
+- **Modified:** `project.yml`:
+  - Added `IceDipWatchWidgetExtension` target (type: `app-extension`, platform: `watchOS`, bundle: `com.icedip.app.watchkitapp.widget`)
+  - Sources: `IceDipWatch/Complications` + shared `IceDip/Shared/Extensions.swift`
+  - Added `Complications` to IceDipWatch excludes (separate target)
+  - Added `dependencies: [{target: IceDipWatchWidgetExtension, embed: true}]` to IceDipWatch
+  - Added `IceDipWatchWidgetExtension: all` to IceDipWatch scheme
 
 ## What Was Tried But Didn't Work (All Sessions)
 
@@ -81,6 +90,7 @@ Senior iOS developer continuing work on IceDip, a cold plunge timer app. SwiftUI
 13. **`static var versionIdentifier` in VersionedSchema**: Swift 6.0 strict concurrency flags `var` as non-safe. Fix: `static let versionIdentifier`.
 14. **Session 9 audit suggested adding HealthKit/CloudKit to `NSPrivacyAccessedAPITypes`**: These are NOT required reason APIs. The valid categories are only: FileTimestamp, SystemBootTime, DiskSpace, ActiveKeyboards, UserDefaults. Fix: declare health data collection in `NSPrivacyCollectedDataTypes` instead.
 15. **`nonisolated(unsafe)` on static Logger in `@MainActor` class**: Compiles but warns "unnecessary for a constant with Sendable type Logger". Fix: move decode+error-handling into `Task { @MainActor in }` block so logger access is in MainActor context (done in `PhoneConnectivityService.swift:44-53` `didReceiveUserInfo`). Do NOT use `nonisolated(unsafe)` on Logger — restructure the code instead.
+16. **`static var title` / `static var description` / `static var openAppWhenRun` on AppIntent**: Swift 6.0 strict concurrency flags `var` as non-safe mutable state. Fix: `static let` for all three. Same lesson as #7/#13 — all static properties on structs must use `let`.
 
 ## Items NOT in Scope (Already Decided)
 
@@ -91,36 +101,40 @@ Senior iOS developer continuing work on IceDip, a cold plunge timer app. SwiftUI
 - **Unit tests / CI:** Premature for solo dev first submission. Can be added post-launch.
 - **Watch entitlements:** Not needed — Watch uses WatchConnectivity only, no App Groups/HealthKit/iCloud.
 
-## Session 13 — Potential Tasks
+## Session 14 — Strengthening & Enhancement Tasks
 
-The app is feature-complete and submission-ready. Possible next steps:
+### Priority 1: Localize New Feature Strings
+The Session 13 features added new user-facing strings that need localization into all 6 languages (en, tr, de, es, fr, ja):
+1. **Shortcuts/Siri phrases** in `IceDip/Intents/IceDipShortcuts.swift` — 4 phrases + shortTitle + intent description. Add to `IceDip/Resources/Localizable.xcstrings`
+2. **Watch complication strings** in `IceDipWatch/Complications/WatchComplicationViews.swift` — `"day streak"`, `"sessions this week"`. Add to `IceDipWatch/Localizable.xcstrings`
+3. **Watch complication config** in `IceDipWatch/Complications/IceDipWatchWidget.swift` — `"IceDip Streak"`, `"Track your cold plunge streak."`. These are `LocalizedStringResource` — add to widget extension's string catalog or `IceDipWatch/Localizable.xcstrings`
 
-### Option A: App Store Submission Preparation
-1. **Archive & upload** — `xcodebuild archive -scheme IceDip ...` → Xcode Organizer → App Store Connect
-2. **Register capabilities** in Apple Developer Portal (App Groups, HealthKit, iCloud/CloudKit) so provisioning profiles include them
-3. **Fill App Store Connect** fields using `APP_STORE_METADATA.md` (description, keywords, screenshots)
-4. **Submit review notes** from `REVIEW_NOTES.md`
-5. **Verify iCloud container** `iCloud.com.icedip.app` exists in CloudKit Dashboard
+### Priority 2: Shortcuts Feature Improvements
+1. **Add optional duration parameter** to `StartPlungeIntent` — `@Parameter(title: "Duration") var duration: Measurement<UnitDuration>?` so users can say "Start a 3-minute cold plunge in IceDip"
+2. **Add ambient sound passthrough** to `startFromShortcut()` in `ContentView.swift:63-76` — currently doesn't pass `ambientSoundService` or `phoneConnectivityService`. Missing: ambient sound won't play, Watch won't get streak update on stop
+3. **`AmbientSoundService` and `PhoneConnectivityService` not injected** — `startFromShortcut()` needs `@Environment(AmbientSoundService.self)` and `@Environment(PhoneConnectivityService.self)` added to `ContentView`, then passed to `beginSession()`
 
-### Option B: Post-Launch Enhancements
-1. **Widget adaptive theming** — `IceDipWidgetEntryView.swift` uses hardcoded dark colors; could respect system appearance
-2. **Watch complication** — quick-launch timer from watch face
-3. **Shortcuts/Siri integration** — `AppIntent` for starting a plunge
-4. **Export data** — CSV/JSON export of session history
-5. **Accessibility audit** — VoiceOver labels, Dynamic Type support
+### Priority 3: Watch Complication Improvements
+1. **Deep link from complication** — tapping complication should open Watch app to Timer tab. Add `.widgetURL(URL(string: "icedip://timer"))` and handle in `WatchContentView.swift`
+2. **Complication localization** — `WatchComplicationViews.swift` uses `String(localized:)` but the strings need actual translations added to `IceDipWatch/Localizable.xcstrings`
+3. **Weekly reset of `complication_sessionsThisWeek`** — currently only incremented, never reset. When phone sends fresh streak data it resets, but if Watch is used standalone without phone, sessions count grows indefinitely. Consider resetting on Monday via timeline provider logic
 
-### Option C: Quality & Polish
-1. **Accessibility** — audit all views for VoiceOver `.accessibilityLabel`, Dynamic Type scaling
-2. **iPad layout** — currently portrait-optimized; could add sidebar/split view for iPad
-3. **Animation refinement** — review zone transitions, breathing exercise timing
-4. **Onboarding screenshots** — replace placeholder onboarding images if any
+### Priority 4: Accessibility Audit
+1. **VoiceOver labels** — audit all views for `.accessibilityLabel`, `.accessibilityHint`, `.accessibilityValue`
+2. **Dynamic Type** — verify all views scale properly with accessibility text sizes
+3. **Widget accessibility** — add `.accessibilityLabel` to widget views
 
-## Current File Structure (37 Swift files + resources)
+### Priority 5: Additional Post-Launch Features
+1. **CSV/JSON export** of session history from Settings — `SettingsView.swift` already has Data section
+2. **iPad layout** — currently portrait-optimized; could add sidebar/split view
+3. **App Store submission** — archive, capability registration, App Store Connect metadata
+
+## Current File Structure (41 Swift files + resources)
 ```
 IceDip/
 ├── App/
 │   ├── IceDipApp.swift              # SharedModelContainer, 4 services injected, dynamic colorScheme from @AppStorage
-│   └── ContentView.swift            # TabView + onboarding gate + orphan recovery alert + tab badge + HK auth check
+│   └── ContentView.swift            # TabView(selection:) + onboarding gate + orphan recovery + shortcut handler + tab badge
 ├── Features/
 │   ├── Timer/
 │   │   ├── TimerView.swift          # @Bindable viewModel, breathing, ShareLink, HK + ambient + connectivity + zoneThresholds, error alerts
@@ -141,6 +155,9 @@ IceDip/
 │   │   └── SettingsView.swift       # Appearance, Timer, Zone Thresholds, Units, Feedback, Ambient, Notifications, Health, Goals, Data (Delete All), About (Show Tutorial)
 │   └── Onboarding/
 │       └── OnboardingView.swift     # 3-page onboarding
+├── Intents/
+│   ├── StartPlungeIntent.swift      # AppIntent, openAppWhenRun, sets pendingShortcutStart flag
+│   └── IceDipShortcuts.swift        # AppShortcutsProvider, 4 Siri phrases, snowflake icon
 ├── Models/
 │   ├── PlungeSession.swift          # @Model, default values for CloudKit, complete(thresholds:)
 │   ├── PlungeSessionSchemaV1.swift  # V1 + V2 VersionedSchema + lightweight migration plan (shared with widget)
@@ -168,11 +185,18 @@ IceDipWatch/
 ├── Features/
 │   ├── Timer/
 │   │   ├── WatchTimerView.swift     # Setup/active/completion states, circular progress
-│   │   └── WatchTimerViewModel.swift # @Observable, WKExtendedRuntimeSession, standalone timer
+│   │   └── WatchTimerViewModel.swift # @Observable, WKExtendedRuntimeSession, standalone timer, WidgetKit reload on stop
 │   └── Streak/
 │       └── WatchStreakView.swift     # Streak display from connectivity data
 ├── Services/
-│   └── WatchConnectivityService.swift # WCSessionDelegate, sends sessions, receives streak, os.Logger
+│   └── WatchConnectivityService.swift # WCSessionDelegate, sends sessions, receives streak, persists to UserDefaults for complication, os.Logger
+├── Complications/
+│   ├── WatchComplicationProvider.swift  # TimelineProvider, reads streak from UserDefaults, refreshes at midnight
+│   ├── WatchComplicationViews.swift     # CircularComplicationView + RectangularComplicationView + InlineComplicationView
+│   ├── IceDipWatchWidget.swift          # Widget config, StaticConfiguration, 3 accessory families
+│   ├── IceDipWatchWidgetBundle.swift    # @main WidgetBundle
+│   ├── Info.plist                       # com.apple.widgetkit-extension
+│   └── PrivacyInfo.xcprivacy           # UserDefaults API (CA92.1)
 ├── PrivacyInfo.xcprivacy            # Minimal privacy manifest (no APIs, no data collection)
 ├── Assets.xcassets/                 # Watch app icon + Theme* adaptive color assets
 ├── Localizable.xcstrings           # Watch localization catalog (10 strings, en + de + es + fr + ja + tr)
@@ -181,9 +205,10 @@ IceDipWatch/
 IceDipWidget/
 ├── IceDipWidgetBundle.swift         # @main widget entry point
 ├── IceDipWidget.swift               # PlungeEntry, PlungeTimelineProvider, IceDipWidget
-├── IceDipWidgetEntryView.swift      # SmallWidgetView + MediumWidgetView (hardcoded dark colors)
+├── IceDipWidgetEntryView.swift      # SmallWidgetView + MediumWidgetView (adaptive Theme.Colors)
 ├── IceDipWidget.entitlements        # App Group: group.com.icedip.app
 ├── PrivacyInfo.xcprivacy            # UserDefaults API (CA92.1), no data collection
+├── Assets.xcassets/                 # Theme* adaptive color assets (ThemeBackground, ThemeSurface, ThemeIceBlue, ThemeTextPrimary, ThemeTextSecondary)
 ├── Localizable.xcstrings           # Widget localization catalog (4 strings, en + de + es + fr + ja + tr)
 └── Info.plist                       # WidgetKit extension point
 
@@ -214,45 +239,30 @@ IceDip/Resources/
 
 ## Key Architectural Decisions
 - **Shared SwiftData via App Group**: `SharedModelContainer` provides single `ModelContainer` at `group.com.icedip.app/IceDip.store`. CloudKit enabled for main app, disabled for extensions. V2 schema with migration plan. 4-tier fallback prevents crashes.
-- **Adaptive theme colors**: 5 theme colors + AccentColor + LaunchBackground use asset catalogs with dark/light variants. Zone colors stay hardcoded hex (same both modes). Widget uses inline hex (dark only).
+- **Adaptive theme colors**: 5 theme colors + AccentColor + LaunchBackground use asset catalogs with dark/light variants. Zone colors stay hardcoded hex (same both modes). Widget and Watch both have their own `Assets.xcassets` with identical theme color sets.
 - **Custom zone thresholds**: `ZoneThresholds` struct stored as JSON in AppStorage via `RawRepresentable`. Read by TimerViewModel from UserDefaults. Mirrored to app group for widget. Watch uses defaults.
-- **Localization**: `String(localized:)` for non-SwiftUI computed String properties and notification content. SwiftUI `Text()` literals auto-localize via `LocalizedStringKey`. `.xcstrings` catalogs populated with 96+ strings across 6 languages (en, tr, de, es, fr, ja). `SWIFT_EMIT_LOC_STRINGS: "YES"` on all 3 targets.
+- **Localization**: `String(localized:)` for non-SwiftUI computed String properties and notification content. SwiftUI `Text()` literals auto-localize via `LocalizedStringKey`. `.xcstrings` catalogs populated with 96+ strings across 6 languages (en, tr, de, es, fr, ja). `SWIFT_EMIT_LOC_STRINGS: "YES"` on all targets.
 - **Structured logging**: All production error handling uses `os.Logger` with subsystem `com.icedip.app` and per-service categories (Notifications, HealthKit, Connectivity, Timer, ModelContainer). Error descriptions use `privacy: .public` (no user data).
 - **StreakCalculator as shared logic**: Struct taking `[PlungeSession]`, reused by StreakView, widget, PhoneConnectivityService, TimerViewModel.
 - **Service injection pattern**: All services `@MainActor @Observable`, created as `@State` in `IceDipApp`, injected via `.environment()`.
-- **Watch architecture**: Standalone timer, no SwiftData, no App Groups, no entitlements. Sessions sync via `transferUserInfo()`, streak via `updateApplicationContext()`.
+- **Watch architecture**: Standalone timer, no SwiftData, no App Groups, no entitlements. Sessions sync via `transferUserInfo()`, streak via `updateApplicationContext()`. Complications read from `UserDefaults.standard` (shared between watch app and embedded widget extension without App Groups).
 - **iCloud sync**: `cloudKitDatabase: .automatic` on ModelConfiguration. Last-writer-wins conflict resolution. Widget excluded via `.appex` bundle path check.
-- **Privacy manifests**: All 3 targets have `PrivacyInfo.xcprivacy` — main app (UserDefaults + HealthAndFitness collection), widget (UserDefaults only), Watch (empty/minimal).
+- **Privacy manifests**: All 4 targets have `PrivacyInfo.xcprivacy` — main app (UserDefaults + HealthAndFitness collection), iOS widget (UserDefaults), Watch (empty/minimal), Watch widget (UserDefaults).
 - **GDPR compliance**: "Delete All Data" in Settings deletes all SwiftData sessions, resets 14 AppStorage keys, clears app group defaults, cancels notifications. Does NOT reset `hasOnboarded`.
+- **Shortcuts architecture**: `StartPlungeIntent` sets `pendingShortcutStart` flag in UserDefaults → `ContentView` observes via `@AppStorage` → calls `startFromShortcut()` which reads all preferences from UserDefaults and calls `timerViewModel.beginSession()`. Handles both cold launch (`.task`) and warm launch (`.onChange`).
+- **Watch complication data flow**: Phone sends streak via `updateApplicationContext()` → `WatchConnectivityService.decodeStreakData()` persists to `UserDefaults.standard` + calls `WidgetCenter.shared.reloadAllTimelines()` → `WatchComplicationProvider.fetchEntry()` reads from UserDefaults.
 
-## project.yml (current — no changes needed)
+## project.yml (current — 4 targets, 2 schemes)
 ```yaml
-IceDipWatch:
-  type: application
-  platform: watchOS
-  sources:
-    - path: IceDipWatch
-      excludes:
-        - "**/.DS_Store"
-    - path: IceDip/Models/ZoneThresholds.swift
-    - path: IceDip/Features/Timer/BenefitZone.swift
-    - path: IceDip/Shared/Extensions.swift
-    - path: IceDip/Shared/Theme.swift
-    - path: IceDip/Shared/WatchSessionData.swift
-  settings:
-    base:
-      CODE_SIGN_STYLE: Automatic
-      MARKETING_VERSION: "1.0.0"
-      CURRENT_PROJECT_VERSION: 1
-      PRODUCT_BUNDLE_IDENTIFIER: com.icedip.app.watchkitapp
-      ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
-      INFOPLIST_FILE: IceDipWatch/Info.plist
-      SWIFT_EMIT_LOC_STRINGS: "YES"
-  info:
-    path: IceDipWatch/Info.plist
-    properties:
-      CFBundleDisplayName: IceDip
-      WKCompanionAppBundleIdentifier: com.icedip.app
+targets:
+  IceDip:          # iOS app, embeds IceDipWidgetExtension
+  IceDipWidgetExtension:  # iOS widget (App Group, SwiftData, Theme, StreakCalculator)
+  IceDipWatch:     # watchOS app, excludes Complications/, embeds IceDipWatchWidgetExtension
+  IceDipWatchWidgetExtension:  # watchOS complication widget (Extensions.swift shared)
+
+schemes:
+  IceDip:          # builds IceDip + IceDipWidgetExtension
+  IceDipWatch:     # builds IceDipWatch + IceDipWatchWidgetExtension
 ```
 
 ## Design Spec
