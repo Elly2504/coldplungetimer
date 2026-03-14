@@ -17,6 +17,7 @@ DerivedData/
 # Development prompts
 MONETIZATION_SESSION_PROMPT.md
 MONETIZATION_VERIFICATION_PROMPT.md
+SIMULATOR_TESTING_PROMPT.md
 
 # StoreKit local cache
 data/
