@@ -1,7 +1,7 @@
-# IceDip — Cold Plunge Timer: Session 9 Continuation Prompt
+# IceDip — Cold Plunge Timer: Session 10 Continuation Prompt
 
 ## Who You Are
-Senior iOS developer continuing work on IceDip, a cold plunge timer app. SwiftUI + SwiftData + MVVM with `@Observable`, iOS 17+, Swift 6.0.
+Senior iOS developer continuing work on IceDip, a cold plunge timer app. SwiftUI + SwiftData + MVVM with `@Observable`, iOS 17+, Swift 6.0. This session focuses on **App Store readiness fixes** — resolving all blocking issues found in the Session 9 audit.
 
 ## Project Setup
 - **Location:** `/Volumes/T7SSD/MacMini/Projects/Coldplungetimer/`
@@ -12,7 +12,7 @@ Senior iOS developer continuing work on IceDip, a cold plunge timer app. SwiftUI
 - **Team ID:** `9B5THFVGW7` | **Bundle:** `com.icedip.app` | **Version:** 1.0.0
 - **Signing identity:** Apple Development: Yusuf Can Samiloglu (CM8U56F8SP)
 
-## Current State (9 commits on `main`, all committed, builds with zero warnings)
+## Current State (12 commits on `main`, all committed, builds with zero warnings)
 - `66d9df5` Initial commit
 - `70171eb` Fix 17 bugs for App Store readiness
 - `94431d0` Fix 12 remaining bugs and add Tier 1 enhancements
@@ -22,53 +22,130 @@ Senior iOS developer continuing work on IceDip, a cold plunge timer app. SwiftUI
 - `88e9e7f` Update continuation prompt for Session 8
 - `b42160f` Refactor BenefitZone, localize weekdays, and add SwiftData schema versioning
 - `ac8575c` Add localization, theme toggle, custom zone thresholds, and iCloud sync
+- `77c2ef6` Update continuation prompt for Session 9
+- `2aeaee7` Update continuation prompt for Session 9
+- `f5b65d2` Add light mode polish, locale-aware formatters, and Turkish localization
 
-## What Was Done in Session 8 (commit ac8575c)
+## What Was Done in Session 9 (commit f5b65d2)
 
-### 1. Localization (ENHANCE 14) — DONE
-- Created `Localizable.xcstrings` String Catalogs (empty JSON base) for all 3 targets: `IceDip/Resources/`, `IceDipWidget/`, `IceDipWatch/`
-- Converted non-SwiftUI string properties to `String(localized:)`:
-  - `BenefitZone.displayName` and `.description` (5 zone names + 5 descriptions)
-  - `AmbientSound.displayName` ("Ocean Waves", "Rain")
-  - `BreathingPhase.label` ("Breathe In", "Hold", "Breathe Out")
-  - `Extensions.swift` `formattedShort` ("Today", "Yesterday")
-- SwiftUI `Text("literal")` auto-creates `LocalizedStringKey` — no code changes needed for those
-- `.xcstrings` catalogs are empty — Xcode auto-extracts strings on build. Currently English-only.
+### 1. Light Mode Polish — DONE
+- **LaunchBackground.colorset**: Added dark/light variants (light: #F0F5FA, dark: #0A1628) — prevents dark flash on launch in light mode
+- **AccentColor.colorset**: Added dark/light variants matching ThemeIceBlue (light: #0891B2, dark: #64D2FF) — system tint for alerts, nav links adapts correctly
+- **ShareCardView**: Pinned to `.environment(\.colorScheme, .dark)` in `TimerView.swift` — share card always renders as branded dark image regardless of app theme
 
-### 2. Theme Toggle (ENHANCE 13) — DONE
-- Added `colorSchemePreference` AppStorage key in `UserPreferences.swift` (values: "dark"/"light"/"system", default "dark")
-- Created 5 adaptive color asset catalogs in `IceDip/Resources/Assets.xcassets/`:
-  - `ThemeBackground.colorset` — dark: #0A1628, light: #F0F5FA
-  - `ThemeSurface.colorset` — dark: #111D2E, light: #FFFFFF
-  - `ThemeIceBlue.colorset` — dark: #64D2FF, light: #0891B2
-  - `ThemeTextPrimary.colorset` — dark: white, light: #0F172A
-  - `ThemeTextSecondary.colorset` — dark: white@60%, light: #64748B
-- Same 5 color assets duplicated to `IceDipWatch/Assets.xcassets/` (Watch uses `Theme.Colors` from shared `Theme.swift`)
-- Updated `Theme.Colors` to use `Color("ThemeBackground")` etc. instead of `Color(hex:)` for the 5 adaptive colors. Zone colors remain `Color(hex:)` (same in both modes).
-- `IceDipApp.swift`: replaced `.preferredColorScheme(.dark)` with dynamic `resolvedColorScheme` computed from `@AppStorage`
-- `SettingsView.swift`: added "Appearance" section with Dark/Light/System Picker
-- Removed `.toolbarColorScheme(.dark, for: .navigationBar)` from `HistoryView`, `StreakView`, `SettingsView`
-- Widget stays dark (uses inline `Color(hex:)`, not `Theme.Colors`)
+### 2. Locale-Aware Date Formatters — DONE
+- `Extensions.swift`: Replaced hardcoded `dateFormat` with `setLocalizedDateFormatFromTemplate()`:
+  - `Formatters.short`: `"MMM d"` → `"MMMd"` (locale-aware date ordering)
+  - `Formatters.time`: `"h:mm a"` → `"jmm"` (adapts to 12/24h per locale)
+  - `Formatters.weekday`: `"EEE"` → `"EEE"` (template, not format — locale-aware)
 
-### 3. Custom Zone Thresholds (ENHANCE 12) — DONE
-- Created `IceDip/Models/ZoneThresholds.swift`:
-  - `ZoneThresholds` struct (Codable, Equatable, Sendable) with 4 configurable thresholds: adaptation(30), dopamineZone(60), metabolicBoost(120), deepResilience(180). coldShock always 0.
-  - `RawRepresentable` extension for JSON encode/decode (enables `@AppStorage` usage)
-  - `startSeconds(for:)` method maps BenefitZone case to threshold value
-- Added `zoneThresholds` key to `UserPreferences.swift`
-- Updated `BenefitZone.zone(for:thresholds:)` with default parameter — all existing callers unaffected
-- `TimerViewModel`: reads thresholds from `UserDefaults.standard` via computed property, passes to `zone(for:thresholds:)` in `tick()`, `handleForeground()`, and `session.complete()`
-- `PlungeSession.complete()`: accepts optional `thresholds` parameter
-- `ZoneIndicatorView`: accepts optional `thresholds` parameter, uses it in `zoneOpacity(for:)`
-- `TimerView`: reads `@AppStorage(zoneThresholds)`, passes to `ZoneIndicatorView`
-- `SettingsView`: added "Zone Thresholds" section with 4 Steppers (step 5s, min 10s gap between zones, max 600s), "Reset to Defaults" button, mirrors to app group UserDefaults on change
-- Added `ZoneThresholds.swift` to widget AND watch sources in `project.yml` (BenefitZone depends on it)
+### 3. Localization Fixes — DONE
+- `ChartView.swift`: Changed `Text(p.rawValue)` → `Text(LocalizedStringKey(p.rawValue))` so period picker ("Week"/"Month"/"All") is localizable
+- `StreakView.swift`: Simplified `"day streak"/"days streak"` conditional → single `"Day Streak"` (number displayed separately above, avoids pluralization issues across languages)
+- `project.yml`: Added `SWIFT_EMIT_LOC_STRINGS: "YES"` to IceDip and IceDipWatch targets (was only on widget)
 
-### 4. iCloud Sync (ENHANCE 15) — DONE
-- Updated `PlungeSession.swift`: added explicit default values to non-optional properties (`id = UUID()`, `startTime = Date()`, `targetDuration = 0`, `isCompleted = false`) for CloudKit compatibility
-- Created `PlungeSessionSchemaV2` in `PlungeSessionSchemaV1.swift`, added lightweight migration stage V1→V2
-- Updated `SharedModelContainer.swift`: added `cloudKitDatabase: .automatic` to `ModelConfiguration`, with `.none` fallback for widget extensions (detected via `Bundle.main.bundlePath.hasSuffix(".appex")`)
-- Added iCloud entitlements to `IceDip/Resources/IceDip.entitlements`: `com.apple.developer.icloud-containers` (`iCloud.com.icedip.app`) and `com.apple.developer.icloud-services` (`CloudDocuments`, `CloudKit`)
+### 4. Turkish Localization — DONE
+- Populated all 3 `.xcstrings` catalogs with English source strings + Turkish (tr) translations:
+  - **Main app** (`IceDip/Resources/Localizable.xcstrings`): 95 strings — zones, breathing, settings, timer, history, streak, onboarding, chart periods, duration labels
+  - **Watch** (`IceDipWatch/Localizable.xcstrings`): 10 strings — START, Complete!, Done, Day Streak, Best, This Week, duration presets
+  - **Widget** (`IceDipWidget/Localizable.xcstrings`): 4 strings — day streak, days streak, streak, this week
+
+## App Store Readiness Audit Results (Session 9)
+
+A comprehensive 3-part audit was performed. Below are ALL findings, organized by priority. **Session 10 must address the CRITICAL and HIGH items.**
+
+### 🔴 CRITICAL — App Store Rejection Risk
+
+#### C1. PrivacyInfo.xcprivacy Missing API Declarations
+- **File:** `IceDip/Resources/PrivacyInfo.xcprivacy`
+- **Issue:** Only declares `NSPrivacyAccessedAPICategoryUserDefaults` (CA92.1). Missing:
+  - HealthKit API usage declaration (app uses `HKHealthStore`, `HKWorkoutBuilder`)
+  - CloudKit/iCloud API usage declaration (app uses SwiftData with `cloudKitDatabase: .automatic`)
+- **Impact:** Apple will reject during review. Required Privacy Manifests must declare all accessed APIs.
+- **Fix:** Add HealthKit and CloudKit entries to `NSPrivacyAccessedAPITypes` array.
+
+#### C2. fatalError() Crashes in SharedModelContainer
+- **File:** `IceDip/Shared/SharedModelContainer.swift`
+- **Lines:** 10, 25
+- **Issue:** Two `fatalError()` calls — if App Group container is missing or ModelContainer creation fails, the app crashes instantly on launch. Apple reviewers may trigger this if entitlements are misconfigured on their test devices.
+- **Fix:** Replace with graceful error handling. Options:
+  - Fall back to non-App-Group container path
+  - Show a user-facing error view instead of crashing
+  - Use a `static let` with a do-catch that logs and uses a fallback
+
+#### C3. GDPR Compliance — No Data Deletion
+- **File:** `IceDip/Features/Settings/SettingsView.swift`
+- **Issue:** No way for users to delete all their data. The app stores:
+  - SwiftData: PlungeSession objects (startTime, duration, waterTemp, mood ratings, notes, zone)
+  - AppStorage: 18+ preference keys
+  - iCloud/CloudKit: Synced session data
+- **Impact:** Required for EU App Store distribution. Apple may also flag during review.
+- **Fix:** Add "Delete All Data" section in Settings with:
+  - Confirmation dialog (destructive action)
+  - Delete all SwiftData objects
+  - Reset all AppStorage keys to defaults
+  - Note: CloudKit deletion happens automatically when local data is deleted with `.automatic` sync
+
+### 🟡 HIGH — Strongly Recommended Before Submission
+
+#### H1. HealthKit Permission Denial Not Handled
+- **File:** `IceDip/Features/Settings/SettingsView.swift` (lines ~150-166)
+- **File:** `IceDip/Services/HealthKitService.swift`
+- **Issue:** When user denies HealthKit permission:
+  - Toggle stays ON in Settings (misleading)
+  - `saveWorkout()` silently fails with only `print("HealthKit save error: ...")`
+  - User loses workout data without knowing
+- **Fix:**
+  - Check authorization status when toggle is activated
+  - Auto-disable toggle if authorization is denied/restricted
+  - Show alert when save fails: "Could not save to Health. Check permissions in Settings > Health > IceDip."
+
+#### H2. Silent Error Handling Across Services
+- **Files:** Multiple service files use `print()` for errors — invisible to users
+- **Specific cases:**
+  - `HealthKitService.swift:54`: `print("HealthKit save error: \(error)")` — user's workout data silently lost
+  - `AmbientSoundService.swift:11`: Silent `return` if audio file missing — user enables sound, hears nothing
+  - `PhoneConnectivityService.swift:28`: `print("Failed to send streak update")` — Watch data silently not synced
+  - `ContentView.swift:40`: `try? modelContext.fetch(descriptor)` — orphan cleanup silently fails
+- **Fix:** For user-impacting failures (HealthKit save, audio playback), show a brief toast/alert. For non-critical failures (streak push, orphan cleanup), acceptable to log silently.
+
+#### H3. Onboarding Not Re-accessible
+- **File:** `IceDip/Features/Settings/SettingsView.swift`
+- **Issue:** After completing onboarding, users can never view it again. No "Help" or "Tutorial" option in Settings.
+- **Fix:** Add a button in Settings > About section: "Show Tutorial" that sets `hasOnboarded = false` and navigates to onboarding.
+
+#### H4. Orphaned Session Recovery
+- **File:** `IceDip/App/ContentView.swift` (lines ~38-44)
+- **Issue:** `cleanupOrphanedSessions()` silently deletes incomplete sessions older than 1 hour. If app crashes during a timer session, user loses their progress without notice.
+- **Fix:** Instead of auto-deleting, show an alert on launch: "You have an incomplete session from [date]. Would you like to save it or discard it?" Only delete if user chooses to discard.
+
+#### H5. ChartView Calendar Edge Case
+- **File:** `IceDip/Features/History/ChartView.swift` (line 71)
+- **Issue:** `let weekdays = Array(symbols.dropFirst()) + [symbols[0]]` — if `Calendar.current.shortWeekdaySymbols` returns empty (extremely unlikely but possible in edge locales), `symbols[0]` will crash.
+- **Fix:** Add `guard !symbols.isEmpty else { return [] }` before the line.
+
+### 🟢 LOW — Nice to Have (Not Blocking)
+
+#### L1. No Network Status Awareness
+- CloudKit sync is enabled but no UI indicator for sync status
+- If user is offline, no feedback that data isn't syncing
+- Could add a small sync indicator in History or Settings
+
+#### L2. Notification Rate Limiting
+- Daily reminder is rescheduled every time the toggle or time changes in Settings
+- Rapidly toggling could queue multiple notifications
+- Should cancel existing before scheduling new (may already work correctly via `cancelDailyReminder()` call)
+
+#### L3. Water Temperature Range
+- TimerView water temp slider currently limited — may want to extend range for extreme cold (below 0°C for salt water)
+
+#### L4. Professional App Icon
+- Current icon is programmatically generated (snowflake on gradient)
+- Consider professionally designed icon for App Store presence
+
+#### L5. Higher Quality Ambient Sounds
+- Current ocean.wav and rain.wav are basic sine/noise (15s loops generated by script)
+- Consider royalty-free high-quality ambient loops
 
 ## What Was Tried But Didn't Work (All Sessions)
 
@@ -94,20 +171,20 @@ IceDip/
 │   └── ContentView.swift            # TabView + onboarding gate + orphan cleanup + tab badge + HK auth check
 ├── Features/
 │   ├── Timer/
-│   │   ├── TimerView.swift          # @Bindable viewModel, breathing, ShareLink, HK + ambient + connectivity + zoneThresholds
+│   │   ├── TimerView.swift          # @Bindable viewModel, breathing, ShareLink, HK + ambient + connectivity + zoneThresholds, dark-pinned share card
 │   │   ├── TimerViewModel.swift     # @Observable, zone thresholds from UserDefaults, async stop/tick, WidgetKit, HK, streak push
 │   │   ├── BreathingView.swift      # Animated box breathing (3 cycles), String(localized:) labels
-│   │   ├── ShareCardView.swift      # Styled share card rendered to UIImage
+│   │   ├── ShareCardView.swift      # Styled share card rendered to UIImage (always dark-themed)
 │   │   ├── BenefitZone.swift        # Zone enum, zone(for:thresholds:), String(localized:) names (SHARED with widget + watch)
 │   │   ├── ZoneGradientBackground.swift
 │   │   └── ZoneIndicatorView.swift  # Accepts optional ZoneThresholds
 │   ├── History/
 │   │   ├── HistoryView.swift        # Zone dist + mood trend + section headers
 │   │   ├── SessionCard.swift        # Mood emojis, notes display
-│   │   ├── ChartView.swift          # Week/Month/All picker, locale-aware weekday labels
+│   │   ├── ChartView.swift          # Week/Month/All picker (LocalizedStringKey), locale-aware weekday labels
 │   │   └── ZoneDistributionView.swift
 │   ├── Streak/
-│   │   └── StreakView.swift          # Delegates to StreakCalculator
+│   │   └── StreakView.swift          # Delegates to StreakCalculator, "Day Streak" label
 │   ├── Settings/
 │   │   └── SettingsView.swift       # Appearance, Timer, Zone Thresholds, Units, Feedback, Ambient, Notifications, Health, Goals, About
 │   └── Onboarding/
@@ -115,7 +192,7 @@ IceDip/
 ├── Models/
 │   ├── PlungeSession.swift          # @Model, default values for CloudKit, complete(thresholds:)
 │   ├── PlungeSessionSchemaV1.swift  # V1 + V2 VersionedSchema + lightweight migration plan (shared with widget)
-│   ├── UserPreferences.swift        # 16 AppStorage keys incl. colorSchemePreference, zoneThresholds
+│   ├── UserPreferences.swift        # 18 AppStorage keys incl. colorSchemePreference, zoneThresholds
 │   ├── ZoneThresholds.swift         # Codable+RawRepresentable struct (SHARED with widget + watch)
 │   └── AmbientSound.swift           # Enum: ocean, rain, String(localized:) display names
 ├── Services/
@@ -126,7 +203,7 @@ IceDip/
 │   └── PhoneConnectivityService.swift # WCSessionDelegate, receives Watch sessions, sends streak updates
 └── Shared/
     ├── Theme.swift                  # Adaptive Color("Theme*") + hex zone colors, Fonts, Spacing, Animations (SHARED)
-    ├── Extensions.swift             # Color(hex:), TimeInterval, Date (String(localized:)), moodEmoji(), temp (SHARED)
+    ├── Extensions.swift             # Color(hex:), TimeInterval, Date (locale-aware formatters), moodEmoji(), temp (SHARED)
     ├── SharedModelContainer.swift   # App Group + CloudKit (.automatic for app, .none for extensions) (shared with widget)
     ├── StreakCalculator.swift        # Extracted streak/goal logic (shared with widget)
     ├── WatchSessionData.swift       # Codable structs for Watch↔Phone sync (SHARED with watch)
@@ -145,7 +222,7 @@ IceDipWatch/
 ├── Services/
 │   └── WatchConnectivityService.swift # WCSessionDelegate, sends sessions, receives streak
 ├── Assets.xcassets/                 # Watch app icon + Theme* adaptive color assets
-├── Localizable.xcstrings           # Watch localization catalog (empty)
+├── Localizable.xcstrings           # Watch localization catalog (10 strings, en + tr)
 └── Info.plist                       # WKCompanionAppBundleIdentifier
 
 IceDipWidget/
@@ -153,7 +230,7 @@ IceDipWidget/
 ├── IceDipWidget.swift               # PlungeEntry, PlungeTimelineProvider, IceDipWidget
 ├── IceDipWidgetEntryView.swift      # SmallWidgetView + MediumWidgetView (hardcoded dark colors)
 ├── IceDipWidget.entitlements        # App Group
-├── Localizable.xcstrings           # Widget localization catalog (empty)
+├── Localizable.xcstrings           # Widget localization catalog (4 strings, en + tr)
 └── Info.plist                       # WidgetKit extension point
 
 Scripts/
@@ -163,14 +240,14 @@ Scripts/
 IceDip/Resources/
 ├── Info.plist                       # UILaunchScreen, HealthKit usage descriptions, orientations
 ├── IceDip.entitlements              # App Group + HealthKit + iCloud/CloudKit
-├── Localizable.xcstrings           # Main app localization catalog (empty)
+├── Localizable.xcstrings           # Main app localization catalog (95 strings, en + tr)
 ├── Sounds/
 │   ├── ocean.wav                    # 15s ambient loop (generated)
 │   └── rain.wav                     # 15s ambient loop (generated)
 ├── Assets.xcassets/
 │   ├── AppIcon.appiconset/          # AppIcon.png (1024x1024 universal snowflake)
-│   ├── AccentColor.colorset/
-│   ├── LaunchBackground.colorset/   # #0A1628
+│   ├── AccentColor.colorset/        # Adaptive: dark #64D2FF, light #0891B2
+│   ├── LaunchBackground.colorset/   # Adaptive: dark #0A1628, light #F0F5FA
 │   ├── ThemeBackground.colorset/    # dark: #0A1628, light: #F0F5FA
 │   ├── ThemeSurface.colorset/       # dark: #111D2E, light: #FFFFFF
 │   ├── ThemeIceBlue.colorset/       # dark: #64D2FF, light: #0891B2
@@ -181,44 +258,31 @@ IceDip/Resources/
 
 ## Key Architectural Decisions
 - **Shared SwiftData via App Group**: `SharedModelContainer` provides single `ModelContainer` at `group.com.icedip.app/IceDip.store`. CloudKit enabled for main app, disabled for extensions. V2 schema with migration plan.
-- **Adaptive theme colors**: 5 colors use asset catalogs with dark/light variants (ThemeBackground, ThemeSurface, ThemeIceBlue, ThemeTextPrimary, ThemeTextSecondary). Zone colors stay hardcoded hex (same both modes). Widget uses inline hex (dark only).
+- **Adaptive theme colors**: 5 theme colors + AccentColor + LaunchBackground use asset catalogs with dark/light variants. Zone colors stay hardcoded hex (same both modes). Widget uses inline hex (dark only).
 - **Custom zone thresholds**: `ZoneThresholds` struct stored as JSON in AppStorage via `RawRepresentable`. Read by TimerViewModel from UserDefaults. Mirrored to app group for widget. Watch uses defaults.
-- **Localization**: `String(localized:)` for non-SwiftUI computed String properties. SwiftUI `Text()` literals auto-localize. Empty `.xcstrings` catalogs ready for translations.
+- **Localization**: `String(localized:)` for non-SwiftUI computed String properties. SwiftUI `Text()` literals auto-localize via `LocalizedStringKey`. `.xcstrings` catalogs populated with 95+ strings (en + tr). `SWIFT_EMIT_LOC_STRINGS: "YES"` on all 3 targets.
 - **StreakCalculator as shared logic**: Struct taking `[PlungeSession]`, reused by StreakView, widget, PhoneConnectivityService, TimerViewModel.
 - **Service injection pattern**: All services `@MainActor @Observable`, created as `@State` in `IceDipApp`, injected via `.environment()`.
 - **Watch architecture**: Standalone timer, no SwiftData. Sessions sync via `transferUserInfo()`, streak via `updateApplicationContext()`.
 - **iCloud sync**: `cloudKitDatabase: .automatic` on ModelConfiguration. Last-writer-wins conflict resolution. Widget excluded via `.appex` bundle path check.
 
-## Remaining Known Issues
-- **celebrationPulse `.repeatForever`** (`TimerView.swift`): Safe — view conditionally rendered.
-- **App icon is programmatic**: May want professionally designed icon for App Store.
-- **Code signing**: App Groups + HealthKit + iCloud/CloudKit capabilities must be registered in Apple Developer Portal before signing on device.
-- **iCloud container `iCloud.com.icedip.app`**: Must be created in Apple Developer Portal before CloudKit works.
-- **Generated ambient sounds**: Basic sine/noise — may want higher quality audio files for production.
-- **Light mode visual polish**: Light theme colors are functional but may need refinement after device testing (contrast, readability of zone indicator, gradient backgrounds).
-- **String Catalogs empty**: `.xcstrings` files have no entries yet — Xcode populates them on build in the IDE. Command-line builds may not auto-extract.
+## Session 10 Task List (Priority Order)
 
-## Priority Next Steps
+### MUST FIX — Critical for App Store Approval
+1. **[C1] Fix PrivacyInfo.xcprivacy** — Add HealthKit and CloudKit API declarations
+2. **[C2] Remove fatalError() from SharedModelContainer** — Replace with graceful fallback
+3. **[C3] Add "Delete All Data" to Settings** — GDPR compliance: delete SwiftData objects + reset AppStorage
 
-### Quality & Polish
-- Test light mode end-to-end on device — refine colors if needed
-- Test iCloud sync between two devices with same Apple ID
-- Populate `.xcstrings` catalogs via Xcode IDE build (or add entries manually)
-- Add a second language to test localization pipeline
-- Replace generated ambient audio with higher-quality loops
-- Consider professionally designed app icon
+### SHOULD FIX — High Priority UX Issues
+4. **[H1] Fix HealthKit permission denial flow** — Auto-disable toggle on denial, show save failure alert
+5. **[H2] Add user-facing error feedback** — Toast/alert for HealthKit save failure and audio file missing
+6. **[H3] Add "Show Tutorial" to Settings** — Re-trigger onboarding from About section
+7. **[H4] Improve orphaned session handling** — Ask user to save or discard instead of auto-deleting
+8. **[H5] Guard ChartView calendar edge case** — Prevent potential crash on empty weekday symbols
 
-### App Store Submission Checklist
-- [ ] Register App Groups + HealthKit + iCloud capabilities in Apple Developer Portal
-- [ ] Create CloudKit container `iCloud.com.icedip.app` in Apple Developer Portal
-- [ ] Install watchOS 26.2 platform from Xcode > Settings > Components
-- [ ] Build and sign on physical device (iOS + watchOS)
-- [ ] Test widget on device (add from home screen)
-- [ ] Test HealthKit flow on device (Simulator doesn't support HealthKit)
-- [ ] Test Watch↔Phone session sync on real devices
-- [ ] Test iCloud sync between two devices
-- [ ] App Store Connect: screenshots, description, keywords, privacy policy URL
-- [ ] Archive and upload via Xcode Organizer
+### Build & Verify
+9. Build iOS + watchOS with zero warnings after all fixes
+10. Run in Simulator to verify new Settings sections, error handling
 
 ## Design Spec
 - **Dark — Background:** #0A1628 | **Surface:** #111D2E | **Accent:** #64D2FF
