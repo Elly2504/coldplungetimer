@@ -50,7 +50,8 @@ struct ChartView: View {
         let today = calendar.startOfDay(for: .now)
         let weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 
-        // Find start of current week (Monday)
+        // .weekday returns 1=Sunday in Gregorian calendar regardless of locale
+        // Formula maps to 0=Monday, 1=Tuesday, ..., 6=Sunday
         let weekday = calendar.component(.weekday, from: today)
         let daysFromMonday = (weekday + 5) % 7
         guard let monday = calendar.date(byAdding: .day, value: -daysFromMonday, to: today) else {

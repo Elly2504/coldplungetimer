@@ -20,6 +20,7 @@ final class TimerViewModel {
     var hasWaterTemp = false
     var moodBefore: Int? = nil
     var moodAfter: Int? = nil
+    var notes: String = ""
 
     // MARK: - Private
 
@@ -41,8 +42,10 @@ final class TimerViewModel {
     }
 
     var timeFormatted: String {
+        if showCompletion {
+            return "0:00"
+        }
         if elapsedSeconds > selectedDuration {
-            // Show elapsed time when going past target
             return "+\(elapsedSeconds.formattedTimer)"
         }
         return remainingSeconds.formattedTimer
@@ -69,6 +72,7 @@ final class TimerViewModel {
         currentZone = .coldShock
         showCompletion = false
         moodAfter = nil
+        notes = ""
 
         notificationService.scheduleTimerComplete(duration: selectedDuration, soundEnabled: soundEnabled)
 
@@ -124,6 +128,7 @@ final class TimerViewModel {
         showCompletion = false
         moodBefore = nil
         moodAfter = nil
+        notes = ""
         storedModelContext = nil
         storedNotificationService = nil
     }

@@ -62,7 +62,7 @@ struct SettingsView: View {
                                         soundEnabled: soundEnabled
                                     )
                                 } else {
-                                    notificationService.cancelPendingNotifications()
+                                    notificationService.cancelDailyReminder()
                                 }
                             }
 
@@ -122,7 +122,7 @@ struct SettingsView: View {
 
     private func updateReminder() {
         guard reminderEnabled else { return }
-        notificationService.cancelPendingNotifications()
+        notificationService.cancelDailyReminder()
         notificationService.scheduleDailyReminder(hour: reminderHour, minute: reminderMinute, soundEnabled: soundEnabled)
     }
 }

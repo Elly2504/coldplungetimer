@@ -28,13 +28,17 @@ struct HistoryView: View {
                                     .accessibilityElement(children: .combine)
                                     .contextMenu {
                                         Button(role: .destructive) {
-                                            modelContext.delete(session)
+                                            withAnimation {
+                                                modelContext.delete(session)
+                                            }
                                         } label: {
                                             Label("Delete Session", systemImage: "trash")
                                         }
                                     }
+                                    .transition(.opacity.combined(with: .slide))
                             }
                         }
+                        .animation(.default, value: sessions.count)
                         .padding(.horizontal, Theme.Spacing.md)
                         .padding(.top, Theme.Spacing.sm)
                     }

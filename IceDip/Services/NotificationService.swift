@@ -1,5 +1,5 @@
 import Foundation
-@preconcurrency import UserNotifications
+import UserNotifications
 
 @MainActor
 @Observable
@@ -21,7 +21,7 @@ final class NotificationService {
         self.isAuthorized = settings.authorizationStatus == .authorized
     }
 
-    nonisolated func scheduleTimerComplete(duration: TimeInterval, soundEnabled: Bool) {
+    func scheduleTimerComplete(duration: TimeInterval, soundEnabled: Bool) {
         let content = UNMutableNotificationContent()
         content.title = "Plunge Complete!"
         let minutes = Int(duration) / 60
@@ -47,7 +47,7 @@ final class NotificationService {
         UNUserNotificationCenter.current().add(request)
     }
 
-    nonisolated func scheduleDailyReminder(hour: Int, minute: Int, soundEnabled: Bool) {
+    func scheduleDailyReminder(hour: Int, minute: Int, soundEnabled: Bool) {
         let content = UNMutableNotificationContent()
         content.title = "Time for Your Cold Plunge"
         content.body = "Build your resilience — start today's cold exposure session."
@@ -71,17 +71,23 @@ final class NotificationService {
         UNUserNotificationCenter.current().add(request)
     }
 
-    nonisolated func cancelPendingNotifications() {
+    func cancelPendingNotifications() {
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
     }
 
-    nonisolated func cancelTimerNotifications() {
-        let center = UNUserNotificationCenter.current()
-        center.getPendingNotificationRequests { requests in
+    func cancelDailyReminder() {
+        UNUserNotificationCenter.current()
+            .removePendingNotificationRequests(withIdentifiers: ["daily-reminder"])
+    }
+
+    func cancelTimerNotifications() {
+        Task {
+            let requests = await UNUserNotificationCenter.current().pendingNotificationRequests()
             let timerIds = requests
                 .filter { $0.identifier.hasPrefix("timer-complete-") }
                 .map(\.identifier)
-            center.removePendingNotificationRequests(withIdentifiers: timerIds)
+            UNUserNotificationCenter.current()
+                .removePendingNotificationRequests(withIdentifiers: timerIds)
         }
     }
 }

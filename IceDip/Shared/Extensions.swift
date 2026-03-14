@@ -61,25 +61,52 @@ extension Date {
         Calendar.current.date(byAdding: .day, value: -days, to: self) ?? self
     }
 
+    private enum Formatters {
+        static let short: DateFormatter = {
+            let f = DateFormatter()
+            f.dateFormat = "MMM d"
+            return f
+        }()
+
+        static let time: DateFormatter = {
+            let f = DateFormatter()
+            f.dateFormat = "h:mm a"
+            return f
+        }()
+
+        static let medium: DateFormatter = {
+            let f = DateFormatter()
+            f.dateStyle = .medium
+            f.timeStyle = .short
+            return f
+        }()
+    }
+
     var formattedShort: String {
         if isToday { return "Today" }
         if isYesterday { return "Yesterday" }
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMM d"
-        return formatter.string(from: self)
+        return Formatters.short.string(from: self)
     }
 
     var formattedTime: String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "h:mm a"
-        return formatter.string(from: self)
+        Formatters.time.string(from: self)
     }
 
     var formattedMedium: String {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .short
-        return formatter.string(from: self)
+        Formatters.medium.string(from: self)
+    }
+}
+
+// MARK: - Mood Emoji
+
+func moodEmoji(_ rating: Int) -> String {
+    switch rating {
+    case 1: "😰"
+    case 2: "😕"
+    case 3: "😐"
+    case 4: "😊"
+    case 5: "🤩"
+    default: "😐"
     }
 }
 

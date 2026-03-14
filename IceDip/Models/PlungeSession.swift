@@ -11,6 +11,7 @@ final class PlungeSession {
     var benefitZoneReached: String?
     var moodBefore: Int?
     var moodAfter: Int?
+    var notes: String?
     var isCompleted: Bool
 
     var duration: TimeInterval {
@@ -36,6 +37,7 @@ final class PlungeSession {
         self.benefitZoneReached = nil
         self.moodBefore = nil
         self.moodAfter = nil
+        self.notes = nil
         self.isCompleted = false
     }
 

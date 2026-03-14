@@ -180,6 +180,7 @@ struct StreakView: View {
         let sessionDays = Set(completedSessions.map { calendar.startOfDay(for: $0.startTime) })
         let sortedDays = sessionDays.sorted()
 
+        // A single session counts as a 1-day streak; 0 only when no completed sessions
         var best = 1
         var current = 1
 
@@ -199,6 +200,7 @@ struct StreakView: View {
     private var sessionsThisWeekCount: Int {
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: .now)
+        // .weekday returns 1=Sunday in Gregorian; maps to 0=Monday, ..., 6=Sunday
         let weekday = calendar.component(.weekday, from: today)
         let daysFromMonday = (weekday + 5) % 7
         guard let monday = calendar.date(byAdding: .day, value: -daysFromMonday, to: today) else {

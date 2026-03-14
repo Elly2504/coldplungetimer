@@ -2,7 +2,7 @@ import SwiftUI
 import SwiftData
 
 struct TimerView: View {
-    @State private var viewModel = TimerViewModel()
+    @Bindable var viewModel: TimerViewModel
     @Environment(NotificationService.self) private var notificationService
     @Environment(\.modelContext) private var modelContext
     @Environment(\.scenePhase) private var scenePhase
@@ -11,6 +11,7 @@ struct TimerView: View {
     @AppStorage(PreferenceKey.tempUnit) private var tempUnit = "celsius"
     @AppStorage(PreferenceKey.defaultDuration) private var defaultDuration: TimeInterval = 120
     @State private var showStopConfirmation = false
+    @State private var celebrationPulse = false
 
     private let durationPresets: [(String, TimeInterval)] = [
         ("1m", 60),
@@ -44,6 +45,9 @@ struct TimerView: View {
         }
         .onAppear {
             viewModel.selectedDuration = defaultDuration
+        }
+        .onChange(of: viewModel.showCompletion) { _, show in
+            celebrationPulse = show
         }
     }
 
@@ -214,11 +218,33 @@ struct TimerView: View {
         VStack(spacing: Theme.Spacing.lg) {
             Spacer()
 
-            Image(systemName: "checkmark.circle.fill")
-                .font(.system(size: 80))
-                .foregroundStyle(Theme.Colors.iceBlue)
-                .scaleEffect(viewModel.showCompletion ? 1.0 : 0.5)
-                .animation(Theme.Animations.celebration, value: viewModel.showCompletion)
+            ZStack {
+                Circle()
+                    .stroke(Theme.Colors.iceBlue.opacity(0.2), lineWidth: 3)
+                    .frame(width: 130, height: 130)
+                    .scaleEffect(celebrationPulse ? 1.3 : 1.0)
+                    .opacity(celebrationPulse ? 0 : 0.6)
+
+                Circle()
+                    .stroke(Theme.Colors.iceBlue.opacity(0.3), lineWidth: 2)
+                    .frame(width: 110, height: 110)
+                    .scaleEffect(celebrationPulse ? 1.2 : 1.0)
+                    .opacity(celebrationPulse ? 0.1 : 0.8)
+
+                Image(systemName: "checkmark.circle.fill")
+                    .font(.system(size: 80))
+                    .foregroundStyle(Theme.Colors.iceBlue)
+                    .shadow(color: Theme.Colors.iceBlue.opacity(0.5), radius: celebrationPulse ? 20 : 10)
+            }
+            .scaleEffect(viewModel.showCompletion ? 1.0 : 0.5)
+            .animation(Theme.Animations.celebration, value: viewModel.showCompletion)
+            .animation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true), value: celebrationPulse)
+
+            if let session = viewModel.currentSession {
+                Text(session.durationFormatted)
+                    .font(Theme.Fonts.timerDisplay)
+                    .foregroundStyle(Theme.Colors.iceBlue)
+            }
 
             Text("Plunge Complete!")
                 .font(Theme.Fonts.heading)
@@ -244,12 +270,24 @@ struct TimerView: View {
             // Mood after
             moodSelector(title: "How do you feel now?", selection: $viewModel.moodAfter)
 
+            // Session notes
+            TextField("Add a note...", text: $viewModel.notes, axis: .vertical)
+                .font(Theme.Fonts.body)
+                .foregroundStyle(Theme.Colors.textPrimary)
+                .padding(Theme.Spacing.md)
+                .background(Theme.Colors.surface)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+                .lineLimit(3...6)
+                .padding(.horizontal, Theme.Spacing.xl)
+
             Spacer()
 
             Button {
-                // Save mood after if selected
                 if let moodAfter = viewModel.moodAfter {
                     viewModel.currentSession?.moodAfter = moodAfter
+                }
+                if !viewModel.notes.isEmpty {
+                    viewModel.currentSession?.notes = viewModel.notes
                 }
                 viewModel.reset()
             } label: {
@@ -306,14 +344,4 @@ struct TimerView: View {
         }
     }
 
-    private func moodEmoji(_ rating: Int) -> String {
-        switch rating {
-        case 1: "😰"
-        case 2: "😕"
-        case 3: "😐"
-        case 4: "😊"
-        case 5: "🤩"
-        default: "😐"
-        }
-    }
 }
