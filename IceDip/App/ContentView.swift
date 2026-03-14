@@ -7,27 +7,43 @@ struct ContentView: View {
     @Environment(HealthKitService.self) private var healthKitService
     @State private var timerViewModel = TimerViewModel()
     @AppStorage(PreferenceKey.hasOnboarded) private var hasOnboarded = false
+    @AppStorage("pendingShortcutStart") private var pendingShortcutStart = false
+    @State private var selectedTab = 0
     @State private var orphanedSessions: [PlungeSession] = []
     @State private var showOrphanAlert = false
 
     var body: some View {
         if hasOnboarded {
-            TabView {
+            TabView(selection: $selectedTab) {
                 TimerView(viewModel: timerViewModel)
                     .tabItem { Label("Timer", systemImage: "timer") }
                     .badge(timerViewModel.isRunning ? 1 : 0)
+                    .tag(0)
                 HistoryView()
                     .tabItem { Label("History", systemImage: "clock.arrow.circlepath") }
+                    .tag(1)
                 StreakView()
                     .tabItem { Label("Streak", systemImage: "flame.fill") }
+                    .tag(2)
                 SettingsView()
                     .tabItem { Label("Settings", systemImage: "gearshape.fill") }
+                    .tag(3)
             }
             .tint(Theme.Colors.iceBlue)
             .task {
                 await notificationService.requestPermission()
                 healthKitService.checkAuthorizationStatus()
                 checkForOrphanedSessions()
+                if pendingShortcutStart {
+                    pendingShortcutStart = false
+                    try? await Task.sleep(for: .milliseconds(500))
+                    startFromShortcut()
+                }
+            }
+            .onChange(of: pendingShortcutStart) { _, shouldStart in
+                guard shouldStart else { return }
+                pendingShortcutStart = false
+                startFromShortcut()
             }
             .alert("Incomplete Session Found", isPresented: $showOrphanAlert) {
                 Button("Save") { saveOrphanedSessions() }
@@ -42,6 +58,21 @@ struct ContentView: View {
         } else {
             OnboardingView()
         }
+    }
+
+    private func startFromShortcut() {
+        guard !timerViewModel.isRunning else { return }
+        selectedTab = 0
+        let duration = UserDefaults.standard.double(forKey: PreferenceKey.defaultDuration)
+        timerViewModel.selectedDuration = duration > 0 ? duration : 120
+        timerViewModel.beginSession(
+            modelContext: modelContext,
+            hapticsEnabled: UserDefaults.standard.bool(forKey: PreferenceKey.hapticsEnabled),
+            soundEnabled: UserDefaults.standard.bool(forKey: PreferenceKey.soundEnabled),
+            notificationService: notificationService,
+            breathingEnabled: UserDefaults.standard.bool(forKey: PreferenceKey.breathingEnabled),
+            healthKitService: UserDefaults.standard.bool(forKey: PreferenceKey.healthKitEnabled) ? healthKitService : nil
+        )
     }
 
     private func checkForOrphanedSessions() {

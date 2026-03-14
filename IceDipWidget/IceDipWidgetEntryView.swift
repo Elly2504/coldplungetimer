@@ -27,19 +27,19 @@ struct SmallWidgetView: View {
             Image(systemName: "flame.fill")
                 .font(.title)
                 .foregroundStyle(entry.currentStreak > 0
-                    ? Color(hex: "FF6B35") : Color.white.opacity(0.6))
+                    ? Theme.Colors.coldShock : Theme.Colors.textSecondary)
 
             Text("\(entry.currentStreak)")
                 .font(.system(size: 48, weight: .bold, design: .rounded))
-                .foregroundStyle(.white)
+                .foregroundStyle(Theme.Colors.textPrimary)
 
             Text(entry.currentStreak == 1 ? "day streak" : "days streak")
                 .font(.system(.caption, design: .rounded))
-                .foregroundStyle(.white.opacity(0.6))
+                .foregroundStyle(Theme.Colors.textSecondary)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .containerBackground(for: .widget) {
-            Color(hex: "0A1628")
+            Theme.Colors.background
         }
     }
 }
@@ -56,20 +56,20 @@ struct MediumWidgetView: View {
                 Image(systemName: "flame.fill")
                     .font(.title2)
                     .foregroundStyle(entry.currentStreak > 0
-                        ? Color(hex: "FF6B35") : Color.white.opacity(0.6))
+                        ? Theme.Colors.coldShock : Theme.Colors.textSecondary)
 
                 Text("\(entry.currentStreak)")
                     .font(.system(size: 36, weight: .bold, design: .rounded))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Theme.Colors.textPrimary)
 
                 Text("streak")
                     .font(.system(.caption2, design: .rounded))
-                    .foregroundStyle(.white.opacity(0.6))
+                    .foregroundStyle(Theme.Colors.textSecondary)
             }
             .frame(maxWidth: .infinity)
 
             Rectangle()
-                .fill(.white.opacity(0.15))
+                .fill(Theme.Colors.textSecondary.opacity(0.25))
                 .frame(width: 1)
                 .padding(.vertical, 8)
 
@@ -78,10 +78,10 @@ struct MediumWidgetView: View {
                 HStack(spacing: 6) {
                     Image(systemName: "target")
                         .font(.caption)
-                        .foregroundStyle(Color(hex: "64D2FF"))
+                        .foregroundStyle(Theme.Colors.iceBlue)
                     Text("\(entry.sessionsThisWeek)/\(entry.weeklyGoal) this week")
                         .font(.system(.caption, design: .rounded))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(Theme.Colors.textPrimary)
                 }
 
                 if let zone = entry.lastZone {
@@ -91,7 +91,7 @@ struct MediumWidgetView: View {
                             .foregroundStyle(zone.color)
                         Text(zone.displayName)
                             .font(.system(.caption, design: .rounded))
-                            .foregroundStyle(.white)
+                            .foregroundStyle(Theme.Colors.textPrimary)
                     }
                 }
 
@@ -99,10 +99,10 @@ struct MediumWidgetView: View {
                     HStack(spacing: 6) {
                         Image(systemName: "clock")
                             .font(.caption)
-                            .foregroundStyle(.white.opacity(0.6))
+                            .foregroundStyle(Theme.Colors.textSecondary)
                         Text(lastDate, style: .relative)
                             .font(.system(.caption, design: .rounded))
-                            .foregroundStyle(.white.opacity(0.6))
+                            .foregroundStyle(Theme.Colors.textSecondary)
                     }
                 }
             }
@@ -111,7 +111,7 @@ struct MediumWidgetView: View {
         .padding(.horizontal, 4)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .containerBackground(for: .widget) {
-            Color(hex: "0A1628")
+            Theme.Colors.background
         }
     }
 }

@@ -1,5 +1,6 @@
 import Foundation
 import WatchConnectivity
+import WidgetKit
 import os
 
 @MainActor
@@ -43,8 +44,20 @@ final class WatchConnectivityService: NSObject, WCSessionDelegate {
         guard let data = context["streakData"] as? Data else { return }
         do {
             streakData = try JSONDecoder().decode(WatchStreakData.self, from: data)
+            persistForComplication()
         } catch {
             Self.logger.error("Failed to decode streak data: \(error, privacy: .public)")
         }
+    }
+
+    private func persistForComplication() {
+        let defaults = UserDefaults.standard
+        defaults.set(streakData.currentStreak, forKey: "complication_currentStreak")
+        defaults.set(streakData.bestStreak, forKey: "complication_bestStreak")
+        defaults.set(streakData.sessionsThisWeek, forKey: "complication_sessionsThisWeek")
+        if let lastDate = streakData.lastSessionDate {
+            defaults.set(lastDate.timeIntervalSince1970, forKey: "complication_lastSessionDate")
+        }
+        WidgetCenter.shared.reloadAllTimelines()
     }
 }

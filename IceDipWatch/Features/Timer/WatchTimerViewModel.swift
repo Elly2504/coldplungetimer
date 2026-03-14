@@ -1,5 +1,6 @@
 import Foundation
 import WatchKit
+import WidgetKit
 
 @MainActor
 @Observable
@@ -87,6 +88,10 @@ final class WatchTimerViewModel {
         )
         connectivityService?.sendSession(sessionData)
         isComplete = true
+
+        let currentSessions = UserDefaults.standard.integer(forKey: "complication_sessionsThisWeek")
+        UserDefaults.standard.set(currentSessions + 1, forKey: "complication_sessionsThisWeek")
+        WidgetCenter.shared.reloadAllTimelines()
 
         return sessionData
     }
