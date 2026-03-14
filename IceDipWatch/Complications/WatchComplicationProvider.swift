@@ -27,10 +27,24 @@ struct WatchComplicationProvider: TimelineProvider {
 
     private func fetchEntry() -> WatchStreakEntry {
         let defaults = UserDefaults.standard
+        let calendar = Calendar.current
+        let currentWeek = calendar.component(.weekOfYear, from: .now)
+        let currentYear = calendar.component(.yearForWeekOfYear, from: .now)
+        let storedWeek = defaults.integer(forKey: "complication_weekOfYear")
+        let storedYear = defaults.integer(forKey: "complication_yearForWeek")
+
+        var sessionsThisWeek = defaults.integer(forKey: "complication_sessionsThisWeek")
+        if currentWeek != storedWeek || currentYear != storedYear {
+            sessionsThisWeek = 0
+            defaults.set(0, forKey: "complication_sessionsThisWeek")
+            defaults.set(currentWeek, forKey: "complication_weekOfYear")
+            defaults.set(currentYear, forKey: "complication_yearForWeek")
+        }
+
         return WatchStreakEntry(
             date: .now,
             currentStreak: defaults.integer(forKey: "complication_currentStreak"),
-            sessionsThisWeek: defaults.integer(forKey: "complication_sessionsThisWeek")
+            sessionsThisWeek: sessionsThisWeek
         )
     }
 }

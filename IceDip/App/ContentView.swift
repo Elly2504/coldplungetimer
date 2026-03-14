@@ -5,6 +5,8 @@ struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(NotificationService.self) private var notificationService
     @Environment(HealthKitService.self) private var healthKitService
+    @Environment(AmbientSoundService.self) private var ambientSoundService
+    @Environment(PhoneConnectivityService.self) private var phoneConnectivityService
     @State private var timerViewModel = TimerViewModel()
     @AppStorage(PreferenceKey.hasOnboarded) private var hasOnboarded = false
     @AppStorage("pendingShortcutStart") private var pendingShortcutStart = false
@@ -63,15 +65,30 @@ struct ContentView: View {
     private func startFromShortcut() {
         guard !timerViewModel.isRunning else { return }
         selectedTab = 0
-        let duration = UserDefaults.standard.double(forKey: PreferenceKey.defaultDuration)
-        timerViewModel.selectedDuration = duration > 0 ? duration : 120
+
+        let defaults = UserDefaults.standard
+        let shortcutDuration = defaults.double(forKey: "pendingShortcutDuration")
+        if shortcutDuration > 0 {
+            timerViewModel.selectedDuration = shortcutDuration
+            defaults.removeObject(forKey: "pendingShortcutDuration")
+        } else {
+            let duration = defaults.double(forKey: PreferenceKey.defaultDuration)
+            timerViewModel.selectedDuration = duration > 0 ? duration : 120
+        }
+
+        let ambientSoundEnabled = defaults.bool(forKey: PreferenceKey.ambientSoundEnabled)
+        let selectedSound = defaults.string(forKey: PreferenceKey.selectedAmbientSound) ?? "ocean"
+
         timerViewModel.beginSession(
             modelContext: modelContext,
-            hapticsEnabled: UserDefaults.standard.bool(forKey: PreferenceKey.hapticsEnabled),
-            soundEnabled: UserDefaults.standard.bool(forKey: PreferenceKey.soundEnabled),
+            hapticsEnabled: defaults.bool(forKey: PreferenceKey.hapticsEnabled),
+            soundEnabled: defaults.bool(forKey: PreferenceKey.soundEnabled),
             notificationService: notificationService,
-            breathingEnabled: UserDefaults.standard.bool(forKey: PreferenceKey.breathingEnabled),
-            healthKitService: UserDefaults.standard.bool(forKey: PreferenceKey.healthKitEnabled) ? healthKitService : nil
+            breathingEnabled: defaults.bool(forKey: PreferenceKey.breathingEnabled),
+            healthKitService: defaults.bool(forKey: PreferenceKey.healthKitEnabled) ? healthKitService : nil,
+            ambientSoundService: ambientSoundEnabled ? ambientSoundService : nil,
+            ambientSound: ambientSoundEnabled ? AmbientSound(rawValue: selectedSound) : nil,
+            phoneConnectivityService: phoneConnectivityService
         )
     }
 

@@ -112,6 +112,9 @@ targets:
       properties:
         CFBundleDisplayName: IceDip
         WKCompanionAppBundleIdentifier: com.icedip.app
+        CFBundleURLTypes:
+          - CFBundleURLSchemes:
+              - icedip
 
   IceDipWatchWidgetExtension:
     type: app-extension
@@ -121,6 +124,7 @@ targets:
         excludes:
           - "**/.DS_Store"
       - path: IceDip/Shared/Extensions.swift
+      - path: IceDipWatch/Localizable.xcstrings
     settings:
       base:
         CODE_SIGN_STYLE: Automatic

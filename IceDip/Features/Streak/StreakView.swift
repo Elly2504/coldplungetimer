@@ -90,6 +90,8 @@ struct StreakView: View {
         .padding(Theme.Spacing.md)
         .background(Theme.Colors.surface)
         .clipShape(RoundedRectangle(cornerRadius: 16))
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Last 7 days: \((0..<7).filter { hasSession(on: Date().daysAgo(6 - $0)) }.count) days completed")
     }
 
     // MARK: - Weekly Goal
@@ -121,6 +123,8 @@ struct StreakView: View {
         .padding(Theme.Spacing.md)
         .background(Theme.Colors.surface)
         .clipShape(RoundedRectangle(cornerRadius: 16))
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Weekly goal: \(sessionsThisWeekCount) of \(weeklyGoal) sessions\(sessionsThisWeekCount >= weeklyGoal ? ", goal reached" : "")")
     }
 
     // MARK: - Best Streak
@@ -143,6 +147,8 @@ struct StreakView: View {
         .padding(Theme.Spacing.md)
         .background(Theme.Colors.surface)
         .clipShape(RoundedRectangle(cornerRadius: 16))
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Best streak: \(bestStreak) days")
     }
 
     // MARK: - Streak Calculations

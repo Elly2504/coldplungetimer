@@ -23,15 +23,18 @@ struct WatchComplicationEntryView: View {
     @Environment(\.widgetFamily) var family
 
     var body: some View {
-        switch family {
-        case .accessoryCircular:
-            CircularComplicationView(entry: entry)
-        case .accessoryRectangular:
-            RectangularComplicationView(entry: entry)
-        case .accessoryInline:
-            InlineComplicationView(entry: entry)
-        default:
-            CircularComplicationView(entry: entry)
+        Group {
+            switch family {
+            case .accessoryCircular:
+                CircularComplicationView(entry: entry)
+            case .accessoryRectangular:
+                RectangularComplicationView(entry: entry)
+            case .accessoryInline:
+                InlineComplicationView(entry: entry)
+            default:
+                CircularComplicationView(entry: entry)
+            }
         }
+        .widgetURL(URL(string: "icedip://timer"))
     }
 }

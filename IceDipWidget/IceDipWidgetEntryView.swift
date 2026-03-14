@@ -41,6 +41,8 @@ struct SmallWidgetView: View {
         .containerBackground(for: .widget) {
             Theme.Colors.background
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(entry.currentStreak) \(entry.currentStreak == 1 ? "day" : "days") streak")
     }
 }
 
@@ -113,5 +115,7 @@ struct MediumWidgetView: View {
         .containerBackground(for: .widget) {
             Theme.Colors.background
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(entry.currentStreak) day streak, \(entry.sessionsThisWeek) of \(entry.weeklyGoal) sessions this week")
     }
 }

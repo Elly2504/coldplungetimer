@@ -90,6 +90,42 @@
         "ja" : { "stringUnit" : { "state" : "translated", "value" : "5分" } },
         "tr" : { "stringUnit" : { "state" : "translated", "value" : "5dk" } }
       }
+    },
+    "day streak" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Tage-Serie" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "días seguidos" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "jours consécutifs" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "日連続" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "günlük seri" } }
+      }
+    },
+    "sessions this week" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Sitzungen diese Woche" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "sesiones esta semana" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "séances cette semaine" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "今週のセッション" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "bu hafta oturum" } }
+      }
+    },
+    "IceDip Streak" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "IceDip Serie" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Racha de IceDip" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Série IceDip" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "IceDip連続記録" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "IceDip Seri" } }
+      }
+    },
+    "Track your cold plunge streak." : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Verfolge deine Eisbad-Serie." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Sigue tu racha de inmersión fría." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Suivez votre série de bains froids." } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "コールドプランジの連続記録を追跡。" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Soğuk dalış serini takip et." } }
+      }
     }
   },
   "version" : "1.0"

@@ -1,4 +1,6 @@
 import SwiftUI
+import SwiftData
+import UIKit
 
 struct SettingsView: View {
     @AppStorage(PreferenceKey.defaultDuration) private var defaultDuration: TimeInterval = 120
@@ -22,6 +24,9 @@ struct SettingsView: View {
     @Environment(HealthKitService.self) private var healthKitService
 
     @State private var showDeleteConfirmation = false
+    @State private var exportURL: URL?
+    @State private var showExportSheet = false
+    @State private var showNoSessionsAlert = false
 
     private let durationOptions: [(String, TimeInterval)] = [
         ("30 seconds", 30),
@@ -186,6 +191,12 @@ struct SettingsView: View {
 
                     // Data
                     Section("Data") {
+                        Button {
+                            exportCSV()
+                        } label: {
+                            Label("Export Sessions", systemImage: "square.and.arrow.up")
+                        }
+
                         Button("Delete All Data", role: .destructive) {
                             showDeleteConfirmation = true
                         }
@@ -220,6 +231,14 @@ struct SettingsView: View {
             }
             .navigationTitle("Settings")
             .tint(Theme.Colors.iceBlue)
+            .sheet(isPresented: $showExportSheet) {
+                if let exportURL {
+                    ActivityView(items: [exportURL])
+                }
+            }
+            .alert("No sessions to export.", isPresented: $showNoSessionsAlert) {
+                Button("OK", role: .cancel) { }
+            }
         }
     }
 
@@ -294,6 +313,22 @@ struct SettingsView: View {
         notificationService.cancelDailyReminder()
     }
 
+    private func exportCSV() {
+        let descriptor = FetchDescriptor<PlungeSession>(
+            predicate: #Predicate { $0.isCompleted },
+            sortBy: [SortDescriptor(\.startTime, order: .reverse)]
+        )
+        guard let sessions = try? modelContext.fetch(descriptor), !sessions.isEmpty else {
+            showNoSessionsAlert = true
+            return
+        }
+        let csv = CSVExportService.generateCSV(sessions: sessions)
+        if let url = CSVExportService.writeToTemporaryFile(csv: csv) {
+            exportURL = url
+            showExportSheet = true
+        }
+    }
+
     private func zoneThresholdRow(zone: BenefitZone, value: Binding<TimeInterval>, min: TimeInterval, max: TimeInterval) -> some View {
         Stepper(value: value, in: min...max, step: 5) {
             HStack(spacing: Theme.Spacing.sm) {
@@ -307,4 +342,16 @@ struct SettingsView: View {
             }
         }
     }
+}
+
+// MARK: - Activity View
+
+struct ActivityView: UIViewControllerRepresentable {
+    let items: [Any]
+
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        UIActivityViewController(activityItems: items, applicationActivities: nil)
+    }
+
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
 }

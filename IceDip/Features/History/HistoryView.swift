@@ -68,6 +68,7 @@ struct HistoryView: View {
                 .font(Theme.Fonts.caption)
                 .foregroundStyle(Theme.Colors.textSecondary)
         }
+        .accessibilityElement(children: .combine)
     }
 
     private var statsBar: some View {

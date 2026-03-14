@@ -15,6 +15,8 @@ struct CircularComplicationView: View {
             }
             .widgetAccentable()
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(entry.currentStreak) \(String(localized: "day streak"))")
     }
 }
 
@@ -38,6 +40,7 @@ struct RectangularComplicationView: View {
             }
             Spacer()
         }
+        .accessibilityElement(children: .combine)
     }
 }
 

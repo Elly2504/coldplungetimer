@@ -89,8 +89,20 @@ final class WatchTimerViewModel {
         connectivityService?.sendSession(sessionData)
         isComplete = true
 
-        let currentSessions = UserDefaults.standard.integer(forKey: "complication_sessionsThisWeek")
-        UserDefaults.standard.set(currentSessions + 1, forKey: "complication_sessionsThisWeek")
+        let defaults = UserDefaults.standard
+        let calendar = Calendar.current
+        let currentWeek = calendar.component(.weekOfYear, from: .now)
+        let currentYear = calendar.component(.yearForWeekOfYear, from: .now)
+        let storedWeek = defaults.integer(forKey: "complication_weekOfYear")
+        let storedYear = defaults.integer(forKey: "complication_yearForWeek")
+
+        var currentSessions = defaults.integer(forKey: "complication_sessionsThisWeek")
+        if currentWeek != storedWeek || currentYear != storedYear {
+            currentSessions = 0
+            defaults.set(currentWeek, forKey: "complication_weekOfYear")
+            defaults.set(currentYear, forKey: "complication_yearForWeek")
+        }
+        defaults.set(currentSessions + 1, forKey: "complication_sessionsThisWeek")
         WidgetCenter.shared.reloadAllTimelines()
 
         return sessionData

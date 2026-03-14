@@ -1179,6 +1179,42 @@
         "ja" : { "stringUnit" : { "state" : "translated", "value" : "レジリエンスを鍛えましょう — 今日の冷水セッションを始めましょう。" } },
         "tr" : { "stringUnit" : { "state" : "translated", "value" : "Dayanıklılığını güçlendir — bugünkü soğuk maruziyetine başla." } }
       }
+    },
+    "Start Cold Plunge" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Kaltbad starten" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Iniciar inmersión fría" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Démarrer le bain froid" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "コールドプランジを開始" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Soğuk Dalış Başlat" } }
+      }
+    },
+    "Start a cold plunge timer session." : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Starte eine Eisbad-Timer-Sitzung." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Inicia una sesión de temporizador de inmersión fría." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Démarrer une séance de minuteur de bain froid." } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "コールドプランジタイマーセッションを開始します。" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Soğuk dalış zamanlayıcı oturumu başlatın." } }
+      }
+    },
+    "Export Sessions" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Sitzungen exportieren" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Exportar sesiones" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Exporter les séances" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "セッションをエクスポート" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Oturumları Dışa Aktar" } }
+      }
+    },
+    "No sessions to export." : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Keine Sitzungen zum Exportieren." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "No hay sesiones para exportar." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Aucune séance à exporter." } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "エクスポートするセッションがありません。" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Dışa aktarılacak oturum yok." } }
+      }
     }
   },
   "version" : "1.0"
