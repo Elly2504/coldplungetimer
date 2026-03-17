@@ -72,11 +72,41 @@ struct ProPaywallView: View {
                     .padding(.horizontal, Theme.Spacing.md)
 
                     // Pricing cards
-                    if purchaseManager.products.isEmpty {
-                        ProgressView()
-                            .tint(Theme.Colors.iceBlue)
-                            .padding(Theme.Spacing.xl)
-                    } else {
+                    switch purchaseManager.productLoadState {
+                    case .notLoaded, .loading:
+                        VStack(spacing: Theme.Spacing.md) {
+                            ProgressView()
+                                .tint(Theme.Colors.iceBlue)
+                            Text("Loading subscription options...")
+                                .font(Theme.Fonts.caption)
+                                .foregroundStyle(Theme.Colors.textSecondary)
+                        }
+                        .padding(Theme.Spacing.xl)
+
+                    case .failed(let message):
+                        VStack(spacing: Theme.Spacing.md) {
+                            Image(systemName: "exclamationmark.triangle.fill")
+                                .font(.title2)
+                                .foregroundStyle(.orange)
+                            Text(message)
+                                .font(Theme.Fonts.body)
+                                .foregroundStyle(Theme.Colors.textSecondary)
+                                .multilineTextAlignment(.center)
+                            Button {
+                                Task { await purchaseManager.loadProducts() }
+                            } label: {
+                                Text("Try Again")
+                                    .font(Theme.Fonts.headingSmall)
+                                    .foregroundStyle(Theme.Colors.iceBlue)
+                            }
+                        }
+                        .padding(Theme.Spacing.lg)
+                        .frame(maxWidth: .infinity)
+                        .background(Theme.Colors.surface)
+                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                        .padding(.horizontal, Theme.Spacing.md)
+
+                    case .loaded:
                         HStack(spacing: Theme.Spacing.md) {
                             if let monthly = purchaseManager.monthlyProduct {
                                 pricingCard(
@@ -145,9 +175,9 @@ struct ProPaywallView: View {
 
                     // Terms & Privacy
                     HStack(spacing: Theme.Spacing.md) {
-                        Link("Terms of Use", destination: URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!)
+                        Link("Terms of Use", destination: URL(string: "https://elly2504.github.io/coldplungetimer/terms/")!)
                         Text("·").foregroundStyle(Theme.Colors.textSecondary)
-                        Link("Privacy Policy", destination: URL(string: "https://icedipapp.github.io/privacy")!)
+                        Link("Privacy Policy", destination: URL(string: "https://elly2504.github.io/coldplungetimer/privacy/")!)
                     }
                     .font(Theme.Fonts.caption)
                     .foregroundStyle(Theme.Colors.textSecondary)
@@ -155,7 +185,11 @@ struct ProPaywallView: View {
                 }
             }
         }
-        .onAppear {
+        .task {
+            // Retry loading if products weren't loaded at app startup
+            if purchaseManager.products.isEmpty {
+                await purchaseManager.loadProducts()
+            }
             // Default to yearly (best value)
             selectedProduct = purchaseManager.yearlyProduct ?? purchaseManager.monthlyProduct
         }

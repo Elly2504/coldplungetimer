@@ -56,6 +56,9 @@ CUSTOMIZATION
 PRIVACY FIRST
 No account required. No ads. No tracking. Your health data stays on your devices and in your iCloud. Full data deletion available in Settings.
 
+Terms of Use (EULA): https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Privacy Policy: https://elly2504.github.io/coldplungetimer/privacy/
+
 ## Promotional Text (170 characters max, can be updated without review)
 
 ```
@@ -95,9 +98,16 @@ https://elly2504.github.io/coldplungetimer/privacy/
 5. **Streak** — Weekly goal ring and current streak display
 6. **Settings** — Feature breadth: themes, HealthKit, zones, languages
 
-## App Clips / In-App Purchases
+## In-App Purchases (Auto-Renewable Subscriptions)
 
-None.
+IceDip offers a freemium model with optional "IceDip Pro" subscriptions:
+
+| Product | Product ID | Price | Period |
+|---------|-----------|-------|--------|
+| Pro Monthly | `com.icedip.app.pro.monthly` | $2.99 | 1 month |
+| Pro Yearly | `com.icedip.app.pro.yearly` | $19.99 | 1 year |
+
+Pro features include: Unlimited History & Charts, Breathing Exercise, Ambient Sounds, Apple Watch & Widget, Siri Shortcuts, HealthKit integration, iCloud Sync, CSV Export, Custom Zones, and additional themes.
 
 ## Age Rating Questionnaire
 

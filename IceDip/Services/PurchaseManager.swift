@@ -11,7 +11,12 @@ final class PurchaseManager {
     static let yearlyID = "com.icedip.app.pro.yearly"
     static let productIDs: Set<String> = [monthlyID, yearlyID]
 
+    enum ProductLoadState {
+        case notLoaded, loading, loaded, failed(String)
+    }
+
     var products: [Product] = []
+    var productLoadState: ProductLoadState = .notLoaded
     var isProUser: Bool = false {
         didSet {
             syncProStatusToAppGroup()
@@ -34,11 +39,19 @@ final class PurchaseManager {
     // MARK: - Load Products
 
     func loadProducts() async {
+        productLoadState = .loading
         do {
             products = try await Product.products(for: Self.productIDs)
                 .sorted { $0.price < $1.price }
-            Self.logger.info("Loaded \(self.products.count) products")
+            if products.isEmpty {
+                productLoadState = .failed(String(localized: "Subscriptions are temporarily unavailable. Please try again later."))
+                Self.logger.error("Product.products returned empty array — check App Store Connect configuration")
+            } else {
+                productLoadState = .loaded
+                Self.logger.info("Loaded \(self.products.count) products")
+            }
         } catch {
+            productLoadState = .failed(String(localized: "Could not load subscriptions. Please check your connection and try again."))
             Self.logger.error("Failed to load products: \(error, privacy: .public)")
         }
     }

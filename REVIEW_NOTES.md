@@ -62,7 +62,23 @@ This satisfies GDPR Article 17 (Right to Erasure) and App Store Review Guideline
 
 ## In-App Purchases
 
-None. The app is completely free with no premium tiers, subscriptions, or consumables.
+IceDip uses a freemium model with two auto-renewable subscriptions in the "IceDip Pro" subscription group:
+
+- **Pro Monthly** (`com.icedip.app.pro.monthly`) — $2.99/month
+- **Pro Yearly** (`com.icedip.app.pro.yearly`) — $19.99/year
+
+**How to find the subscription offer:**
+1. Open the app.
+2. Go to the **Settings** tab (gear icon).
+3. Tap **"Upgrade to Pro"** in the "IceDip Pro" section.
+4. The paywall screen displays both subscription options with pricing.
+
+**What Pro unlocks:** Unlimited History & Charts, Breathing Exercise, Ambient Sounds, Apple Watch & Widget, Siri Shortcuts & HealthKit, iCloud Sync & CSV Export, Custom Zones & Themes.
+
+Free users can use the core timer, view 7 days of history, and track streaks. Pro-only features show a lock overlay prompting upgrade.
+
+**Terms of Use (EULA):** The app uses Apple's Standard EULA. A link is displayed in the paywall and in the App Store description.
+**Privacy Policy:** https://elly2504.github.io/coldplungetimer/privacy/
 
 ## Third-Party Libraries
 
